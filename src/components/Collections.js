@@ -21,6 +21,7 @@ import StoreIcon from '@material-ui/icons/Store';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import ErrorIcon from '@material-ui/icons/Warning';
+import PhonelinkRingIcon from '@material-ui/icons/PhonelinkRing';
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -51,7 +52,7 @@ function Collections() {
     setSelectedIndex(index);
     dispatch(changeDocView(index, title));
   };
-  
+
   return (
     <Container maxWidth="md" disableGutters="true" style={{height:"90vh",overflowY:"auto"}}>
       <Typography variant="h6" style={{marginLeft:"10px"}}>
@@ -95,7 +96,7 @@ function Collections() {
           <ListItemIcon>
             <StoreIcon />
           </ListItemIcon>
-          <ListItemText primary="In-Listing" />
+          <ListItemText primary="In-App" />
         </ListItem>
         <ListItem button className={classes.nested} selected={selectedIndex === 7} onClick={event => handleListItemClick(event, 7, 'For-Approval')} >
           <ListItemIcon>
@@ -127,6 +128,13 @@ function Collections() {
             <ErrorOutlineIcon />
           </ListItemIcon>
           <ListItemText primary="Not Verified" />
+        </ListItem>
+
+        <ListItem button selected={selectedIndex === 8} onClick={event => handleListItemClick(event, 8, 'All Users')} >
+          <ListItemIcon>
+            <PhonelinkRingIcon />
+          </ListItemIcon>
+          <ListItemText primary="Client App" />
         </ListItem>
       </List>
     </Container>
