@@ -2,7 +2,8 @@ import React from 'react'
 import { useSelector } from 'react-redux';
 
 // Components
-import RentalView from './RentalView';
+import RentalsView from './RentalsView';
+import ItemsView from './ItemsView';
 
 // Layout
 import Container from '@material-ui/core/Container';
@@ -13,11 +14,14 @@ function Documents() {
   const viewIndex = useSelector(state => state.docView.index);
 
   const view = (index) => {
-    switch (index) {
-      case 1:
-        return <RentalView />;
-      default:
-        return 0;
+    if(index >= 1 && index <= 4) {
+      return <RentalsView />;
+    } else if(index >= 5 && index <= 7) {
+      return <ItemsView />;
+    } else if(index >= 8 && index <= 11) {
+      
+    } else {
+      return <h2>Select another Collection you dumb shit..</h2>;
     }
   }
 
