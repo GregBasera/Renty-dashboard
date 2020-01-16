@@ -1,5 +1,5 @@
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 // Layout
 import Container from '@material-ui/core/Container';
@@ -8,7 +8,6 @@ import Typography from '@material-ui/core/Typography';
 function Documents() {
   const veiwIndex = useSelector(state => state.docView.index);
   const viewTitle = useSelector(state => state.docView.title);
-  const dispatch = useDispatch();
 
   return (
     <Container maxWidth="md" disableGutters="true" style={{height:"90vh",overflowY:"scroll"}}>
