@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 // Components
 import RentalsView from './RentalsView';
 import ItemsView from './ItemsView';
+import UsersView from './UsersView';
+// import Firebase from './../Firebase';
 
 // Layout
 import Container from '@material-ui/core/Container';
@@ -19,7 +21,7 @@ function Documents() {
     } else if(index >= 5 && index <= 7) {
       return <ItemsView />;
     } else if(index >= 8 && index <= 11) {
-      
+      return <UsersView />
     } else {
       return <h2>Select another Collection you dumb shit..</h2>;
     }
