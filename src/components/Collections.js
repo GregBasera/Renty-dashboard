@@ -45,7 +45,7 @@ const useStyles = makeStyles(theme => ({
 
 function Collections() {
   const classes = useStyles();
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
   const dispatch = useDispatch();
 
   const handleListItemClick = (event, index, title) => {
