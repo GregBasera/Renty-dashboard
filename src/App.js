@@ -12,27 +12,6 @@ import Collections from './components/Collections';
 import Documents from './components/Documents';
 import Fields from './components/Fields';
 
-import * as firebase from 'firebase';
-
-var config = {
-  apiKey: "AIzaSyBeLsH834-Te4Jsrc9fazNiKwiAtJIxh9o",
-  authDomain: "gregle.firebaseapp.com",
-  databaseURL: "https://gregle.firebaseio.com",
-  projectId: "gregle",
-  storageBucket: "gregle.appspot.com",
-  messagingSenderId: "732514209548",
-  appId: "1:732514209548:web:b22c574c31301470bf0329",
-  measurementId: "G-EF4LJDKNHJ"
-};
-const db = firebase.initializeApp(config);
-var listen = db.firestore().collection('items').doc('H1cnFUQoyhQGDVh8lKSx');
-console.log(listen);
-
-// var name = listen.onSnapshot(doc => {
-//   const data = doc.data();
-//   // document.write(data.name + "<br>")
-// })
-
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
