@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
   },
   paper: {
     padding: theme.spacing(1),
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.primary,
   },
 }));
 
