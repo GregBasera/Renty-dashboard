@@ -16,14 +16,18 @@ function Documents() {
   const viewIndex = useSelector(state => state.docView.index);
 
   const view = (index) => {
-    if(index >= 1 && index <= 4) {
-      return <RentalsView />;
-    } else if(index >= 5 && index <= 7) {
-      return <ItemsView />;
-    } else if(index >= 8 && index <= 11) {
-      return <UsersView />
-    } else {
-      return <h2>Select another Collection you dumb shit..</h2>;
+    switch (index) {
+      case 1:
+        return <h2>Select a Collection ...</h2>;
+      case 5:
+        return <h2>Select a Collection ...</h2>;
+      case 8:
+        return <UsersView query={Firebase.firestore().collection('users')} />;
+      case 9:
+        return <UsersView query={Firebase.firestore().collection('users').where('verified', '==', true)} />;
+      default:
+        return <h2>Select a Collection ...</h2>;
+
     }
   }
 
