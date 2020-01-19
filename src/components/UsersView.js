@@ -1,15 +1,18 @@
-import React, { Component } from 'react';
-import 'firebase/firestore';
-import Firebase from './../Firebase';
+import React from 'react';
+// import 'firebase/firestore';
+// import Firebase from './../Firebase';
 
 // Layout
-// import { makeStyles } from '@material-ui/core/styles';
+// import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 // import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Avatar from '@material-ui/core/Avatar';
 import ListItemText from '@material-ui/core/ListItemText';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Divider from '@material-ui/core/Divider';
 
 // Icons
 import PersonIcon from '@material-ui/icons/Person';
@@ -17,21 +20,28 @@ import PersonIcon from '@material-ui/icons/Person';
 class UsersView extends React.Component {
   constructor(props) {
     super(props);
+    this.updateSelected = this.updateSelected.bind(this);
     this.state = ({
-      users: ["0"],
+      users: [],
       selected: null,
     });
+
+    this.listenToFirebase = this.listenToFirebase.bind(this);
+    this.listenToFirebase();
   }
 
-  componentDidMount() {
+  listenToFirebase() {
     var list = [];
-
-    Firebase.firestore().collection('users').onSnapshot((snapshot) => {
+    this.props.query.onSnapshot((snapshot) => {
       let changes = snapshot.docChanges();
       changes.forEach(change => {
         switch(change.type) {
           case 'added':
-            list.push(change.doc.data().full_name);
+            list.push({
+              user_id: change.doc.id,
+              name: change.doc.data().name,
+              phone: change.doc.data().phone,
+            });
             break;
           case 'deleted':
             console.log("deleted");
@@ -47,6 +57,12 @@ class UsersView extends React.Component {
     })
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if(prevProps.query !== this.props.query) {
+      this.listenToFirebase();
+    }
+  }
+
   updateSelected(selectedIndex) {
     this.setState({ selected: selectedIndex });
   }
@@ -55,24 +71,26 @@ class UsersView extends React.Component {
     const { selected } = this.state;
 
     return (
-      <div>
-        <List component="nav" aria-label="Collections" dense="true">
-          {this.state.users.map(
-            function(user){
-              return (
-                <ListItem button selected={selected === 1} onClick={() => this.updateSelected(1)}>
-                  <ListItemIcon>
+      <List component="nav" aria-label="Collections" dense="true">
+        <Divider />
+        {this.state.users.map((user, index) =>
+          {
+            return (
+              <div>
+              <ListItem button selected={selected === index} onClick={() => this.updateSelected(index)}>
+                <ListItemAvatar>
+                  <Avatar>
                     <PersonIcon />
-                  </ListItemIcon>
-                  <Typography variant="h6">{user}</Typography>
-                  <br />
-                  <Typography variant="caption">0909 090 0909</Typography>
-                </ListItem>
-              )
-            })
-          }
-        </List>
-      </div>
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary={user.name} secondary={user.phone} />
+              </ListItem>
+              <Divider />
+              </div>
+            )
+          })
+        }
+      </List>
     )
   }
 }
