@@ -8,6 +8,7 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import Chip from '@material-ui/core/Chip';
 import ListItemText from '@material-ui/core/ListItemText';
 
 // Icons
@@ -66,6 +67,7 @@ function Collections() {
             <ShoppingBasketIcon />
           </ListItemIcon>
           <ListItemText primary="Rentals" />
+          <Chip variant="outlined" size="small" label="100" />
         </ListItem>
         <ListItem button className={classes.nested} selected={selectedIndex === 2} onClick={event => handleListItemClick(event, 2, 'Due')} >
           <ListItemIcon>
@@ -130,7 +132,7 @@ function Collections() {
           <ListItemText primary="Not Verified" />
         </ListItem>
 
-        <ListItem button selected={selectedIndex === 8} onClick={event => handleListItemClick(event, 8, 'All Users')} >
+        <ListItem button selected={selectedIndex === 12} onClick={event => handleListItemClick(event, 12, 'Client App')} >
           <ListItemIcon>
             <PhonelinkRingIcon />
           </ListItemIcon>
