@@ -1,9 +1,11 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
+import 'firebase/firestore';
+import Firebase from './../Firebase';
 
 // Components
-import RentalsView from './RentalsView';
-import ItemsView from './ItemsView';
+// import RentalsView from './RentalsView';
+// import ItemsView from './ItemsView';
 import UsersView from './UsersView';
 // import Firebase from './../Firebase';
 
