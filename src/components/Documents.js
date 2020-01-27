@@ -5,7 +5,7 @@ import Firebase from './../Firebase';
 
 // Components
 // import RentalsView from './RentalsView';
-// import ItemsView from './ItemsView';
+import ItemsView from './ItemsView';
 import UsersView from './UsersView';
 // import Firebase from './../Firebase';
 
@@ -22,7 +22,7 @@ function Documents() {
       case 1:
         return <h2>Select a Collection ...</h2>;
       case 5:
-        return <h2>Select a Collection ...</h2>;
+        return <ItemsView query={Firebase.firestore().collection('item_listings')} />;
       case 8:
         return <UsersView query={Firebase.firestore().collection('users')} />;
       case 9:
