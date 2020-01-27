@@ -37,7 +37,7 @@ class UsersView extends React.Component {
       changes.forEach(change => {
         switch(change.type) {
           case 'added':
-            list.push({
+            list.unshift({
               user_id: change.doc.id,
               name: change.doc.data().name,
               phone: change.doc.data().phone,
