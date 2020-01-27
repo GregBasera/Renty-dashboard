@@ -61,7 +61,7 @@ function Collections() {
       </Typography>
       <hr size="1"/>
 
-      <List component="nav" aria-label="Collections" dense="true">
+      <List component="nav" aria-label="Collections" dense={true}>
         <ListItem button selected={selectedIndex === 1} onClick={event => handleListItemClick(event, 1, 'All Rentals')} >
           <ListItemIcon>
             <ShoppingBasketIcon />
