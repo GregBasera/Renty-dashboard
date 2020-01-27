@@ -35,16 +35,20 @@ class UsersView extends React.Component {
     this.props.query.onSnapshot((snapshot) => {
       let changes = snapshot.docChanges();
       changes.forEach(change => {
+        console.log(change);
         switch(change.type) {
           case 'added':
-            list.push({
+            list.unshift({
               user_id: change.doc.id,
-              name: change.doc.data().name,
+              name: change.doc.data().full_name,
               phone: change.doc.data().phone,
             });
             break;
-          case 'deleted':
-            console.log("deleted");
+          case 'removed':
+            // list = this.state.users;
+            // list.splice(list.indexOf(list.length - change.oldIndex -1), 1);
+            // can delete things without proper arrangeBy function 
+            console.log(change.oldIndex);
             break;
           case 'modified':
             console.log("modified");
