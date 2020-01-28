@@ -25,20 +25,6 @@ import ErrorIcon from '@material-ui/icons/Warning';
 import PhonelinkRingIcon from '@material-ui/icons/PhonelinkRing';
 
 const useStyles = makeStyles(theme => ({
-  card: {
-    minWidth: 275,
-  },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
-  },
-  title: {
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
-  },
   nested: {
     paddingLeft: theme.spacing(4),
   },
@@ -55,7 +41,7 @@ function Collections() {
   };
 
   return (
-    <Container maxWidth="md" disableGutters="true" style={{height:"90vh",overflowY:"auto"}}>
+    <Container maxWidth="md" disableGutters={true} style={{height:"90vh",overflowY:"auto"}}>
       <Typography variant="h6" style={{marginLeft:"10px"}}>
         Collections
       </Typography>
