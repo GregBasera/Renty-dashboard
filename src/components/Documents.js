@@ -4,7 +4,7 @@ import 'firebase/firestore';
 import Firebase from './../Firebase';
 
 // Components
-// import RentalsView from './RentalsView';
+import RentalsView from './RentalsView';
 import ItemsView from './ItemsView';
 import UsersView from './UsersView';
 // import Firebase from './../Firebase';
@@ -20,8 +20,10 @@ function Documents() {
   const view = (index) => {
     switch (index) {
       case 1:
-        return <h2>Select a Collection ...</h2>;
+        return <RentalsView query={Firebase.firestore().collection('rentals')} />;
       case 5:
+        return <ItemsView query={Firebase.firestore().collection('item_listings')} />;
+      case 6:
         return <ItemsView query={Firebase.firestore().collection('item_listings')} />;
       case 8:
         return <UsersView query={Firebase.firestore().collection('users')} />;
