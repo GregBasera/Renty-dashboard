@@ -1,21 +1,10 @@
 import React from 'react';
-// import 'firebase/firestore';
-// import Firebase from './../Firebase';
 
 // Layout
-// import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
-// import Container from '@material-ui/core/Container';
-// import Typography from '@material-ui/core/Typography';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Avatar from '@material-ui/core/Avatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
-
-// Icons
-import PersonIcon from '@material-ui/icons/Person';
 
 class ItemsView extends React.Component {
   constructor(props) {
