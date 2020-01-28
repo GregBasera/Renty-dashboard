@@ -1,12 +1,6 @@
 import React from 'react';
-// import 'firebase/firestore';
-// import Firebase from './../Firebase';
 
 // Layout
-// import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
-// import Container from '@material-ui/core/Container';
-// import Typography from '@material-ui/core/Typography';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
@@ -45,9 +39,6 @@ class UsersView extends React.Component {
             });
             break;
           case 'removed':
-            // list = this.state.users;
-            // list.splice(list.indexOf(list.length - change.oldIndex -1), 1);
-            // can delete things without proper arrangeBy function 
             console.log(change.oldIndex);
             break;
           case 'modified':
