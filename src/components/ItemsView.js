@@ -17,12 +17,12 @@ import Divider from '@material-ui/core/Divider';
 // Icons
 import PersonIcon from '@material-ui/icons/Person';
 
-class UsersView extends React.Component {
+class ItemsView extends React.Component {
   constructor(props) {
     super(props);
     this.updateSelected = this.updateSelected.bind(this);
     this.state = ({
-      users: [],
+      items: [],
       selected: null,
     });
 
@@ -35,19 +35,17 @@ class UsersView extends React.Component {
     this.props.query.onSnapshot((snapshot) => {
       let changes = snapshot.docChanges();
       changes.forEach(change => {
-        console.log(change);
         switch(change.type) {
           case 'added':
             list.unshift({
-              user_id: change.doc.id,
-              name: change.doc.data().full_name,
-              phone: change.doc.data().phone,
+              item_name: change.doc.data().item_name,
+              rent_rate: change.doc.data().rent_rate,
             });
             break;
           case 'removed':
             // list = this.state.users;
             // list.splice(list.indexOf(list.length - change.oldIndex -1), 1);
-            // can delete things without proper arrangeBy function 
+            // can delete things without proper arrangeBy function
             console.log(change.oldIndex);
             break;
           case 'modified':
@@ -57,7 +55,7 @@ class UsersView extends React.Component {
             break;
         }
       })
-      this.setState({ users: list });
+      this.setState({ items: list });
     })
   }
 
@@ -77,17 +75,12 @@ class UsersView extends React.Component {
     return (
       <List component="nav" aria-label="Collections" dense="true">
         <Divider />
-        {this.state.users.map((user, index) =>
+        {this.state.items.map((item, index) =>
           {
             return (
               <div>
               <ListItem button selected={selected === index} onClick={() => this.updateSelected(index)}>
-                <ListItemAvatar>
-                  <Avatar>
-                    <PersonIcon />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary={user.name} secondary={user.phone} />
+                <ListItemText primary={item.item_name} secondary={item.rent_rate} />
               </ListItem>
               <Divider />
               </div>
@@ -99,4 +92,4 @@ class UsersView extends React.Component {
   }
 }
 
-export default UsersView;
+export default ItemsView;
