@@ -16,9 +16,9 @@ function UsersListItem(props) {
   const [selectedIndex, setSelectedIndex] = React.useState(-1);
   const dispatch = useDispatch();
 
-  const handleListItemClick = (event, index) => {
+  const handleListItemClick = (event, index, user_id) => {
     setSelectedIndex(index);
-    dispatch(changeFieldView(index));
+    dispatch(changeFieldView(index, user_id));
   };
 
   console.log(props.users);
@@ -28,7 +28,7 @@ function UsersListItem(props) {
         {
           return (
             <div>
-            <ListItem button selected={selectedIndex === index} onClick={event => handleListItemClick(event, index)}>
+            <ListItem button selected={selectedIndex === index} onClick={event => handleListItemClick(event, index, user.user_id)}>
               <ListItemAvatar>
                 <Avatar>
                   <PersonIcon />

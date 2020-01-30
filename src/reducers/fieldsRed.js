@@ -1,4 +1,4 @@
-const changeFieldsView = (state = { index: 0, string: 'default' }, action) => {
+const changeFieldsView = (state = { index: 0, user_id: null }, action) => {
     switch(action.type) {
         case "fieldView":
             return action.payload;
