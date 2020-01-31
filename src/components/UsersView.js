@@ -21,7 +21,7 @@ class UsersView extends React.Component {
     this.props.query.onSnapshot((snapshot) => {
       let changes = snapshot.docChanges();
       changes.forEach(change => {
-        console.log(change);
+        // console.log(change);
         switch(change.type) {
           case 'added':
             list.unshift({

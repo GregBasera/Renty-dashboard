@@ -7,7 +7,6 @@ import Firebase from './../Firebase';
 import RentalsView from './RentalsView';
 import ItemsView from './ItemsView';
 import UsersView from './UsersView';
-// import Firebase from './../Firebase';
 
 // Layout
 import Container from '@material-ui/core/Container';

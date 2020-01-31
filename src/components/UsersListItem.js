@@ -20,8 +20,7 @@ function UsersListItem(props) {
     setSelectedIndex(index);
     dispatch(changeFieldView(index, user_id));
   };
-
-  console.log(props.users);
+  
   return(
     <div>
       {props.users.map((user, index) =>
