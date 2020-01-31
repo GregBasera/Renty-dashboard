@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import 'firebase/firestore';
 import Firebase from './../Firebase';
 
-import UserField from './UserField';
+import UserField from './FieldsChildren/UserField';
 
 // Layout
 import Container from '@material-ui/core/Container';

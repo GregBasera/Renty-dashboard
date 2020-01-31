@@ -1,5 +1,6 @@
 import React from 'react';
-import UsersListItem from './UsersListItem';
+
+import UsersListItem from './UserViewChildren/UsersListItem';
 
 // Layout
 import List from '@material-ui/core/List';

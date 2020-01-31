@@ -4,9 +4,9 @@ import 'firebase/firestore';
 import Firebase from './../Firebase';
 
 // Components
-import RentalsView from './RentalsView';
-import ItemsView from './ItemsView';
-import UsersView from './UsersView';
+import RentalsView from './DocumentsChildren/RentalsView.js';
+import ItemsView from './DocumentsChildren/ItemsView';
+import UsersView from './DocumentsChildren/UsersView';
 
 // Layout
 import Container from '@material-ui/core/Container';

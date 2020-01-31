@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { changeFieldView } from '../actions/collectionsActs';
+import { changeFieldView } from '../../../actions/collectionsActs';
 
 // Layout
 import ListItem from '@material-ui/core/ListItem';
@@ -20,7 +20,7 @@ function UsersListItem(props) {
     setSelectedIndex(index);
     dispatch(changeFieldView(index, user_id));
   };
-  
+
   return(
     <div>
       {props.users.map((user, index) =>
