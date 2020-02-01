@@ -18,8 +18,7 @@ function Fields() {
       case 'items':
         return "items";
       case 'users':
-        console.log(Firebase.firestore().collection('users').doc("Model User").full_name);
-        // return user_ID ? <UserField query={Firebase.firestore().collection('users').doc(user_ID)} /> : "Select a document";
+        return user_ID ? <UserField query={Firebase.firestore().collection('users').doc(user_ID)} /> : "Select a document";
       case 'rentals':
         return "rentals";
       default:
@@ -34,7 +33,7 @@ function Fields() {
       </Typography>
       <hr size="1"/>
 
-      <Typography variant="h6" style={{marginLeft:"10px"}}>
+      <Typography variant="h6" style={{marginTop:"20px"}}>
         {view(collection)}
       </Typography>
     </Container>
