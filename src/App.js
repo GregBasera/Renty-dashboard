@@ -1,54 +1,137 @@
 import './App.css';
 import React from 'react';
 
+import Firebase from './Firebase';
+
 // Layout
-import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
 
 // Components
+import logo from './Renty_Logo+Text.png';
 import Header from './components/Header';
 import Collections from './components/Collections';
 import Documents from './components/Documents';
 import Fields from './components/Fields';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(1),
-    color: theme.palette.text.primary,
-  },
-}));
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = ({
+      user: null,
+      email: null,
+      passw: null,
+    })
 
-function App() {
-  const classes = useStyles();
+    this.handleChanges = this.handleChanges.bind(this);
+    this.login = this.login.bind(this);
+  }
 
-  return (
-    <div className={classes.root}>
-      <Grid container spacing={0} style={{height:"100vh"}}>
-        <Grid item xs={12}>
-          <Header />
+  componentDidMount() {
+    this.authListener();
+  }
+
+  login(e) {
+    e.preventDefault();
+    Firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.passw).then((u) => {
+
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
+  handleChanges(e) {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+    console.log(e.target.value);
+  }
+
+  authListener() {
+    Firebase.auth().onAuthStateChanged((user) => {
+      // console.log(user);
+      if(user) {
+        this.setState({ user });
+        localStorage.setItem('user', user.uid);
+      } else {
+        this.setState({ user: null });
+        localStorage.removeItem('user', user.uid);
+      }
+    })
+  }
+
+  render() {
+    console.log(this.state.user);
+    if(this.state.user) {
+      return (
+        <Grid container spacing={0} style={{height:"100vh"}}>
+          <Grid item xs={12}>
+            <Header />
+          </Grid>
+          <Grid item xs={3}>
+            <Paper variant="outlined">
+              <Collections />
+            </Paper>
+          </Grid>
+          <Grid item xs={4}>
+            <Paper variant="outlined">
+              <Documents />
+            </Paper>
+          </Grid>
+          <Grid item xs={5}>
+            <Paper variant="outlined">
+              <Fields />
+            </Paper>
+          </Grid>
         </Grid>
-        <Grid item xs={3}>
-          <Paper className={classes.paper} variant="outlined">
-            <Collections />
-          </Paper>
+      );
+    } else {
+      return(
+        <Grid container spacing={0} style={{height:"100vh"}}>
+          <Grid container xs={4} alignItems="center" style={{backgroundColor:"#f06383"}}>
+            <Card style={{position:"absolute", left:"16%", width:"33%", border:"1px", borderStyle:"solid", borderColor:"lightgray"}}>
+              <CardContent>
+                <Typography variant="h4">
+                  Staff Sign-in
+                </Typography>
+                <form noValidate autoComplete="off">
+                  <TextField style={{marginTop:"15px"}} name="email"
+                  id="staff-email"
+                  label="Email"
+                  variant="outlined"
+                  fullWidth
+                  onChange={this.handleChanges}
+                  />
+                  <TextField style={{marginTop:"15px"}} name="passw"
+                  id="staff-passw"
+                  label="Password"
+                  variant="outlined"
+                  fullWidth
+                  onChange={this.handleChanges}
+                  />
+                  <Button
+                  fullWidth
+                  variant="contained"
+                  onClick={this.login}
+                  style={{marginTop:"15px", backgroundColor:"#ce2458", color:"white"}}>
+                    Sign-in
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item container xs={8} justify="center" alignItems="center" style={{backgroundColor:"white"}}>
+            <img src={logo} alt="Logo" />
+          </Grid>
         </Grid>
-        <Grid item xs={4}>
-          <Paper className={classes.paper} variant="outlined">
-            <Documents />
-          </Paper>
-        </Grid>
-        <Grid item xs={5}>
-          <Paper className={classes.paper} variant="outlined">
-            <Fields />
-          </Paper>
-        </Grid>
-      </Grid>
-    </div>
-  );
+      )
+    }
+  }
 }
 
 export default App;
