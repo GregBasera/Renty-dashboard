@@ -1,5 +1,7 @@
 import React from 'react'
 
+import Firebase from '../Firebase'
+
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -21,6 +23,11 @@ const useStyles = makeStyles(theme => ({
 function Header() {
   const classes = useStyles();
 
+  const handleSignOut = (event) => {
+    Firebase.auth().signOut();
+    console.log("signout");
+  }
+
   return (
     <div>
       <AppBar position="static">
@@ -28,7 +35,7 @@ function Header() {
           <Typography variant="h6" className={classes.title}>
             Renty
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Button color="inherit" onClick={event => handleSignOut(event)}>Sign-out</Button>
         </Toolbar>
       </AppBar>
     </div>
