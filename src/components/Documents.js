@@ -29,13 +29,13 @@ function Documents() {
       case 9:
         return <UsersView query={Firebase.firestore().collection('users').where('verified', '==', true)} />;
       default:
-        return <h2>Select a Collection ...</h2>;
+        return "Select a collection...";
 
     }
   }
 
   return (
-    <Container maxWidth="md" disableGutters="true" style={{height:"90vh",overflowY:"scroll"}}>
+    <Container maxWidth="md" disableGutters style={{height:"90vh",overflowY:"scroll"}}>
       <Typography variant="h6" style={{marginLeft:"10px"}}>
         {viewTitle}
       </Typography>
