@@ -5,7 +5,6 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 
 function ItemFieldElements(props) {
-  console.log(props.info.pic);
   return(
     <form noValidate autoComplete="off">
       <Grid container spacing={1} style={{width:"100%"}}>
@@ -18,8 +17,8 @@ function ItemFieldElements(props) {
             fullWidth={true}
           />
         </Grid>
-        <Grid item xs={12}>
-          <img src={props.info.pic} alt="pics"/>
+        <Grid item xs={6}>
+          <img src={props.info.pic[0]} alt="pics" width="inherit"/>
         </Grid>
       </Grid>
     </form>
