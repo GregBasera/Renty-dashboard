@@ -5,9 +5,9 @@ export const changeDocView = (index, title, frbsColl) => {
     };
 }
 
-export const changeFieldView = (index, user_id) => {
+export const changeFieldView = (index, id) => {
     return {
       type: "fieldView",
-      payload: { index: index, user_id: user_id }
+      payload: { index: index, id: id }
     };
 }
