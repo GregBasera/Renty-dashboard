@@ -18,16 +18,31 @@ function Documents() {
 
   const view = (index) => {
     switch (index) {
-      case 1:
+      case 1: // ALL rentals
         return <RentalsView query={Firebase.firestore().collection('rentals')} />;
-      case 5:
-        return <ItemsView query={Firebase.firestore().collection('item_listings')} />;
-      case 6:
-        return <ItemsView query={Firebase.firestore().collection('item_listings')} />;
-      case 8:
+      case 2: // DUE rentals
+        return "Select a collection...";
+      case 3: // PENDING rentals
+        return "Select a collection...";
+      case 4: // LEASED rentals
+        return "Select a collection...";
+
+      case 5: // ALL items
+        return <ItemsView query={Firebase.firestore().collection('items')} />;
+      case 6: // IN_APP items
+        return <ItemsView query={Firebase.firestore().collection('items').where('is_approved', '==', true)} />;
+      case 7: // FOR-APPROVAL items
+        return <ItemsView query={Firebase.firestore().collection('items').where('is_approved', '==', false)} />;
+
+      case 8: // ALL users
         return <UsersView query={Firebase.firestore().collection('users')} />;
-      case 9:
+      case 9: // VERIFIED users
         return <UsersView query={Firebase.firestore().collection('users').where('verified', '==', true)} />;
+      case 10: // PENDING verifications
+        return "Select a collection...";
+      case 11: // NOT VERIFIED users
+        return <UsersView query={Firebase.firestore().collection('users').where('verified', '==', false)} />;
+
       default:
         return "Select a collection...";
 
