@@ -41,7 +41,7 @@ function Collections() {
   };
 
   return (
-    <Container maxWidth="md" disableGutters={true} style={{height:"90vh",overflowY:"auto"}}>
+    <Container maxWidth="md" disableGutters style={{height:"90vh",overflowY:"auto"}}>
       <Typography variant="h6" style={{marginLeft:"10px"}}>
         Collections
       </Typography>
