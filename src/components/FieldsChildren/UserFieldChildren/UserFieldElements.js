@@ -6,12 +6,11 @@ import Grid from '@material-ui/core/Grid';
 
 function UserFieldElements(props) {
   let phone = props.info.phone;
-  console.log(props.info.address);
 
   return(
     <form noValidate autoComplete="off">
       <Grid container spacing={1} style={{width:"100%"}}>
-        <Grid item xs={4}>
+        <Grid item xs={6}>
           <TextField
             id="fullname"
             label="Fullname"
@@ -20,18 +19,18 @@ function UserFieldElements(props) {
             fullWidth={true}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={6}>
           <TextField
             id="phone"
             label="Phone number"
-            value={phone.substring(0, 6) + " - " +
-                   phone.substring(6, 9) + " - " +
+            value={phone.substring(0, 6) + "-" +
+                   phone.substring(6, 9) + "-" +
                    phone.substring(9)}
             variant="outlined"
             fullWidth={true}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={6}>
           <TextField
             id="email"
             label="Email address"
