@@ -49,7 +49,6 @@ class App extends React.Component {
     this.setState({
       [e.target.name]: e.target.value,
     });
-    console.log(e.target.value);
   }
 
   authListener() {
@@ -66,7 +65,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.state.user);
     if(this.state.user) {
       return (
         <Grid container spacing={0} style={{height:"100vh"}}>
@@ -74,17 +72,17 @@ class App extends React.Component {
             <Header />
           </Grid>
           <Grid item xs={3}>
-            <Paper variant="outlined">
+            <Paper variant="outlined" style={{paddingTop:"10px"}}>
               <Collections />
             </Paper>
           </Grid>
           <Grid item xs={4}>
-            <Paper variant="outlined">
+            <Paper variant="outlined" style={{paddingTop:"10px"}}>
               <Documents />
             </Paper>
           </Grid>
           <Grid item xs={5}>
-            <Paper variant="outlined">
+            <Paper variant="outlined" style={{paddingTop:"10px"}}>
               <Fields />
             </Paper>
           </Grid>
@@ -108,6 +106,7 @@ class App extends React.Component {
                   onChange={this.handleChanges}
                   />
                   <TextField style={{marginTop:"15px"}} name="passw"
+                  type="password"
                   id="staff-passw"
                   label="Password"
                   variant="outlined"
