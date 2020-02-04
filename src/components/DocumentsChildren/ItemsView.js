@@ -1,18 +1,16 @@
 import React from 'react';
 
+import ItemsListItem from './ItemViewChildren/ItemsListItem'
+
 // Layout
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 
 class ItemsView extends React.Component {
   constructor(props) {
     super(props);
-    this.updateSelected = this.updateSelected.bind(this);
     this.state = ({
       items: [],
-      selected: null,
     });
 
     this.listenToFirebase = this.listenToFirebase.bind(this);
@@ -27,6 +25,7 @@ class ItemsView extends React.Component {
         switch(change.type) {
           case 'added':
             list.unshift({
+              item_id: change.doc.id,
               item_name: change.doc.data().item_name,
               rent_rate: change.doc.data().rent_rate,
             });
@@ -54,28 +53,12 @@ class ItemsView extends React.Component {
     }
   }
 
-  updateSelected(selectedIndex) {
-    this.setState({ selected: selectedIndex });
-  }
-
   render () {
-    const { selected } = this.state;
 
     return (
       <List component="nav" aria-label="Collections" dense="true">
         <Divider />
-        {this.state.items.map((item, index) =>
-          {
-            return (
-              <div>
-              <ListItem button selected={selected === index} onClick={() => this.updateSelected(index)}>
-                <ListItemText primary={item.item_name} secondary={item.rent_rate} />
-              </ListItem>
-              <Divider />
-              </div>
-            )
-          })
-        }
+        <ItemsListItem items={this.state.items} />
       </List>
     )
   }
