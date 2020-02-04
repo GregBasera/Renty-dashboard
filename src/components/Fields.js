@@ -4,6 +4,7 @@ import 'firebase/firestore';
 import Firebase from './../Firebase';
 
 import UserField from './FieldsChildren/UserField';
+import ItemField from './FieldsChildren/ItemField';
 
 // Layout
 import Container from '@material-ui/core/Container';
@@ -11,16 +12,16 @@ import Typography from '@material-ui/core/Typography';
 
 function Fields() {
   const collection = useSelector(state => state.docView.frbsColl);
-  const user_ID = useSelector(state => state.fieldView.user_id);
+  const id = useSelector(state => state.fieldView.id);
 
   const view = (collection) => {
     switch(collection){
-      case 'items':
-        return "items";
       case 'users':
-        return user_ID ? <UserField query={Firebase.firestore().collection('users').doc(user_ID)} /> : "Select a document";
+        return id ? <UserField query={Firebase.firestore().collection(collection).doc(id)} /> : "Select a document";
+      case 'items':
+        return id ? <ItemField query={Firebase.firestore().collection(collection).doc(id)} /> : "Select a document";
       case 'rentals':
-        return "rentals";
+        return null;
       default:
         return null;
     }
