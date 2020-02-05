@@ -9,6 +9,7 @@ import ItemField from './FieldsChildren/ItemField';
 // Layout
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 
 function Fields() {
   const collection = useSelector(state => state.docView.frbsColl);
@@ -28,7 +29,7 @@ function Fields() {
   }
 
   return (
-    <Container maxWidth="md" disableGutters style={{height:"90vh",overflowY:"scroll"}}>
+    <Container maxWidth="md" disableGutters style={{height:"90vh", overflowY:"auto"}}>
       <Typography variant="h6" style={{marginLeft:"10px"}}>
         Fields
       </Typography>

@@ -71,7 +71,7 @@ function ItemFieldElements(props) {
           <TextField
             id="item_name"
             label="Item Name"
-            value={props.info.item_name}
+            defaultValue={props.info.item_name}
             variant="outlined"
             fullWidth
           />
@@ -81,7 +81,7 @@ function ItemFieldElements(props) {
             <InputLabel htmlFor="rent_rate">Rate</InputLabel>
             <OutlinedInput
               id="rent_rate"
-              value={props.info.rent_rate}
+              defaultValue={props.info.rent_rate}
               startAdornment={<InputAdornment position="start">$</InputAdornment>}
               labelWidth={40}
             />
@@ -93,18 +93,9 @@ function ItemFieldElements(props) {
             label="Description"
             multiline
             fullWidth
-            rows="4"
+            rows="5"
             defaultValue={props.info.description}
             variant="outlined"
-          />
-        </Grid>
-        <Grid item xs={4}>
-          <TextField
-            id="lender"
-            label="Lender"
-            value={props.info.lender}
-            variant="outlined"
-            fullWidth
           />
         </Grid>
       </Grid>
