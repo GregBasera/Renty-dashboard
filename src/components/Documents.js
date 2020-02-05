@@ -56,7 +56,7 @@ function Documents() {
       </Typography>
       <hr size="1"/>
 
-      <Typography variant="h6" style={{marginLeft:"10px"}}>
+      <Typography variant="h6" style={{margin:"0px 10px"}}>
         {view(viewIndex)}
       </Typography>
     </Container>

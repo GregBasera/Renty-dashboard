@@ -29,13 +29,13 @@ function Fields() {
   }
 
   return (
-    <Container maxWidth="md" disableGutters style={{height:"90vh", overflowY:"auto"}}>
+    <Container maxWidth="md" disableGutters style={{height:"90vh",overflowY:"auto"}}>
       <Typography variant="h6" style={{marginLeft:"10px"}}>
         Fields
       </Typography>
       <hr size="1"/>
 
-      <Typography variant="h6" style={{marginLeft:"10px", marginTop:"20px"}}>
+      <Typography variant="h6" style={{margin:"0px 10px"}}>
         {view(collection)}
       </Typography>
     </Container>
