@@ -50,7 +50,7 @@ function Documents() {
   }
 
   return (
-    <Container maxWidth="md" disableGutters style={{height:"90vh",overflowY:"scroll"}}>
+    <Container maxWidth="md" disableGutters style={{height:"90vh",overflowY:"auto"}}>
       <Typography variant="h6" style={{marginLeft:"10px"}}>
         {viewTitle}
       </Typography>
