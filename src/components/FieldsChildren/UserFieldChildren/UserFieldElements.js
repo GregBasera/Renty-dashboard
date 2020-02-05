@@ -9,7 +9,7 @@ function UserFieldElements(props) {
 
   return(
     <form noValidate autoComplete="off">
-      <Grid container spacing={1} style={{width:"100%"}}>
+      <Grid container spacing={2}>
         <Grid item xs={6}>
           <TextField
             id="fullname"
