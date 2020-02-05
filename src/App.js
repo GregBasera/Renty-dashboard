@@ -11,6 +11,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // Components
 import logo from './Renty_Logo+Text.png';
@@ -56,40 +57,17 @@ class App extends React.Component {
       // console.log(user);
       if(user) {
         this.setState({ user });
-        localStorage.setItem('user', user.uid);
+        // localStorage.setItem('user', user.uid);
       } else {
-        this.setState({ user: null });
-        localStorage.removeItem('user', user.uid);
+        this.setState({ user: 0 });
+        // localStorage.removeItem('user', user.uid);
       }
     })
   }
 
-  render() {
-    if(this.state.user) {
+  renderHomeOrLogin() {
+    if(this.state.user === 0) {
       return (
-        <Grid container spacing={0} style={{height:"100vh"}}>
-          <Grid item xs={12}>
-            <Header />
-          </Grid>
-          <Grid item xs={3}>
-            <Paper variant="outlined" style={{paddingTop:"10px"}}>
-              <Collections />
-            </Paper>
-          </Grid>
-          <Grid item xs={4}>
-            <Paper variant="outlined" style={{paddingTop:"10px"}}>
-              <Documents />
-            </Paper>
-          </Grid>
-          <Grid item xs={5}>
-            <Paper variant="outlined" style={{paddingTop:"10px"}}>
-              <Fields />
-            </Paper>
-          </Grid>
-        </Grid>
-      );
-    } else {
-      return(
         <Grid container spacing={0} style={{height:"100vh"}}>
           <Grid container xs={4} alignItems="center" style={{backgroundColor:"#f06383"}}>
             <Card style={{position:"absolute", left:"16%", width:"33%", border:"1px", borderStyle:"solid", borderColor:"lightgray"}}>
@@ -128,8 +106,39 @@ class App extends React.Component {
             <img src={logo} alt="Logo" />
           </Grid>
         </Grid>
-      )
+      );
+    } else {
+      return (
+        <Grid container spacing={0} style={{height:"100vh"}}>
+          <Grid item xs={12}>
+            <Header />
+          </Grid>
+          <Grid item xs={3}>
+            <Paper variant="outlined" style={{paddingTop:"10px"}}>
+              <Collections />
+            </Paper>
+          </Grid>
+          <Grid item xs={4}>
+            <Paper variant="outlined" style={{paddingTop:"10px"}}>
+              <Documents />
+            </Paper>
+          </Grid>
+          <Grid item xs={5}>
+            <Paper variant="outlined" style={{paddingTop:"10px"}}>
+              <Fields />
+            </Paper>
+          </Grid>
+        </Grid>
+      );
     }
+  }
+
+  render() {
+    return (
+      <div>
+        {(this.state.user === null) ? <CircularProgress /> : this.renderHomeOrLogin()}
+      </div>
+    )
   }
 }
 
