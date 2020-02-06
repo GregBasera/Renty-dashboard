@@ -50,13 +50,13 @@ function Documents() {
   }
 
   return (
-    <Container maxWidth="md" disableGutters style={{height:"90vh",overflowY:"auto"}}>
+    <Container maxWidth="md" disableGutters style={{height:"85vh",overflowY:"auto"}}>
       <Typography variant="h6" style={{marginLeft:"10px"}}>
         {viewTitle}
       </Typography>
       <hr size="1"/>
 
-      <Typography variant="h6" style={{marginLeft:"10px"}}>
+      <Typography variant="h6" style={{margin:"0px 10px"}}>
         {view(viewIndex)}
       </Typography>
     </Container>
