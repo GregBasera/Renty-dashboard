@@ -35,7 +35,6 @@ function ItemFieldElements(props) {
   const handleBack = () => {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
   };
-  console.log(props.info.lender);
 
   return(
     <form noValidate autoComplete="off">

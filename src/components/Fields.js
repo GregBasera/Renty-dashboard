@@ -39,12 +39,13 @@ function Fields() {
           Fields
           </Typography>
         </Grid>
-          <Grid container xs={6} justify="flex-end">
-            <Button variant="contained" size="small" style={{marginRight:"10px"}}>
-              <ReplayIcon />
-            </Button>
-          </Grid>
+        <Grid container xs={6} justify="flex-end">
+          <Button variant="contained" size="small" style={{marginRight:"10px"}}>
+            <ReplayIcon />
+          </Button>
         </Grid>
+      </Grid>
+
       <hr size="1"/>
 
       <Typography variant="h6" style={{margin:"0px 10px"}}>
