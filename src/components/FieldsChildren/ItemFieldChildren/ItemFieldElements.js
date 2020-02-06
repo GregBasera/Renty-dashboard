@@ -26,7 +26,7 @@ function ItemFieldElements(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
-  const maxSteps = props.info.pic.length;
+  const maxSteps = props.info.pictures.length;
 
   const handleNext = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1);
@@ -36,6 +36,10 @@ function ItemFieldElements(props) {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
   };
 
+  // props.info.lender.get().then((ref) => {
+  //   console.log(ref);
+  // });
+
   return(
     <form noValidate autoComplete="off">
       <Grid container spacing={2}>
@@ -43,7 +47,7 @@ function ItemFieldElements(props) {
           <Card style={{backgroundColor:"coral"}}>
             <CardMedia
               className={classes.media}
-              image={props.info.pic[activeStep]}
+              image={props.info.pictures[activeStep].https}
               title="Contemplative Reptile"
             />
             <MobileStepper
@@ -76,15 +80,28 @@ function ItemFieldElements(props) {
           />
         </Grid>
         <Grid item xs={4}>
-          <FormControl fullWidth variant="outlined">
-            <InputLabel htmlFor="rent_rate">Rate</InputLabel>
-            <OutlinedInput
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <FormControl fullWidth variant="outlined">
+              <InputLabel htmlFor="rent_rate">Rate</InputLabel>
+              <OutlinedInput
               id="rent_rate"
               defaultValue={props.info.rent_rate}
               startAdornment={<InputAdornment position="start">$</InputAdornment>}
               labelWidth={40}
-            />
-          </FormControl>
+              />
+              </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                id="lender"
+                label="lender"
+                defaultValue={"dsds"}
+                variant="outlined"
+                fullWidth
+              />
+            </Grid>
+          </Grid>
         </Grid>
         <Grid item xs={8}>
           <TextField
@@ -92,7 +109,7 @@ function ItemFieldElements(props) {
             label="Description"
             multiline
             fullWidth
-            rows="5"
+            rows="4"
             defaultValue={props.info.description}
             variant="outlined"
           />
