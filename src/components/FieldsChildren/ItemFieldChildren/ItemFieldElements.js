@@ -36,10 +36,6 @@ function ItemFieldElements(props) {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
   };
 
-  // props.info.lender.get().then((ref) => {
-  //   console.log(ref);
-  // });
-
   return(
     <form noValidate autoComplete="off">
       <Grid container spacing={2}>
@@ -96,7 +92,7 @@ function ItemFieldElements(props) {
               <TextField
                 id="lender"
                 label="lender"
-                defaultValue={"dsds"}
+                defaultValue={props.info.lender}
                 variant="outlined"
                 fullWidth
               />
