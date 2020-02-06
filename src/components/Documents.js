@@ -21,7 +21,7 @@ function Documents() {
       case 1: // ALL rentals
         return <RentalsView query={Firebase.firestore().collection('rentals')} />;
       case 2: // DUE rentals
-        return "Select a collection...";
+        return <RentalsView query={Firebase.firestore().collection('rentals').where('status', '==', 'due')} />;
       case 3: // PENDING rentals
         return "Select a collection...";
       case 4: // LEASED rentals
