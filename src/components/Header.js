@@ -30,12 +30,12 @@ function Header() {
 
   return (
     <div>
-      <AppBar position="static">
+      <AppBar style={{backgroundColor:"#f06383"}}>
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
             Renty
           </Typography>
-          <Button color="inherit" onClick={event => handleSignOut(event)}>Sign-out</Button>
+          <Button style={{backgroundColor:"#ce2458",color:"white"}} onClick={event => handleSignOut(event)}>Sign-out</Button>
         </Toolbar>
       </AppBar>
     </div>
