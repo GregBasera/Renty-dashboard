@@ -49,7 +49,7 @@ function Fields() {
 
       <hr size="1"/>
 
-      <Typography variant="h6" style={{margin:"0px 10px"}}>
+      <Typography variant="h6" style={{margin:"20px 10px"}}>
         {view(collection)}
       </Typography>
     </Container>
