@@ -11,6 +11,9 @@ class RentalsView extends React.Component {
     this.state = ({
       rentals: [],
     });
+
+    this.listenToFirebase = this.listenToFirebase.bind(this);
+    this.listenToFirebase();
   }
 
   listenToFirebase() {
@@ -39,7 +42,7 @@ class RentalsView extends React.Component {
             break;
         }
       })
-      this.setState({ items: list });
+      this.setState({ rentals: list });
     })
   }
 
