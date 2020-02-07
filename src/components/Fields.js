@@ -10,8 +10,8 @@ import RentalField from './FieldsChildren/RentalField';
 // Layout
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
 
 import ReplayIcon from '@material-ui/icons/Replay';
 
@@ -41,9 +41,9 @@ function Fields() {
           </Typography>
         </Grid>
         <Grid container xs={6} justify="flex-end">
-          <Button variant="contained" size="small" style={{marginRight:"10px"}}>
+          <IconButton size="small" edge="end" aria-label="delete" style={{marginRight:"10px"}}>
             <ReplayIcon />
-          </Button>
+          </IconButton>
         </Grid>
       </Grid>
 
