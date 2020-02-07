@@ -1,6 +1,7 @@
 import React from 'react';
 
 import ItemsListItem from './ItemViewChildren/ItemsListItem'
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // Layout
 import List from '@material-ui/core/List';
@@ -57,8 +58,7 @@ class ItemsView extends React.Component {
 
     return (
       <List component="nav" aria-label="Collections" dense="true">
-        <Divider />
-        <ItemsListItem items={this.state.items} />
+        {(this.state.items[0]) ? <ItemsListItem items={this.state.items} /> : <CircularProgress />}
       </List>
     )
   }

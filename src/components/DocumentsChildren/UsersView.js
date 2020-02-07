@@ -1,6 +1,7 @@
 import React from 'react';
 
 import UsersListItem from './UserViewChildren/UsersListItem';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // Layout
 import List from '@material-ui/core/List';
@@ -54,8 +55,7 @@ class UsersView extends React.Component {
   render () {
     return (
       <List component="nav" aria-label="Collections" dense="true">
-        <Divider />
-        <UsersListItem users={this.state.users}/>
+        {(this.state.users[0]) ? <UsersListItem users={this.state.users}/> : <CircularProgress />}
       </List>
     )
   }
