@@ -114,17 +114,17 @@ class App extends React.Component {
             <Header />
           </Grid>
           <Grid item xs={3}>
-            <Paper elevation="0" variant="outlined" square style={{marginTop:"60px",padding:"10px 0px"}}>
+            <Paper elevation="0" variant="outlined" square style={{marginTop:"45px",padding:"10px 0px"}}>
               <Collections />
             </Paper>
           </Grid>
           <Grid item xs={4}>
-            <Paper elevation="0" variant="outlined" square style={{marginTop:"60px",padding:"10px 0px"}}>
+            <Paper elevation="0" variant="outlined" square style={{marginTop:"45px",padding:"10px 0px"}}>
               <Documents />
             </Paper>
           </Grid>
           <Grid item xs={5}>
-            <Paper elevation="0" variant="outlined" square style={{marginTop:"60px",padding:"10px 0px"}}>
+            <Paper elevation="0" variant="outlined" square style={{marginTop:"45px",padding:"10px 0px"}}>
               <Fields />
             </Paper>
           </Grid>
