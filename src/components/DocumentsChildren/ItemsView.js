@@ -5,7 +5,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 // Layout
 import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
 
 class ItemsView extends React.Component {
   constructor(props) {
