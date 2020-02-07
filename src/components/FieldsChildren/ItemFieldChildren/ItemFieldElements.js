@@ -40,7 +40,7 @@ function ItemFieldElements(props) {
     <form noValidate autoComplete="off">
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Card style={{backgroundColor:"coral"}}>
+          <Card style={{backgroundColor:"#c3c3c3"}}>
             <CardMedia
               className={classes.media}
               image={props.info.pictures[activeStep].https}
