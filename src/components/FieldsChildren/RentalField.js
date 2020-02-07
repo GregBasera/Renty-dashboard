@@ -1,6 +1,7 @@
 import React from 'react';
 
 import RentalFieldElements from './RentalFieldChildren/RentalFieldElements.js';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 class RentalField extends React.Component {
   constructor(props) {
@@ -11,7 +12,6 @@ class RentalField extends React.Component {
 
     this.listenToFirebase = this.listenToFirebase.bind(this);
     this.listenToFirebase();
-    this.renderOrNot = this.renderOrNot.bind(this);
   }
 
   listenToFirebase() {
@@ -27,16 +27,10 @@ class RentalField extends React.Component {
     }
   }
 
-  renderOrNot() {
-    if(this.state.rentalInfo) {
-      return <RentalFieldElements info={this.state.rentalInfo} />;
-    }
-  }
-
   render() {
     return (
       <div>
-        {this.renderOrNot()}
+        {(this.state.rentalInfo) ? <RentalFieldElements info={this.state.rentalInfo} /> : <CircularProgress />}
       </div>
     )
   }

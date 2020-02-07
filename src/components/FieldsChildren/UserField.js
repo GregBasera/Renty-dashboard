@@ -1,6 +1,7 @@
 import React from 'react';
 
-import UserFieldElements from './UserFieldChildren/UserFieldElements.js'
+import UserFieldElements from './UserFieldChildren/UserFieldElements.js';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 class UserField extends React.Component {
   constructor(props) {
@@ -36,7 +37,7 @@ class UserField extends React.Component {
   render() {
     return (
       <div>
-        {this.renderOrNot()}
+        {(this.state.userFields) ? <UserFieldElements info={this.state.userFields} /> : <CircularProgress />}
       </div>
     )
   }

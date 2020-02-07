@@ -1,6 +1,7 @@
 import React from 'react';
 
-import ItemFieldElements from './ItemFieldChildren/ItemFieldElements.js'
+import ItemFieldElements from './ItemFieldChildren/ItemFieldElements.js';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 class ItemField extends React.Component {
   constructor(props) {
@@ -11,7 +12,6 @@ class ItemField extends React.Component {
 
     this.listenToFirebase = this.listenToFirebase.bind(this);
     this.listenToFirebase();
-    this.renderOrNot = this.renderOrNot.bind(this);
   }
 
   listenToFirebase() {
@@ -27,16 +27,10 @@ class ItemField extends React.Component {
     }
   }
 
-  renderOrNot() {
-    if(this.state.itemInfo) {
-      return <ItemFieldElements info={this.state.itemInfo} />;
-    }
-  }
-
   render() {
     return (
       <div>
-        {this.renderOrNot()}
+        {(this.state.itemInfo) ? <ItemFieldElements info={this.state.itemInfo} /> : <CircularProgress />}
       </div>
     )
   }
