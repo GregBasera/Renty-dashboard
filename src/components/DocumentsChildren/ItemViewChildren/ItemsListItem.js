@@ -18,6 +18,7 @@ function ItemsListItem(props) {
 
   return(
     <div>
+      <Divider />
       {props.items.map((item, index) =>
         {
           return (

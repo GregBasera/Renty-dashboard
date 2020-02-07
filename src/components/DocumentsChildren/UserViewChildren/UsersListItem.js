@@ -23,6 +23,7 @@ function UsersListItem(props) {
 
   return(
     <div>
+      <Divider />
       {props.users.map((user, index) =>
         {
           return (
