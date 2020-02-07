@@ -1,13 +1,13 @@
 import React from 'react';
 
-import ItemFieldElements from './ItemFieldChildren/ItemFieldElements.js';
+import RentalFieldElements from './RentalFieldChildren/RentalFieldElements.js';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-class ItemField extends React.Component {
+class RentalField extends React.Component {
   constructor(props) {
     super(props);
     this.state = ({
-      itemInfo: null,
+      rentalInfo: null,
     });
 
     this.listenToFirebase = this.listenToFirebase.bind(this);
@@ -17,7 +17,7 @@ class ItemField extends React.Component {
   listenToFirebase() {
     this.props.query.onSnapshot((doc) => {
       // console.log("Current data: ", doc.data());
-      this.setState({ itemInfo: doc.data() });
+      this.setState({ rentalInfo: doc.data() });
     });
   }
 
@@ -30,10 +30,10 @@ class ItemField extends React.Component {
   render() {
     return (
       <div>
-        {(this.state.itemInfo) ? <ItemFieldElements info={this.state.itemInfo} /> : <CircularProgress />}
+        {(this.state.rentalInfo) ? <RentalFieldElements info={this.state.rentalInfo} /> : <CircularProgress />}
       </div>
     )
   }
 }
 
-export default ItemField;
+export default RentalField;

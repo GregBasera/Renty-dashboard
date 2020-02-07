@@ -3,7 +3,7 @@ import React from 'react';
 import RentalsListItem from './RentalViewChildren/RentalsListItem';
 
 import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 class RentalsView extends React.Component {
   constructor(props) {
@@ -11,6 +11,9 @@ class RentalsView extends React.Component {
     this.state = ({
       rentals: [],
     });
+
+    this.listenToFirebase = this.listenToFirebase.bind(this);
+    this.listenToFirebase();
   }
 
   listenToFirebase() {
@@ -39,7 +42,7 @@ class RentalsView extends React.Component {
             break;
         }
       })
-      this.setState({ items: list });
+      this.setState({ rentals: list });
     })
   }
 
@@ -52,8 +55,7 @@ class RentalsView extends React.Component {
   render() {
     return (
       <List component="nav" aria-label="Collections" dense="true">
-        <Divider />
-        <RentalsListItem rentals={this.state.rentals} />
+        {(this.state.rentals[0]) ? <RentalsListItem rentals={this.state.rentals} /> : <CircularProgress />}
       </List>
     );
   }

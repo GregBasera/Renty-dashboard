@@ -23,9 +23,9 @@ function Documents() {
       case 2: // DUE rentals
         return <RentalsView query={Firebase.firestore().collection('rentals').where('status', '==', 'due')} />;
       case 3: // PENDING rentals
-        return "Select a collection...";
+        return <RentalsView query={Firebase.firestore().collection('rentals').where('status', '==', 'pending')} />;
       case 4: // LEASED rentals
-        return "Select a collection...";
+        return <RentalsView query={Firebase.firestore().collection('rentals').where('status', '==', 'leased')} />;
 
       case 5: // ALL items
         return <ItemsView query={Firebase.firestore().collection('items')} />;
@@ -50,7 +50,7 @@ function Documents() {
   }
 
   return (
-    <Container maxWidth="md" disableGutters style={{height:"85vh",overflowY:"auto"}}>
+    <Container maxWidth="md" disableGutters style={{height:"88vh",overflowY:"auto"}}>
       <Typography variant="h6" style={{marginLeft:"10px"}}>
         {viewTitle}
       </Typography>

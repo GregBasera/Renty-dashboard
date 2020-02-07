@@ -40,11 +40,11 @@ function ItemFieldElements(props) {
     <form noValidate autoComplete="off">
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Card style={{backgroundColor:"coral"}}>
+          <Card style={{backgroundColor:"#c3c3c3"}}>
             <CardMedia
               className={classes.media}
               image={props.info.pictures[activeStep].https}
-              title="Contemplative Reptile"
+              title="pictures"
             />
             <MobileStepper
               steps={maxSteps}
@@ -70,7 +70,7 @@ function ItemFieldElements(props) {
           <TextField
             id="item_name"
             label="Item Name"
-            defaultValue={props.info.item_name}
+            defaultValue={(props.info.item_name) ? props.info.item_name : "--"}
             variant="outlined"
             fullWidth
           />
@@ -82,7 +82,7 @@ function ItemFieldElements(props) {
               <InputLabel htmlFor="rent_rate">Rate</InputLabel>
               <OutlinedInput
               id="rent_rate"
-              defaultValue={props.info.rent_rate}
+              defaultValue={(props.info.rent_rate) ? props.info.rent_rate : "--"}
               startAdornment={<InputAdornment position="start">$</InputAdornment>}
               labelWidth={40}
               />
@@ -92,7 +92,7 @@ function ItemFieldElements(props) {
               <TextField
                 id="lender"
                 label="lender"
-                defaultValue={props.info.lender}
+                defaultValue={(props.info.lender) ? props.info.lender : "--"}
                 variant="outlined"
                 fullWidth
               />
@@ -106,7 +106,7 @@ function ItemFieldElements(props) {
             multiline
             fullWidth
             rows="4"
-            defaultValue={props.info.description}
+            defaultValue={(props.info.description) ? props.info.description : "--"}
             variant="outlined"
           />
         </Grid>

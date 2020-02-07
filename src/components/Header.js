@@ -31,7 +31,7 @@ function Header() {
   return (
     <div>
       <AppBar style={{backgroundColor:"#f06383"}}>
-        <Toolbar>
+        <Toolbar variant="dense">
           <Typography variant="h6" className={classes.title}>
             Renty
           </Typography>

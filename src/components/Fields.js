@@ -5,12 +5,13 @@ import Firebase from './../Firebase';
 
 import UserField from './FieldsChildren/UserField';
 import ItemField from './FieldsChildren/ItemField';
+import RentalField from './FieldsChildren/RentalField';
 
 // Layout
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
 
 import ReplayIcon from '@material-ui/icons/Replay';
 
@@ -25,14 +26,14 @@ function Fields() {
       case 'items':
         return id ? <ItemField query={Firebase.firestore().collection(collection).doc(id)} /> : "Select a document";
       case 'rentals':
-        return null;
+        return id ? <RentalField query={Firebase.firestore().collection(collection).doc(id)} /> : "Select a document";
       default:
         return null;
     }
   }
 
   return (
-    <Container maxWidth="md" disableGutters style={{height:"85vh", overflowY:"auto"}}>
+    <Container maxWidth="md" disableGutters style={{height:"88vh", overflowY:"auto"}}>
       <Grid container spacing={0}>
         <Grid item xs={6}>
           <Typography variant="h6" style={{marginLeft:"10px"}}>
@@ -40,15 +41,15 @@ function Fields() {
           </Typography>
         </Grid>
         <Grid container xs={6} justify="flex-end">
-          <Button variant="contained" size="small" style={{marginRight:"10px"}}>
+          <IconButton size="small" edge="end" aria-label="delete" style={{marginRight:"10px"}}>
             <ReplayIcon />
-          </Button>
+          </IconButton>
         </Grid>
       </Grid>
 
       <hr size="1"/>
 
-      <Typography variant="h6" style={{margin:"0px 10px"}}>
+      <Typography variant="h6" style={{margin:"20px 10px"}}>
         {view(collection)}
       </Typography>
     </Container>

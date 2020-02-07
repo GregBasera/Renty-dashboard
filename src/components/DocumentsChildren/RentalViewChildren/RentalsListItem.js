@@ -18,6 +18,7 @@ function RentalsListItem(props) {
 
   return (
     <div>
+      <Divider />
       {props.rentals.map((rental, index) =>
         {
           return (

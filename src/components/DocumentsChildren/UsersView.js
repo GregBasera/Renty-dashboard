@@ -1,10 +1,10 @@
 import React from 'react';
 
 import UsersListItem from './UserViewChildren/UsersListItem';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // Layout
 import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
 
 class UsersView extends React.Component {
   constructor(props) {
@@ -32,7 +32,7 @@ class UsersView extends React.Component {
             });
             break;
           case 'removed':
-            console.log(change.oldIndex);
+            list.splice(change.oldIndex, 1)
             break;
           case 'modified':
             console.log("modified");
@@ -54,8 +54,7 @@ class UsersView extends React.Component {
   render () {
     return (
       <List component="nav" aria-label="Collections" dense="true">
-        <Divider />
-        <UsersListItem users={this.state.users}/>
+        {(this.state.users[0]) ? <UsersListItem users={this.state.users}/> : <CircularProgress />}
       </List>
     )
   }
