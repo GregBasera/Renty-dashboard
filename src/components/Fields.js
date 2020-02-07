@@ -32,12 +32,6 @@ function Fields() {
   }
 
   return (
-<<<<<<< HEAD
-    <Container maxWidth="md" disableGutters style={{height:"90vh",overflowY:"auto"}}>
-      <Typography variant="h6" style={{marginLeft:"10px"}}>
-        Fields
-      </Typography>
-=======
     <Container maxWidth="md" disableGutters style={{height:"85vh", overflowY:"auto"}}>
       <Grid container spacing={0}>
         <Grid item xs={6}>
@@ -52,7 +46,6 @@ function Fields() {
         </Grid>
       </Grid>
 
->>>>>>> 73a2338883b89d79d7254a6edaf394e75fc14ee7
       <hr size="1"/>
 
       <Typography variant="h6" style={{margin:"0px 10px"}}>
