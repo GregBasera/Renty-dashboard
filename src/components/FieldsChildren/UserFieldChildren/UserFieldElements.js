@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 
 function UserFieldElements(props) {
-  let phone = props.info.phone;
+  let phone = (props.info.phone) ? props.info.phone : null;
 
   return(
     <form noValidate autoComplete="off">
@@ -14,7 +14,7 @@ function UserFieldElements(props) {
           <TextField
             id="fullname"
             label="Fullname"
-            value={props.info.full_name}
+            value={(props.info.full_name) ? props.info.full_name : "--"}
             variant="outlined"
             fullWidth={true}
           />
@@ -23,9 +23,9 @@ function UserFieldElements(props) {
           <TextField
             id="phone"
             label="Phone number"
-            value={phone.substring(0, 6) + "-" +
+            value={(phone) ? phone.substring(0, 6) + "-" +
                    phone.substring(6, 9) + "-" +
-                   phone.substring(9)}
+                   phone.substring(9) : "--"}
             variant="outlined"
             fullWidth={true}
           />
@@ -34,7 +34,7 @@ function UserFieldElements(props) {
           <TextField
             id="email"
             label="Email address"
-            value={props.info.email}
+            value={(props.info.email) ? props.info.email : "--"}
             variant="outlined"
             fullWidth={true}
           />
@@ -44,7 +44,7 @@ function UserFieldElements(props) {
             id="address"
             label="Home Address"
             // value={props.info.address._lat + " - " + props.info.address._long}
-            value={"should the address be stored as geopoints?"}
+            value={(props.info.address) ? props.info.address : "--"}
             variant="outlined"
             fullWidth={true}
           />

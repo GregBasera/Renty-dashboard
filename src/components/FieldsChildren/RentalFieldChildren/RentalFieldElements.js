@@ -10,7 +10,7 @@ function RentalFieldElements(props) {
         <TextField
           id="lender"
           label="Lender's ID"
-          defaultValue={props.info.lender}
+          defaultValue={(props.info.lender) ? props.info.lender : "--"}
           variant="outlined"
           fullWidth
         />
@@ -19,7 +19,7 @@ function RentalFieldElements(props) {
         <TextField
           id="renter"
           label="Renter's ID"
-          defaultValue={props.info.renter}
+          defaultValue={(props.info.renter) ? props.info.renter : "--"}
           variant="outlined"
           fullWidth
         />
@@ -28,7 +28,7 @@ function RentalFieldElements(props) {
         <TextField
           id="item"
           label="Items's ID"
-          defaultValue={props.info.item}
+          defaultValue={(props.info.item) ? props.info.item : "--"}
           variant="outlined"
           fullWidth
         />
