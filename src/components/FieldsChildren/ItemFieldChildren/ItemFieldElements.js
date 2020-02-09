@@ -14,6 +14,8 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import Switch from '@material-ui/core/Switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 
 const useStyles = makeStyles({
@@ -27,19 +29,37 @@ function ItemFieldElements(props) {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const maxSteps = props.info.pictures.length;
+  const [checked, setChecked] = React.useState(false);
 
   const handleNext = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1);
   };
-
   const handleBack = () => {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
+  };
+  const toggleChecked = () => {
+    setChecked(prev => !prev);
   };
 
   return(
     <form noValidate autoComplete="off">
       <Grid container spacing={2}>
-        <Grid item xs={12}>
+        <Grid item xs={3}>
+          <FormControlLabel
+            control={<Switch checked={checked} onChange={toggleChecked} />}
+            label="Approved"
+          />
+        </Grid>
+        <Grid item xs={9}>
+          <TextField
+            id="item_name"
+            label="Item Name"
+            defaultValue={(props.info.item_name) ? props.info.item_name : "--"}
+            variant="outlined"
+            fullWidth
+          />
+        </Grid>
+        <Grid item xs={5}>
           <Card style={{backgroundColor:"#c3c3c3"}}>
             <CardMedia
               className={classes.media}
@@ -66,49 +86,58 @@ function ItemFieldElements(props) {
             />
           </Card>
         </Grid>
-        <Grid item xs={12}>
-          <TextField
-            id="item_name"
-            label="Item Name"
-            defaultValue={(props.info.item_name) ? props.info.item_name : "--"}
-            variant="outlined"
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={4}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <FormControl fullWidth variant="outlined">
-              <InputLabel htmlFor="rent_rate">Rate</InputLabel>
-              <OutlinedInput
-              id="rent_rate"
-              defaultValue={(props.info.rent_rate) ? props.info.rent_rate : "--"}
-              startAdornment={<InputAdornment position="start">$</InputAdornment>}
-              labelWidth={40}
-              />
-              </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                id="lender"
-                label="lender"
-                defaultValue={(props.info.lender) ? props.info.lender : "--"}
-                variant="outlined"
-                fullWidth
-              />
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={7}>
           <TextField
             id="description"
             label="Description"
             multiline
             fullWidth
-            rows="4"
+            rows="7"
             defaultValue={(props.info.description) ? props.info.description : "--"}
             variant="outlined"
           />
+        </Grid>
+        <Grid item xs={4}>
+          <TextField
+            id="lender"
+            label="Lender"
+            defaultValue={(props.info.lender) ? props.info.lender : "--"}
+            variant="outlined"
+            fullWidth
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <FormControl fullWidth variant="outlined">
+          <InputLabel htmlFor="rent_rate">Lender's Rate</InputLabel>
+          <OutlinedInput
+          id="rent_rate"
+          defaultValue={(props.info.rent_rate) ? props.info.rent_rate : "--"}
+          startAdornment={<InputAdornment position="start">₱</InputAdornment>}
+          labelWidth={95}
+          />
+          </FormControl>
+        </Grid>
+        <Grid item xs={2}>
+          <FormControl fullWidth variant="outlined">
+          <InputLabel htmlFor="service_fee">Service Fee</InputLabel>
+          <OutlinedInput
+          id="service_fee"
+          defaultValue={20}
+          endAdornment={<InputAdornment position="end">%</InputAdornment>}
+          labelWidth={85}
+          />
+          </FormControl>
+        </Grid>
+        <Grid item xs={3}>
+          <FormControl fullWidth variant="outlined">
+          <InputLabel htmlFor="price-in-store">In-store Price</InputLabel>
+          <OutlinedInput
+          id="price-in-store"
+          defaultValue={212121}
+          startAdornment={<InputAdornment position="start">₱</InputAdornment>}
+          labelWidth={100}
+          />
+          </FormControl>
         </Grid>
       </Grid>
     </form>
