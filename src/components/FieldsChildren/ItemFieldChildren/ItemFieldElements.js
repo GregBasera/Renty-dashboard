@@ -16,7 +16,7 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-
+import warning from './warning_sign.png';
 
 const useStyles = makeStyles({
   media: {
@@ -28,7 +28,7 @@ function ItemFieldElements(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
-  const maxSteps = props.info.pictures.length;
+  const maxSteps = (props.info.pictures) ? props.info.pictures.length : 1;
   const [checked, setChecked] = React.useState(false);
 
   const handleNext = () => {
@@ -63,7 +63,7 @@ function ItemFieldElements(props) {
           <Card style={{backgroundColor:"#c3c3c3"}}>
             <CardMedia
               className={classes.media}
-              image={props.info.pictures[activeStep].https}
+              image={(props.info.pictures) ? props.info.pictures[activeStep].https : warning}
               title="pictures"
             />
             <MobileStepper
