@@ -46,6 +46,8 @@ function ItemFieldElements(props) {
               <Switch checked={checked} onChange={toggleChecked} />
             }
             label="Approved"
+            name="is_approved"
+            inputRef={register}
           />
         </Grid>
         <Grid item xs={9}>
@@ -116,6 +118,7 @@ function ItemFieldElements(props) {
         </Grid>
         <Grid item xs={3}>
           <TextField
+            type="number"
             id="lenders_rate"
             label="Lender Rate (₱)"
             defaultValue={(props.info.rent_rate) ? props.info.rent_rate : "--"}
@@ -138,6 +141,7 @@ function ItemFieldElements(props) {
         </Grid>
         <Grid item xs={3}>
           <TextField
+            type="number"
             id="service_fee"
             label="Service Fee (%)"
             defaultValue={(props.info.service_fee) ? props.info.service_fee : "--"}
@@ -149,6 +153,7 @@ function ItemFieldElements(props) {
         </Grid>
         <Grid item xs={3}>
           <TextField
+            type="number"
             id="in_store_price"
             label="In-store (₱)"
             defaultValue={(props.info.in_store_price) ? props.info.in_store_price : "--"}
@@ -158,12 +163,14 @@ function ItemFieldElements(props) {
             inputRef={register}
           />
         </Grid>
+        <Grid item xs={6}>
+          <ButtonBase type="submit">
+            <Button variant="contained" style={{backgroundColor:"#ce2458",color:"white"}}>
+              apply changes
+            </Button>
+          </ButtonBase>
+        </Grid>
       </Grid>
-      <ButtonBase type="submit">
-        <Button variant="contained" color="primary">
-          Submit
-        </Button>
-      </ButtonBase>
     </form>
   )
 }
