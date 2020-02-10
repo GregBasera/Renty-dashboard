@@ -98,7 +98,6 @@ function ItemFieldElements(props) {
                 defaultValue={(props.info.description) ? props.info.description : "--"}
                 variant="outlined"
                 name="description"
-                name="description"
                 inputRef={register}
               />
             </Grid>
