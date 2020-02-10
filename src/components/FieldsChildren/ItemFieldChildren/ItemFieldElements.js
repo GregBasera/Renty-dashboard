@@ -1,35 +1,26 @@
 import React from 'react';
+import { useForm } from 'react-hook-form';
 
 // Layout
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import MobileStepper from '@material-ui/core/MobileStepper';
+import ButtonBase from '@material-ui/core/ButtonBase';
 import Button from '@material-ui/core/Button';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import warning from './warning_sign.png';
 
-const useStyles = makeStyles({
-  media: {
-    height: 140,
-  },
-});
-
 function ItemFieldElements(props) {
-  const classes = useStyles();
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const maxSteps = (props.info.pictures) ? props.info.pictures.length : 1;
-  const [checked, setChecked] = React.useState(false);
+  const [checked, setChecked] = React.useState((props.info.is_approved) ? props.info.is_approved : false);
 
   const handleNext = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1);
@@ -41,12 +32,19 @@ function ItemFieldElements(props) {
     setChecked(prev => !prev);
   };
 
+  const { handleSubmit, register } = useForm();
+  const onSubmit = values => {
+    console.log(values);
+  };
+
   return(
-    <form noValidate autoComplete="off">
+    <form onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={2}>
         <Grid item xs={3}>
           <FormControlLabel
-            control={<Switch checked={checked} onChange={toggleChecked} />}
+            control={
+              <Switch checked={checked} onChange={toggleChecked} />
+            }
             label="Approved"
           />
         </Grid>
@@ -57,12 +55,14 @@ function ItemFieldElements(props) {
             defaultValue={(props.info.item_name) ? props.info.item_name : "--"}
             variant="outlined"
             fullWidth
+            name="item_name"
+            inputRef={register}
           />
         </Grid>
         <Grid item xs={5}>
           <Card style={{backgroundColor:"#c3c3c3"}}>
             <CardMedia
-              className={classes.media}
+              style={{height:"200px"}}
               image={(props.info.pictures) ? props.info.pictures[activeStep].https : warning}
               title="pictures"
             />
@@ -87,59 +87,84 @@ function ItemFieldElements(props) {
           </Card>
         </Grid>
         <Grid item xs={7}>
-          <TextField
-            id="description"
-            label="Description"
-            multiline
-            fullWidth
-            rows="7"
-            defaultValue={(props.info.description) ? props.info.description : "--"}
-            variant="outlined"
-          />
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                id="description"
+                label="Description"
+                multiline
+                fullWidth
+                rows="7"
+                defaultValue={(props.info.description) ? props.info.description : "--"}
+                variant="outlined"
+                name="description"
+                name="description"
+                inputRef={register}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                id="lender"
+                label="Lender"
+                defaultValue={(props.info.lender) ? props.info.lender : "--"}
+                variant="outlined"
+                fullWidth
+                name="lender"
+                inputRef={register}
+              />
+            </Grid>
+          </Grid>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={3}>
           <TextField
-            id="lender"
-            label="Lender"
-            defaultValue={(props.info.lender) ? props.info.lender : "--"}
+            id="lenders_rate"
+            label="Lender Rate (₱)"
+            defaultValue={(props.info.rent_rate) ? props.info.rent_rate : "--"}
             variant="outlined"
             fullWidth
+            name="lenders_rate"
+            inputRef={register}
           />
         </Grid>
         <Grid item xs={3}>
-          <FormControl fullWidth variant="outlined">
-          <InputLabel htmlFor="rent_rate">Lender's Rate</InputLabel>
-          <OutlinedInput
-          id="rent_rate"
-          defaultValue={(props.info.rent_rate) ? props.info.rent_rate : "--"}
-          startAdornment={<InputAdornment position="start">₱</InputAdornment>}
-          labelWidth={95}
+          <TextField
+            id="rent_type"
+            label="Span"
+            defaultValue={(props.info.rent_type) ? props.info.rent_type : "--"}
+            variant="outlined"
+            fullWidth
+            name="rent_type"
+            inputRef={register}
           />
-          </FormControl>
-        </Grid>
-        <Grid item xs={2}>
-          <FormControl fullWidth variant="outlined">
-          <InputLabel htmlFor="service_fee">Service Fee</InputLabel>
-          <OutlinedInput
-          id="service_fee"
-          defaultValue={20}
-          endAdornment={<InputAdornment position="end">%</InputAdornment>}
-          labelWidth={85}
-          />
-          </FormControl>
         </Grid>
         <Grid item xs={3}>
-          <FormControl fullWidth variant="outlined">
-          <InputLabel htmlFor="price-in-store">In-store Price</InputLabel>
-          <OutlinedInput
-          id="price-in-store"
-          defaultValue={212121}
-          startAdornment={<InputAdornment position="start">₱</InputAdornment>}
-          labelWidth={100}
+          <TextField
+            id="service_fee"
+            label="Service Fee (%)"
+            defaultValue={(props.info.service_fee) ? props.info.service_fee : "--"}
+            variant="outlined"
+            fullWidth
+            name="service_fee"
+            inputRef={register}
           />
-          </FormControl>
+        </Grid>
+        <Grid item xs={3}>
+          <TextField
+            id="in_store_price"
+            label="In-store (₱)"
+            defaultValue={(props.info.in_store_price) ? props.info.in_store_price : "--"}
+            variant="outlined"
+            fullWidth
+            name="in_store_price"
+            inputRef={register}
+          />
         </Grid>
       </Grid>
+      <ButtonBase type="submit">
+        <Button variant="contained" color="primary">
+          Submit
+        </Button>
+      </ButtonBase>
     </form>
   )
 }

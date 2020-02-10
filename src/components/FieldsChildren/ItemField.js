@@ -27,10 +27,18 @@ class ItemField extends React.Component {
     }
   }
 
+  uploadChanged = () => {
+    this.props.query.set({
+      is_approved: true,
+    })
+  }
+
   render() {
     return (
       <div>
-        {(this.state.itemInfo) ? <ItemFieldElements info={this.state.itemInfo} /> : <CircularProgress />}
+        { (this.state.itemInfo)
+          ? <ItemFieldElements info={this.state.itemInfo} up={this.uploadChanged} />
+          : <CircularProgress /> }
       </div>
     )
   }
