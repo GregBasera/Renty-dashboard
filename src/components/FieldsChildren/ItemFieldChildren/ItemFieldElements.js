@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useTheme } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import MobileStepper from '@material-ui/core/MobileStepper';
@@ -32,146 +33,46 @@ function ItemFieldElements(props) {
     setChecked(prev => !prev);
   };
 
-  const { handleSubmit, register } = useForm();
+  const { handleSubmit, register, formState } = useForm();
+  const showApplyButton = formState.dirty;
   const onSubmit = values => {
     console.log(values);
   };
 
+  const [value, setValue] = React.useState((props.info.item_name) ? props.info.item_name : "--");
+  const updateValue = (event) => {
+    const val = event.target.value;
+    setValue(value => val);
+  }
+
   return(
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Grid container spacing={2}>
-        <Grid item xs={3}>
-          <FormControlLabel
-            control={
-              <Switch checked={checked} onChange={toggleChecked} />
+    <div>
+        <Card style={{backgroundColor:"#c3c3c3"}}>
+          <CardMedia
+            style={{height:"200px"}}
+            image={(props.info.pictures) ? props.info.pictures[activeStep].https : warning}
+            title="pictures"
+          />
+          <MobileStepper
+            steps={maxSteps}
+            position="static"
+            variant="text"
+            activeStep={activeStep}
+            nextButton={
+              <Button size="small" onClick={handleNext} disabled={activeStep === maxSteps - 1}>
+                Next
+                {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+              </Button>
             }
-            label="Approved"
-            name="is_approved"
-            inputRef={register}
+            backButton={
+              <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+                {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+                Back
+              </Button>
+            }
           />
-        </Grid>
-        <Grid item xs={9}>
-          <TextField
-            id="item_name"
-            label="Item Name"
-            defaultValue={(props.info.item_name) ? props.info.item_name : "--"}
-            variant="outlined"
-            fullWidth
-            name="item_name"
-            inputRef={register}
-          />
-        </Grid>
-        <Grid item xs={5}>
-          <Card style={{backgroundColor:"#c3c3c3"}}>
-            <CardMedia
-              style={{height:"200px"}}
-              image={(props.info.pictures) ? props.info.pictures[activeStep].https : warning}
-              title="pictures"
-            />
-            <MobileStepper
-              steps={maxSteps}
-              position="static"
-              variant="text"
-              activeStep={activeStep}
-              nextButton={
-                <Button size="small" onClick={handleNext} disabled={activeStep === maxSteps - 1}>
-                  Next
-                  {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-                </Button>
-              }
-              backButton={
-                <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-                  {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-                  Back
-                </Button>
-              }
-            />
-          </Card>
-        </Grid>
-        <Grid item xs={7}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                id="description"
-                label="Description"
-                multiline
-                fullWidth
-                rows="7"
-                defaultValue={(props.info.description) ? props.info.description : "--"}
-                variant="outlined"
-                name="description"
-                inputRef={register}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                id="lender"
-                label="Lender"
-                defaultValue={(props.info.lender) ? props.info.lender : "--"}
-                variant="outlined"
-                fullWidth
-                name="lender"
-                inputRef={register}
-              />
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid item xs={3}>
-          <TextField
-            type="number"
-            id="lenders_rate"
-            label="Lender Rate (₱)"
-            defaultValue={(props.info.rent_rate) ? props.info.rent_rate : "--"}
-            variant="outlined"
-            fullWidth
-            name="lenders_rate"
-            inputRef={register}
-          />
-        </Grid>
-        <Grid item xs={3}>
-          <TextField
-            id="rent_type"
-            label="Span"
-            defaultValue={(props.info.rent_type) ? props.info.rent_type : "--"}
-            variant="outlined"
-            fullWidth
-            name="rent_type"
-            inputRef={register}
-          />
-        </Grid>
-        <Grid item xs={3}>
-          <TextField
-            type="number"
-            id="service_fee"
-            label="Service Fee (%)"
-            defaultValue={(props.info.service_fee) ? props.info.service_fee : "--"}
-            variant="outlined"
-            fullWidth
-            name="service_fee"
-            inputRef={register}
-          />
-        </Grid>
-        <Grid item xs={3}>
-          <TextField
-            type="number"
-            id="in_store_price"
-            label="In-store (₱)"
-            defaultValue={(props.info.in_store_price) ? props.info.in_store_price : "--"}
-            variant="outlined"
-            fullWidth
-            name="in_store_price"
-            inputRef={register}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <ButtonBase type="submit">
-            <Button variant="contained" style={{backgroundColor:"#ce2458",color:"white"}}>
-              apply changes
-            </Button>
-          </ButtonBase>
-        </Grid>
-      </Grid>
-    </form>
+        </Card>
+    </div>
   )
 }
 
