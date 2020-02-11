@@ -32,7 +32,7 @@ class UsersView extends React.Component {
             });
             break;
           case 'removed':
-            list.splice(change.oldIndex, 1)
+            list.splice(change.oldIndex, 1);
             break;
           case 'modified':
             console.log("modified");

@@ -31,10 +31,7 @@ class ItemsView extends React.Component {
             });
             break;
           case 'removed':
-            // list = this.state.users;
-            // list.splice(list.indexOf(list.length - change.oldIndex -1), 1);
-            // can delete things without proper arrangeBy function
-            console.log(change.oldIndex);
+            list.splice(change.oldIndex, 1);
             break;
           case 'modified':
             console.log("modified");
