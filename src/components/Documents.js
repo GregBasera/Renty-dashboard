@@ -11,6 +11,7 @@ import UsersView from './DocumentsChildren/UsersView';
 // Layout
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 
 function Documents() {
   const viewTitle = useSelector(state => state.docView.title);
@@ -56,9 +57,9 @@ function Documents() {
       </Typography>
       <hr size="1"/>
 
-      <Typography variant="h6" style={{margin:"0px 10px"}}>
+      <Box style={{margin:"20px 10px",marginBottom:"0px"}}>
         {view(viewIndex)}
-      </Typography>
+      </Box>
     </Container>
   )
 }
