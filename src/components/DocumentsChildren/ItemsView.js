@@ -27,7 +27,7 @@ class ItemsView extends React.Component {
             list.unshift({
               item_id: change.doc.id,
               item_name: change.doc.data().item_name,
-              rent_rate: change.doc.data().rent_rate,
+              is_approved: change.doc.data().is_approved,
             });
             break;
           case 'removed':
