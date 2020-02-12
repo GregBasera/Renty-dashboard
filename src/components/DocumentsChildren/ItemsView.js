@@ -53,7 +53,7 @@ class ItemsView extends React.Component {
   render () {
 
     return (
-      <List component="nav" aria-label="Collections" dense="true">
+      <List component="nav" aria-label="Collections" dense>
         {(this.state.items[0]) ? <ItemsListItem items={this.state.items} /> : <CircularProgress />}
       </List>
     )
