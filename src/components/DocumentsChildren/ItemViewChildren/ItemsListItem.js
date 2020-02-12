@@ -9,6 +9,7 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Divider from '@material-ui/core/Divider';
+import Typography from '@material-ui/core/Typography';
 
 function ItemsListItem(props) {
   const [selectedIndex, setSelectedIndex] = React.useState(-1);
@@ -27,7 +28,15 @@ function ItemsListItem(props) {
           return (
             <div>
             <ListItem button selected={selectedIndex === index} onClick={event => handleListItemClick(event, index, item.item_id)}>
-              <ListItemText primary={item.item_name} secondary={"₱ " + item.rent_rate} />
+              <ListItemText primary={
+                <Typography variant="h6">
+                  {item.item_name}
+                </Typography>
+              } secondary={
+                <Typography variant="subtitle2" style={{color:(item.is_approved) ? "limegreen" : "tomato"}}>
+                  {(item.is_approved) ? "Approved" : "Not Approved"}
+                </Typography>
+              } />
               <ListItemSecondaryAction>
                 <IconButton edge="end" aria-label="delete">
                   <DeleteIcon />
