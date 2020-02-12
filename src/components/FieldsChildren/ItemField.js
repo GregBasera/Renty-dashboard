@@ -8,7 +8,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
-import ItemFieldElements from './ItemFieldChildren/ItemFieldElements.js';
+import MediaCard from './ItemFieldChildren/MediaCard.js';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 class ItemField extends React.Component {
@@ -109,7 +109,7 @@ class ItemField extends React.Component {
         </Grid>
         <Grid item xs={5}> {/* pictures card */}
           { (this.state.itemInfo)
-            ? <ItemFieldElements info={this.state.itemInfo} up={this.uploadChanged} />
+            ? <MediaCard info={this.state.itemInfo} up={this.uploadChanged} />
             : <CircularProgress /> }
         </Grid>
         <Grid item xs={7}>
