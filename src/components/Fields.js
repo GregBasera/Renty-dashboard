@@ -35,17 +35,13 @@ function Fields() {
 
   return (
     <Container maxWidth="md" disableGutters style={{height:"88vh", overflowY:"auto"}}>
-      <Grid container spacing={0}>
-        <Grid item xs={6}>
+      <Grid container spacing={0} justify="space-between">
           <Typography variant="h6" style={{marginLeft:"10px"}}>
           Fields
           </Typography>
-        </Grid>
-        <Grid container xs={6} justify="flex-end">
           <IconButton size="small" edge="end" aria-label="delete" style={{marginRight:"10px"}}>
             <ReplayIcon />
           </IconButton>
-        </Grid>
       </Grid>
 
       <hr size="1"/>
