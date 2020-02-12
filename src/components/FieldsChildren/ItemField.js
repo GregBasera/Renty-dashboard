@@ -4,6 +4,9 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 
 import ItemFieldElements from './ItemFieldChildren/ItemFieldElements.js';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -13,6 +16,8 @@ class ItemField extends React.Component {
     super(props);
     this.state = ({
       itemInfo: null,
+      initialState: null,
+      applyButton: false,
     });
 
     this.listenToFirebase = this.listenToFirebase.bind(this);
@@ -23,19 +28,27 @@ class ItemField extends React.Component {
   listenToFirebase() {
     this.props.query.onSnapshot((doc) => {
       // console.log("Current data: ", doc.data());
+      if(this.state.itemInfo === null) {
+        this.setState({ initialState: doc.data() });
+      }
       this.setState({ itemInfo: doc.data() });
     });
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if(prevProps.query !== this.props.query) {
+      this.setState({ initialState: null });
+      this.setState({ itemInfo: null });
+      this.setState({ applyButton: false });
       this.listenToFirebase();
     }
   }
 
   uploadChanged = () => {
+    console.log("submit was called");
     this.props.query.set({
-      is_approved: true,
+      is_approved: this.state.itemInfo.is_approved,
+      item_name: this.state.itemInfo.item_name,
     })
   }
 
@@ -45,45 +58,63 @@ class ItemField extends React.Component {
     const name = target.name;
 
     this.setState(prevState => ({
-      // itemInfo: { [name]: value }
       itemInfo: {
         ...prevState.itemInfo, [name]: value
-      }
+      },
+      applyButton: true,
     }));
-    console.log(this.state);
+    console.log(this.state.itemInfo);
   }
 
   render() {
     return (
       <Grid container spacing={2}>
-        <Grid item xs={3}>
-          <FormControlLabel
-            control={
-              <Switch checked={(this.state.itemInfo) ? this.state.itemInfo.is_approved : false} />
-            }
-            label="Approved"
-            name="is_approved"
-          />
+        <Grid item xs={4}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}> {/* is_approved switch */}
+              <FormControlLabel
+              control={
+                <Switch checked={(this.state.itemInfo) ? this.state.itemInfo.is_approved : false} />
+              }
+              label="Approved"
+              name="is_approved"
+              onChange={this.updateValue}
+              />
+            </Grid>
+            <Grid item xs={12}> {/* date_entered text */}
+              <TextField
+                id="date_entered"
+                label="Date Entered"
+                value={"date"}
+                variant="outlined"
+                fullWidth
+                name="date_entered"
+                onChange={this.updateValue}
+              />
+            </Grid>
+          </Grid>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8}> {/* item_name text */}
           <TextField
             id="item_name"
             label="Item Name"
             value={(this.state.itemInfo) ? this.state.itemInfo.item_name : "--"}
             variant="outlined"
             fullWidth
+            multiline
+            rows="3"
             name="item_name"
             onChange={this.updateValue}
           />
         </Grid>
-        <Grid item xs={5}>
+        <Grid item xs={5}> {/* pictures card */}
           { (this.state.itemInfo)
             ? <ItemFieldElements info={this.state.itemInfo} up={this.uploadChanged} />
             : <CircularProgress /> }
         </Grid>
         <Grid item xs={7}>
           <Grid container spacing={2}>
-            <Grid item xs={12}>
+            <Grid item xs={12}> {/* description text */}
               <TextField
                 id="description"
                 label="Description"
@@ -96,7 +127,7 @@ class ItemField extends React.Component {
                 onChange={this.updateValue}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12}> {/* lender text */}
               <TextField
                 id="lender"
                 label="Lender"
@@ -109,52 +140,52 @@ class ItemField extends React.Component {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={3}>
-          <TextField
-            type="number"
-            id="lenders_rate"
-            label="Lender Rate (₱)"
-            value={(this.state.itemInfo) ? this.state.itemInfo.rent_rate : "--"}
-            variant="outlined"
-            fullWidth
-            name="lenders_rate"
-            onChange={this.updateValue}
-          />
+        <Grid item xs={6}> {/* rent_mode group */}
+          <Typography variant="subtitle2" color="textSecondary">
+            Rent Modes
+          </Typography>
+          <Box borderRadius={4} border={1} borderColor="grey.400" style={{padding:"5px"}}>
+            <Grid container spacing={2} style={{marginTop:"5px"}}>
+              <Grid item xs={12}>
+                <TextField
+                  id="hourly"
+                  label="perHour (₱)"
+                  value={(this.state.itemInfo && this.state.itemInfo.rent_mode) ? this.state.itemInfo.rent_mode.perHour : ""}
+                  variant="outlined"
+                  fullWidth
+                  name="rent_mode.perHour"
+                  onChange={this.updateValue}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  id="daily"
+                  label="perDay (₱)"
+                  value={(this.state.itemInfo && this.state.itemInfo.rent_mode) ? this.state.itemInfo.rent_mode.perDay : ""}
+                  variant="outlined"
+                  fullWidth
+                  name="rent_mode.perDay"
+                  onChange={this.updateValue}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  id="weekly"
+                  label="perWeek (₱)"
+                  value={(this.state.itemInfo && this.state.itemInfo.rent_mode) ? this.state.itemInfo.rent_mode.perWeek : ""}
+                  variant="outlined"
+                  fullWidth
+                  name="rent_mode.perWeek"
+                  onChange={this.updateValue}
+                />
+              </Grid>
+            </Grid>
+          </Box>
         </Grid>
-        <Grid item xs={3}>
-          <TextField
-            id="rent_type"
-            label="Span"
-            value={(this.state.itemInfo) ? this.state.itemInfo.rent_type : "--"}
-            variant="outlined"
-            fullWidth
-            name="rent_type"
-            onChange={this.updateValue}
-          />
-        </Grid>
-        <Grid item xs={3}>
-          <TextField
-            type="number"
-            id="service_fee"
-            label="Service Fee (%)"
-            value={(this.state.itemInfo) ? this.state.itemInfo.service_fee : "--"}
-            variant="outlined"
-            fullWidth
-            name="service_fee"
-            onChange={this.updateValue}
-          />
-        </Grid>
-        <Grid item xs={3}>
-          <TextField
-            type="number"
-            id="in_store_price"
-            label="In-store (₱)"
-            value={(this.state.itemInfo) ? this.state.itemInfo.in_store_price : "--"}
-            variant="outlined"
-            fullWidth
-            name="in_store_price"
-            onChange={this.updateValue}
-          />
+        <Grid item xs={12}>
+          <Box display={(this.state.applyButton) ? "block" : "none"}>
+            <Button style={{backgroundColor:"#ce2458",color:"white"}} onClick={this.uploadChanged}>apply changes</Button>
+          </Box>
         </Grid>
       </Grid>
     )
