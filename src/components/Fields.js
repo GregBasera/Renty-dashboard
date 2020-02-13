@@ -23,7 +23,8 @@ function Fields() {
   const view = (collection) => {
     switch(collection){
       case 'users':
-        return id ? <UserField query={Firebase.firestore().collection(collection).doc(id)} /> : "Select a document";
+        return id ? <UserField query={Firebase.firestore().collection(collection).doc(id)}
+          setRef={Firebase.firestore().ref(collection + '/' + id)} /> : "Select a document";
       case 'items':
         return id ? <ItemField query={Firebase.firestore().collection(collection).doc(id)} /> : "Select a document";
       case 'rentals':
