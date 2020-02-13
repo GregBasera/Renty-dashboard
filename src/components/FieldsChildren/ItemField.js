@@ -17,12 +17,12 @@ class ItemField extends React.Component {
     this.state = ({
       itemInfo: null,
       initialState: null,
-      applyButton: false,
     });
 
     this.listenToFirebase = this.listenToFirebase.bind(this);
     this.listenToFirebase();
     this.updateValue = this.updateValue.bind(this);
+    this.applyButton = false;
   }
 
   listenToFirebase() {
@@ -30,6 +30,7 @@ class ItemField extends React.Component {
       // console.log("Current data: ", doc.data());
       if(this.state.itemInfo === null) {
         this.setState({ initialState: doc.data() });
+        console.log("updated initialState");
       }
       this.setState({ itemInfo: doc.data() });
     });
@@ -39,17 +40,19 @@ class ItemField extends React.Component {
     if(prevProps.query !== this.props.query) {
       this.setState({ initialState: null });
       this.setState({ itemInfo: null });
-      this.setState({ applyButton: false });
+      this.applyButton = false;
       this.listenToFirebase();
     }
   }
 
   uploadChanged = () => {
     console.log("submit was called");
-    this.props.query.set({
-      is_approved: this.state.itemInfo.is_approved,
-      item_name: this.state.itemInfo.item_name,
-    })
+    let stateRef = this.state.itemInfo;
+    this.props.query.update({
+      is_approved: (stateRef.is_approved) ? stateRef.is_approved : "error: notfound",
+      item_name: (stateRef.item_name) ? stateRef.item_name : "error: notfound",
+      description: (stateRef.description) ? stateRef.description : "error: notfound",
+    });
   }
 
   updateValue(event) {
@@ -61,50 +64,51 @@ class ItemField extends React.Component {
       itemInfo: {
         ...prevState.itemInfo, [name]: value
       },
-      applyButton: true,
     }));
-    console.log(this.state.itemInfo);
+
   }
 
   render() {
+    this.applyButton = (JSON.stringify(this.state.itemInfo) !== JSON.stringify(this.state.initialState)) ? true : false;
+
     return (
       <Grid container spacing={2}>
-        <Grid item xs={4}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}> {/* is_approved switch */}
-              <FormControlLabel
-              control={
-                <Switch checked={(this.state.itemInfo) ? this.state.itemInfo.is_approved : false} />
-              }
-              label="Approved"
-              name="is_approved"
-              onChange={this.updateValue}
-              />
-            </Grid>
-            <Grid item xs={12}> {/* date_entered text */}
-              <TextField
-                id="date_entered"
-                label="Date Entered"
-                value={"date"}
-                variant="outlined"
-                fullWidth
-                name="date_entered"
-                onChange={this.updateValue}
-              />
-            </Grid>
-          </Grid>
+        <Grid item xs={12}> {/* item_name text */}
+        <TextField
+        id="item_name"
+        label="Item Name"
+        value={(this.state.itemInfo) ? this.state.itemInfo.item_name : ""}
+        variant="outlined"
+        fullWidth
+        name="item_name"
+        onChange={this.updateValue}
+        />
         </Grid>
-        <Grid item xs={8}> {/* item_name text */}
+        <Grid item xs={3}> {/* is_approved switch @ */}
+        <FormControlLabel
+        control={
+          <Switch checked={(this.state.itemInfo) ? this.state.itemInfo.is_approved : false} />
+        }
+        label="Approved"
+        name="is_approved"
+        onChange={this.updateValue}
+        />
+        </Grid>
+        <Grid item xs={9}> {/* date_entered text */}
           <TextField
-            id="item_name"
-            label="Item Name"
-            value={(this.state.itemInfo) ? this.state.itemInfo.item_name : "--"}
+            id="date_entered"
+            label="Date Entered"
+            value={(this.state.itemInfo && this.state.itemInfo.date_entered)
+              ? this.state.itemInfo.date_entered.toDate().toLocaleDateString("en-US", {
+                weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour:'2-digit', minute:'2-digit' })
+              : ""}
             variant="outlined"
             fullWidth
-            multiline
-            rows="3"
-            name="item_name"
+            name="date_entered"
             onChange={this.updateValue}
+            InputProps={{
+              readOnly: true,
+            }}
           />
         </Grid>
         <Grid item xs={5}> {/* pictures card */}
@@ -114,14 +118,14 @@ class ItemField extends React.Component {
         </Grid>
         <Grid item xs={7}>
           <Grid container spacing={2}>
-            <Grid item xs={12}> {/* description text */}
+            <Grid item xs={12}> {/* description text @ */}
               <TextField
                 id="description"
                 label="Description"
                 multiline
                 fullWidth
                 rows="7"
-                value={(this.state.itemInfo) ? this.state.itemInfo.description : "--"}
+                value={(this.state.itemInfo) ? this.state.itemInfo.description : ""}
                 variant="outlined"
                 name="description"
                 onChange={this.updateValue}
@@ -131,11 +135,14 @@ class ItemField extends React.Component {
               <TextField
                 id="lender"
                 label="Lender"
-                value={(this.state.itemInfo) ? this.state.itemInfo.lender : "--"}
+                value={(this.state.itemInfo) ? this.state.itemInfo.lender : ""}
                 variant="outlined"
                 fullWidth
                 name="lender"
                 onChange={this.updateValue}
+                InputProps={{
+                  readOnly: true,
+                }}
               />
             </Grid>
           </Grid>
@@ -155,6 +162,9 @@ class ItemField extends React.Component {
                   fullWidth
                   name="rent_mode.perHour"
                   onChange={this.updateValue}
+                  InputProps={{
+                    readOnly: true,
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -166,6 +176,9 @@ class ItemField extends React.Component {
                   fullWidth
                   name="rent_mode.perDay"
                   onChange={this.updateValue}
+                  InputProps={{
+                    readOnly: true,
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -177,13 +190,16 @@ class ItemField extends React.Component {
                   fullWidth
                   name="rent_mode.perWeek"
                   onChange={this.updateValue}
+                  InputProps={{
+                    readOnly: true,
+                  }}
                 />
               </Grid>
             </Grid>
           </Box>
         </Grid>
-        <Grid item xs={12}>
-          <Box display={(this.state.applyButton) ? "block" : "none"}>
+        <Grid item xs={12}> {/* apply changes button */}
+          <Box display={(this.applyButton) ? "block" : "none"}>
             <Button style={{backgroundColor:"#ce2458",color:"white"}} onClick={this.uploadChanged}>apply changes</Button>
           </Box>
         </Grid>
