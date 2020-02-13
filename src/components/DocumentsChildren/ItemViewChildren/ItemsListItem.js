@@ -29,7 +29,7 @@ function ItemsListItem(props) {
             <div key={item.item_id}>
             <ListItem key={item.item_id} selected={selectedIndex === index} onClick={event => handleListItemClick(event, index, item.item_id)}>
               <ListItemText key={item.item_id} primary={
-                <Typography variant="h6">
+                <Typography variant="subtitle1">
                   {item.item_name}
                 </Typography>
               } secondary={
