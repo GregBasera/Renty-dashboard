@@ -124,6 +124,13 @@ function Collections() {
           </ListItemIcon>
           <ListItemText primary="Client App" />
         </ListItem>
+
+        <ListItem button selected={selectedIndex === 13} onClick={event => handleListItemClick(event, 13, 'Operations', null)} >
+          <ListItemIcon>
+            <PhonelinkRingIcon />
+          </ListItemIcon>
+          <ListItemText primary="Operations" />
+        </ListItem>
       </List>
     </Container>
   );
