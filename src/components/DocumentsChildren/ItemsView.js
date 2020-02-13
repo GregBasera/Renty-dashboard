@@ -31,7 +31,7 @@ class ItemsView extends React.Component {
             });
             break;
           case 'removed':
-            list.splice(change.oldIndex, 1);
+            // list.splice(list.indexOf(change), 1);
             break;
           case 'modified':
             console.log("modified");
@@ -41,7 +41,7 @@ class ItemsView extends React.Component {
         }
       })
       this.setState({ items: list });
-    })
+    });
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
