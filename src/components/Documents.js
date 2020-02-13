@@ -29,11 +29,11 @@ function Documents() {
         return <RentalsView query={Firebase.firestore().collection('rentals').where('status', '==', 'leased')} />;
 
       case 5: // ALL items
-        return <ItemsView query={Firebase.firestore().collection('items')} />;
+        return <ItemsView query={Firebase.firestore().collection('items').orderBy('date_entered')} />;
       case 6: // IN_APP items
-        return <ItemsView query={Firebase.firestore().collection('items').where('is_approved', '==', true)} />;
+        return <ItemsView query={Firebase.firestore().collection('items').where('is_approved', '==', true).orderBy('date_entered')} />;
       case 7: // FOR-APPROVAL items
-        return <ItemsView query={Firebase.firestore().collection('items').where('is_approved', '==', false)} />;
+        return <ItemsView query={Firebase.firestore().collection('items').where('is_approved', '==', false).orderBy('date_entered')} />;
 
       case 8: // ALL users
         return <UsersView query={Firebase.firestore().collection('users')} />;
@@ -44,6 +44,12 @@ function Documents() {
       case 11: // NOT VERIFIED users
         return <UsersView query={Firebase.firestore().collection('users').where('verified', '==', false)} />;
 
+      case 12: // NOT VERIFIED users
+        // return <UsersView query={Firebase.firestore().collection('users').where('verified', '==', false)} />;
+        Firebase.firestore().collection('operations').doc('items').onSnapshot((doc) => {
+          console.log(doc.data().categories);
+        });
+        break;
       default:
         return "Select a collection...";
 
