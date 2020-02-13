@@ -74,25 +74,25 @@ class ItemField extends React.Component {
     return (
       <Grid container spacing={2}>
         <Grid item xs={12}> {/* item_name text */}
-        <TextField
-        id="item_name"
-        label="Item Name"
-        value={(this.state.itemInfo) ? this.state.itemInfo.item_name : ""}
-        variant="outlined"
-        fullWidth
-        name="item_name"
-        onChange={this.updateValue}
-        />
+          <TextField
+            id="item_name"
+            label="Item Name"
+            value={(this.state.itemInfo) ? this.state.itemInfo.item_name : ""}
+            variant="outlined"
+            fullWidth
+            name="item_name"
+            onChange={this.updateValue}
+          />
         </Grid>
         <Grid item xs={3}> {/* is_approved switch @ */}
-        <FormControlLabel
-        control={
-          <Switch checked={(this.state.itemInfo) ? this.state.itemInfo.is_approved : false} />
-        }
-        label="Approved"
-        name="is_approved"
-        onChange={this.updateValue}
-        />
+          <FormControlLabel
+            control={
+              <Switch checked={(this.state.itemInfo) ? this.state.itemInfo.is_approved : false} />
+            }
+            label="Approved"
+            name="is_approved"
+            onChange={this.updateValue}
+          />
         </Grid>
         <Grid item xs={9}> {/* date_entered text */}
           <TextField
