@@ -28,6 +28,7 @@ class ItemsView extends React.Component {
               item_id: change.doc.id,
               item_name: change.doc.data().item_name,
               is_approved: change.doc.data().is_approved,
+              date_entered: change.doc.data().date_entered,
             });
             break;
           case 'removed':

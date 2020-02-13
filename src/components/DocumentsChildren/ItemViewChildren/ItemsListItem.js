@@ -33,9 +33,17 @@ function ItemsListItem(props) {
                   {item.item_name}
                 </Typography>
               } secondary={
-                <Typography variant="subtitle2" style={{color:(item.is_approved) ? "limegreen" : "tomato"}}>
+                <div>
+                <Typography variant="caption">
+                  {item.date_entered.toDate().toLocaleDateString("en-US", { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' })}
+                </Typography>
+                <Typography variant="subtitle1" component="span">
+                  {" | "}
+                </Typography>
+                <Typography variant="overline" style={{color:(item.is_approved) ? "forestgreen" : "crimson"}}>
                   {(item.is_approved) ? "Approved" : "Not Approved"}
                 </Typography>
+                </div>
               } />
               <ListItemSecondaryAction key={item.item_id}>
                 <IconButton edge="end" aria-label="delete">
