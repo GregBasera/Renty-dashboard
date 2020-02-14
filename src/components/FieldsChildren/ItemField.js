@@ -7,6 +7,7 @@ import Switch from '@material-ui/core/Switch';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import Chip from '@material-ui/core/Chip';
 
 import MediaCard from './ItemFieldChildren/MediaCard.js';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -147,8 +148,20 @@ class ItemField extends React.Component {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={6}> {/* rent_mode group */}
-          <Typography variant="subtitle2" color="textSecondary">
+        <Grid item xs={12}> {/* categories chips */}
+          <Typography variant="subtitle1" color="textSecondary">
+            Categories
+          </Typography>
+          <Box borderRadius={4} border={1} borderColor="grey.400" style={{padding:"5px"}}>
+            {(this.state.itemInfo) ? this.state.itemInfo.categories.map((category,index) => {
+              return (
+                <Chip size="small" label={category} />
+              )
+            }) : "nothing"}
+          </Box>
+        </Grid>
+        <Grid item xs={5}> {/* rent_mode group */}
+          <Typography variant="subtitle1" color="textSecondary">
             Rent Modes
           </Typography>
           <Box borderRadius={4} border={1} borderColor="grey.400" style={{padding:"5px"}}>
@@ -198,9 +211,17 @@ class ItemField extends React.Component {
             </Grid>
           </Box>
         </Grid>
+        <Grid item xs={7}> {/* reviews group */}
+          <Typography variant="subtitle1" color="textSecondary">
+            Reviews
+          </Typography>
+          <Box borderRadius={4} border={1} borderColor="grey.400" style={{padding:"5px"}}>
+            Sa next patch na yan -Pau
+          </Box>
+        </Grid>
         <Grid item xs={12}> {/* apply changes button */}
           <Box display={(this.applyButton) ? "block" : "none"}>
-            <Button style={{backgroundColor:"#ce2458",color:"white"}} onClick={this.uploadChanged}>apply changes</Button>
+            <Button fullWidth style={{backgroundColor:"#ce2458",color:"white"}} onClick={this.uploadChanged}>apply changes</Button>
           </Box>
         </Grid>
       </Grid>
