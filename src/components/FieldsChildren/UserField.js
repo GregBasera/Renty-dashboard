@@ -12,7 +12,6 @@ class UserField extends React.Component {
 
     this.listenToFirebase = this.listenToFirebase.bind(this);
     this.listenToFirebase();
-    this.renderOrNot = this.renderOrNot.bind(this);
   }
 
   listenToFirebase() {
@@ -25,12 +24,6 @@ class UserField extends React.Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
     if(prevProps.query !== this.props.query) {
       this.listenToFirebase();
-    }
-  }
-
-  renderOrNot() {
-    if(this.state.userFields) {
-      return <UserFieldElements info={this.state.userFields} />;
     }
   }
 
