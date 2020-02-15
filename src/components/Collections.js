@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { changeDocView } from '../actions/collectionsActs';
+import { changeFieldView } from '../actions/collectionsActs';
 
 // Layout
 import { makeStyles } from '@material-ui/core/styles';
@@ -37,6 +38,7 @@ function Collections() {
 
   const handleListItemClick = (event, index, title, frbsColl) => {
     setSelectedIndex(index);
+    dispatch(changeFieldView(0, null));
     dispatch(changeDocView(index, title, frbsColl));
   };
 
