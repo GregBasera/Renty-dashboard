@@ -30,10 +30,10 @@ class ItemField extends React.Component {
     this.props.query.onSnapshot((doc) => {
       // console.log("Current data: ", doc.data());
       if(this.state.itemInfo === null) {
-        this.setState({ initialState: doc.data() });
+        this.setState({ initialState: { id: doc.id, data: doc.data() } });
         console.log("updated initialState");
       }
-      this.setState({ itemInfo: doc.data() });
+      this.setState({ itemInfo: { id: doc.id, data: doc.data() } });
     });
   }
 
@@ -66,7 +66,6 @@ class ItemField extends React.Component {
         ...prevState.itemInfo, [name]: value
       },
     }));
-
   }
 
   render() {
@@ -78,7 +77,7 @@ class ItemField extends React.Component {
           <TextField
             id="item_name"
             label="Item Name"
-            value={(this.state.itemInfo) ? this.state.itemInfo.item_name : ""}
+            value={(this.state.itemInfo) ? this.state.itemInfo.data.item_name : ""}
             variant="outlined"
             fullWidth
             name="item_name"
@@ -88,24 +87,40 @@ class ItemField extends React.Component {
         <Grid item xs={3}> {/* is_approved switch @ */}
           <FormControlLabel
             control={
-              <Switch checked={(this.state.itemInfo) ? this.state.itemInfo.is_approved : false} />
+              <Switch checked={(this.state.itemInfo) ? this.state.itemInfo.data.is_approved : false} />
             }
             label="Approved"
             name="is_approved"
             onChange={this.updateValue}
           />
         </Grid>
-        <Grid item xs={9}> {/* date_entered text */}
+        <Grid item xs={5}> {/* date_entered text */}
           <TextField
             id="date_entered"
             label="Date Entered"
-            value={(this.state.itemInfo && this.state.itemInfo.date_entered)
-              ? this.state.itemInfo.date_entered.toDate().toLocaleDateString("en-US", {
-                weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour:'2-digit', minute:'2-digit' })
+            value={(this.state.itemInfo && this.state.itemInfo.data.date_entered)
+              ? this.state.itemInfo.data.date_entered.toDate().toLocaleDateString("en-US", {
+                year: 'numeric', month: 'short', day: 'numeric', hour:'2-digit', minute:'2-digit' })
               : ""}
             variant="outlined"
             fullWidth
+            size="small"
             name="date_entered"
+            onChange={this.updateValue}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+        </Grid>
+        <Grid item xs={4}> {/* item_id text */}
+          <TextField
+            id="item_ID"
+            label="Item ID"
+            value={(this.state.itemInfo)? this.state.itemInfo.id: ""}
+            variant="outlined"
+            fullWidth
+            size="small"
+            name="item_ID"
             onChange={this.updateValue}
             InputProps={{
               readOnly: true,
@@ -114,7 +129,7 @@ class ItemField extends React.Component {
         </Grid>
         <Grid item xs={5}> {/* pictures card */}
           { (this.state.itemInfo)
-            ? <MediaCard info={this.state.itemInfo} up={this.uploadChanged} />
+            ? <MediaCard info={this.state.itemInfo.data} up={this.uploadChanged} />
             : <CircularProgress /> }
         </Grid>
         <Grid item xs={7}>
@@ -126,7 +141,7 @@ class ItemField extends React.Component {
                 multiline
                 fullWidth
                 rows="7"
-                value={(this.state.itemInfo) ? this.state.itemInfo.description : ""}
+                value={(this.state.itemInfo) ? this.state.itemInfo.data.description : ""}
                 variant="outlined"
                 name="description"
                 onChange={this.updateValue}
@@ -136,9 +151,10 @@ class ItemField extends React.Component {
               <TextField
                 id="lender"
                 label="Lender"
-                value={(this.state.itemInfo) ? this.state.itemInfo.lender : ""}
+                value={(this.state.itemInfo) ? this.state.itemInfo.data.lender : ""}
                 variant="outlined"
                 fullWidth
+                size="small"
                 name="lender"
                 onChange={this.updateValue}
                 InputProps={{
@@ -152,13 +168,11 @@ class ItemField extends React.Component {
           <Typography variant="subtitle1" color="textSecondary">
             Categories
           </Typography>
-          <Box borderRadius={4} border={1} borderColor="grey.400" style={{padding:"5px"}}>
-            {(this.state.itemInfo) ? this.state.itemInfo.categories.map((category,index) => {
-              return (
-                <Chip size="small" label={category} />
-              )
-            }) : "nothing"}
-          </Box>
+          {(this.state.itemInfo && this.state.itemInfo.data.categories) ? this.state.itemInfo.data.categories.map((category,index) => {
+            return (
+              <Chip size="small" label={category} />
+            )
+          }) : "nothing"}
         </Grid>
         <Grid item xs={5}> {/* rent_mode group */}
           <Typography variant="subtitle1" color="textSecondary">
@@ -170,9 +184,10 @@ class ItemField extends React.Component {
                 <TextField
                   id="hourly"
                   label="perHour (₱)"
-                  value={(this.state.itemInfo && this.state.itemInfo.rent_mode) ? this.state.itemInfo.rent_mode.perHour : ""}
+                  value={(this.state.itemInfo && this.state.itemInfo.data.rent_mode) ? this.state.itemInfo.data.rent_mode.perHour : ""}
                   variant="outlined"
                   fullWidth
+                  size="small"
                   name="rent_mode.perHour"
                   onChange={this.updateValue}
                   InputProps={{
@@ -184,9 +199,10 @@ class ItemField extends React.Component {
                 <TextField
                   id="daily"
                   label="perDay (₱)"
-                  value={(this.state.itemInfo && this.state.itemInfo.rent_mode) ? this.state.itemInfo.rent_mode.perDay : ""}
+                  value={(this.state.itemInfo && this.state.itemInfo.data.rent_mode) ? this.state.itemInfo.data.rent_mode.perDay : ""}
                   variant="outlined"
                   fullWidth
+                  size="small"
                   name="rent_mode.perDay"
                   onChange={this.updateValue}
                   InputProps={{
@@ -198,9 +214,10 @@ class ItemField extends React.Component {
                 <TextField
                   id="weekly"
                   label="perWeek (₱)"
-                  value={(this.state.itemInfo && this.state.itemInfo.rent_mode) ? this.state.itemInfo.rent_mode.perWeek : ""}
+                  value={(this.state.itemInfo && this.state.itemInfo.data.rent_mode) ? this.state.itemInfo.data.rent_mode.perWeek : ""}
                   variant="outlined"
                   fullWidth
+                  size="small"
                   name="rent_mode.perWeek"
                   onChange={this.updateValue}
                   InputProps={{
