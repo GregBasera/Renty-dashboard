@@ -5,9 +5,17 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
 
-import UserFieldElements from './UserFieldChildren/UserFieldElements.js';
-import CircularProgress from '@material-ui/core/CircularProgress';
+
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
+
+// import UserFieldElements from './UserFieldChildren/UserFieldElements.js';
+// import CircularProgress from '@material-ui/core/CircularProgress';
 
 class UserField extends React.Component {
   constructor(props) {
@@ -93,7 +101,7 @@ class UserField extends React.Component {
             <Grid item xs={12}> {/* acc_created text */}
               <TextField
                 id="acc_created"
-                label="Account Created"
+                label="Acc Created"
                 value={(this.state.userInfo) ? this.state.userInfo.data.acc_created.toDate().toLocaleDateString("en-US", {
                   year: 'numeric', month: 'short', day: 'numeric' }) : ""}
                 variant="outlined"
@@ -155,11 +163,38 @@ class UserField extends React.Component {
             onChange={this.updateValue}
           />
         </Grid>
-        <Grid item xs={6} style={{backgroundColor:"coral", height:"100px"}}>
-          Legal Documents
+        <Grid item xs={6}> {/* legal documents group */}
+          <Typography variant="subtitle1" color="textSecondary">
+            Legal Documents
+          </Typography>
+          <Box borderRadius={4} border={1} borderColor="grey.400" style={{padding:"5px"}}>
+            <Card>
+              <CardContent style={{padding:"5px 5px"}}>
+                <Typography variant="subtitle1">
+                  Document Title
+                </Typography>
+                <Typography variant="caption">
+                  32mb last modified
+                </Typography>
+              </CardContent>
+              <Box justifyContent="flex-end"> { /*!!!*/ }
+                <Button size="small" color="primary">
+                  download
+                </Button>
+                <Button size="small" color="primary">
+                  preview
+                </Button>
+              </Box>
+            </Card>
+          </Box>
         </Grid>
-        <Grid item xs={6} style={{backgroundColor:"teal", height:"100px"}}>
-          User's History
+        <Grid item xs={6}>
+          <Typography variant="subtitle1" color="textSecondary">
+            User's History
+          </Typography>
+          <Box borderRadius={4} border={1} borderColor="grey.400" style={{padding:"5px"}}>
+
+          </Box>
         </Grid>
       </Grid>
     )
