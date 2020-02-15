@@ -36,13 +36,13 @@ function Documents() {
         return <ItemsView query={Firebase.firestore().collection('items').where('is_approved', '==', false).orderBy('date_entered')} />;
 
       case 8: // ALL users
-        return <UsersView query={Firebase.firestore().collection('users')} />;
+        return <UsersView query={Firebase.firestore().collection('users').orderBy('full_name', 'desc')} />;
       case 9: // VERIFIED users
-        return <UsersView query={Firebase.firestore().collection('users').where('verified', '==', true)} />;
+        return <UsersView query={Firebase.firestore().collection('users').where('verified', '==', true).orderBy('full_name', 'desc')} />;
       case 10: // PENDING verifications
         return "Select a collection...";
       case 11: // NOT VERIFIED users
-        return <UsersView query={Firebase.firestore().collection('users').where('verified', '==', false)} />;
+        return <UsersView query={Firebase.firestore().collection('users').where('verified', '==', false).orderBy('full_name', 'desc')} />;
 
       case 12: // NOT VERIFIED users
         // return <UsersView query={Firebase.firestore().collection('users').where('verified', '==', false)} />;
