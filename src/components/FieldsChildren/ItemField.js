@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
 
+
 import MediaCard from './ItemFieldChildren/MediaCard.js';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -48,9 +49,9 @@ class ItemField extends React.Component {
 
   uploadChanged = () => {
     console.log("submit was called");
-    let stateRef = this.state.itemInfo;
+    let stateRef = this.state.itemInfo.data;
     this.props.query.update({
-      is_approved: (stateRef.is_approved) ? stateRef.is_approved : "error: notfound",
+      is_approved: (typeof stateRef.is_approved !== 'undefined') ? stateRef.is_approved: "error: notfound",
       item_name: (stateRef.item_name) ? stateRef.item_name : "error: notfound",
       description: (stateRef.description) ? stateRef.description : "error: notfound",
     });
@@ -63,7 +64,10 @@ class ItemField extends React.Component {
 
     this.setState(prevState => ({
       itemInfo: {
-        ...prevState.itemInfo, [name]: value
+        id: this.state.itemInfo.id,
+        data: {
+          ...prevState.itemInfo.data, [name]: value
+        }
       },
     }));
   }
@@ -116,7 +120,7 @@ class ItemField extends React.Component {
           <TextField
             id="item_ID"
             label="Item ID"
-            value={(this.state.itemInfo)? this.state.itemInfo.id: ""}
+            value={(this.state.itemInfo) ? this.state.itemInfo.id : ""}
             variant="outlined"
             fullWidth
             size="small"
@@ -163,16 +167,6 @@ class ItemField extends React.Component {
               />
             </Grid>
           </Grid>
-        </Grid>
-        <Grid item xs={12}> {/* categories chips */}
-          <Typography variant="subtitle1" color="textSecondary">
-            Categories
-          </Typography>
-          {(this.state.itemInfo && this.state.itemInfo.data.categories) ? this.state.itemInfo.data.categories.map((category,index) => {
-            return (
-              <Chip size="small" label={category} />
-            )
-          }) : "nothing"}
         </Grid>
         <Grid item xs={5}> {/* rent_mode group */}
           <Typography variant="subtitle1" color="textSecondary">
@@ -229,12 +223,26 @@ class ItemField extends React.Component {
           </Box>
         </Grid>
         <Grid item xs={7}> {/* reviews group */}
-          <Typography variant="subtitle1" color="textSecondary">
-            Reviews
-          </Typography>
-          <Box borderRadius={4} border={1} borderColor="grey.400" style={{padding:"5px"}}>
-            Sa next patch na yan -Pau
-          </Box>
+          <Grid container spacing={2}>
+            <Grid item xs={12}> {/* categories chips */}
+              <Typography variant="subtitle1" color="textSecondary">
+                Categories
+              </Typography>
+              {(this.state.itemInfo && this.state.itemInfo.data.categories) ? this.state.itemInfo.data.categories.map((category,index) => {
+                return (
+                  <Chip size="small" label={category} />
+                )
+              }) : "nothing"}
+            </Grid>
+            <Grid item xs={12}> {/* Dropoff method group */}
+              <Typography variant="subtitle1" color="textSecondary">
+                Drop-Off Method
+              </Typography>
+              <Box borderRadius={4} border={1} borderColor="grey.400" style={{padding:"5px"}}>
+
+              </Box>
+            </Grid>
+          </Grid>
         </Grid>
         <Grid item xs={12}> {/* apply changes button */}
           <Box display={(this.applyButton) ? "block" : "none"}>
