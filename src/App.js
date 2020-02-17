@@ -12,6 +12,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Box from '@material-ui/core/Box';
 
 // Components
 import logo from './Renty_Logo+Text.png';
@@ -27,6 +28,7 @@ class App extends React.Component {
       user: null,
       email: null,
       passw: null,
+      alert: { show: false, msg: "" },
     })
 
     this.handleChanges = this.handleChanges.bind(this);
@@ -38,11 +40,50 @@ class App extends React.Component {
   }
 
   login(e) {
+    this.setState({ alert: { show: false, msg:"" } })
     e.preventDefault();
-    Firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.passw).then((u) => {
+    if(this.state.email === null || this.state.passw === null) {
+      this.setState({
+        alert: {
+          show: true,
+          msg: "Nothing to submit... Please fill up the fields"
+        }
+      });
+      return;
+    }
 
+    Firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.passw).then((u) => {
+      // Stuff to do when logged in...
     }).catch((error) => {
-      console.log(error);
+      switch (error.code) {
+        case 'auth/invalid-email':
+          this.setState({
+            alert: {
+              show: true,
+              msg: "Invalid email address"
+            }
+          });
+          console.log("invalid email");
+          break;
+        case 'auth/wrong-password':
+          this.setState({
+            alert: {
+              show: true,
+              msg: "Invalid password"
+            }
+          });
+          console.log("invalid password");
+          break;
+        default:
+          this.setState({
+            alert: {
+              show: true,
+              msg: "Unknown error. Check your internet connection.."
+            }
+          });
+          console.log(error.code);
+          break;
+      }
     });
   }
 
@@ -77,27 +118,33 @@ class App extends React.Component {
                 </Typography>
                 <form noValidate autoComplete="off">
                   <TextField style={{marginTop:"15px"}} name="email"
-                  id="staff-email"
-                  label="Email"
-                  variant="outlined"
-                  fullWidth
-                  onChange={this.handleChanges}
+                    id="staff-email"
+                    label="Email"
+                    variant="outlined"
+                    fullWidth
+                    onChange={this.handleChanges}
                   />
                   <TextField style={{marginTop:"15px"}} name="passw"
-                  type="password"
-                  id="staff-passw"
-                  label="Password"
-                  variant="outlined"
-                  fullWidth
-                  onChange={this.handleChanges}
+                    type="password"
+                    id="staff-passw"
+                    label="Password"
+                    variant="outlined"
+                    fullWidth
+                    onChange={this.handleChanges}
                   />
                   <Button
-                  fullWidth
-                  variant="contained"
-                  onClick={this.login}
-                  style={{marginTop:"15px", backgroundColor:"#ce2458", color:"white"}}>
+                    fullWidth
+                    variant="contained"
+                    onClick={this.login}
+                    style={{marginTop:"15px", backgroundColor:"#ce2458", color:"white"}}>
                     Sign-in
                   </Button>
+                  <Box display={(this.state.alert.show) ? "block" : "none"} borderRadius={4} border={1} borderColor="#f06383"
+                    style={{marginTop:"10px", padding:"10px 40px", backgroundColor:"#f06383", color:"white"}}>
+                    <Typography>
+                      {this.state.alert.msg}
+                    </Typography>
+                  </Box>
                 </form>
               </CardContent>
             </Card>
