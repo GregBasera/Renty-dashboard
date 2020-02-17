@@ -8,9 +8,13 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 
 // Icons
 import PersonIcon from '@material-ui/icons/Person';
+import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 
 function UsersListItem(props) {
   const [selectedIndex, setSelectedIndex] = React.useState(-1);
@@ -27,17 +31,38 @@ function UsersListItem(props) {
       {props.users.map((user, index) =>
         {
           return (
-            <div>
+            <React.Fragment key={user.user_id}>
             <ListItem button selected={selectedIndex === index} onClick={event => handleListItemClick(event, index, user.user_id)}>
               <ListItemAvatar>
                 <Avatar>
                   <PersonIcon />
                 </Avatar>
               </ListItemAvatar>
-              <ListItemText primary={user.name} secondary={user.phone} />
+              <ListItemText primary={
+                <Typography variant="subtitle1">
+                  {user.name}
+                </Typography>
+              } secondary={
+                <React.Fragment>
+                  <Typography variant="caption">
+                    {user.user_id}
+                  </Typography>
+                  <Typography variant="subtitle1" component="span">
+                    {" | "}
+                  </Typography>
+                  <Typography variant="caption">
+                    {user.phone}
+                  </Typography>
+                </React.Fragment>
+              } />
+              <ListItemSecondaryAction>
+                <Box component="span" display={(user.verified) ? "block" : "none"}>
+                  <VerifiedUserIcon style={{color:"#ce2458"}}/>
+                </Box>
+              </ListItemSecondaryAction>
             </ListItem>
             <Divider />
-            </div>
+            </React.Fragment>
           )
         })
       }
