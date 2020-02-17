@@ -19,31 +19,61 @@ class UserField extends React.Component {
     super(props);
     this.state = ({
       userInfo: null,
+      initialState: null,
     });
 
     this.listenToFirebase = this.listenToFirebase.bind(this);
     this.listenToFirebase();
     this.updateValue = this.updateValue.bind(this);
+    this.applyButton = false;
   }
 
   listenToFirebase() {
     this.props.query.onSnapshot((doc) => {
       // console.log("Current data: ", doc.data());
+      if(this.state.userInfo === null) {
+        this.setState({ initialState: { id: doc.id, data: doc.data() } });
+        console.log("updated initialState");
+      }
       this.setState({ userInfo: { id: doc.id, data: doc.data() } });
     });
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if(prevProps.query !== this.props.query) {
+      this.setState({ initialState: null });
+      this.setState({ itemInfo: null });
+      this.applyButton = false;
       this.listenToFirebase();
     }
   }
 
-  updateValue() {
+  uploadChanged = () => {
+    console.log("submit was called");
+    let stateRef = this.state.userInfo.data;
+    this.props.query.update({
+      verified: (typeof stateRef.verified !== 'undefined') ? stateRef.verified : "error: notfound",
+    });
+  }
 
+  updateValue(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState(prevState => ({
+      userInfo: {
+        id: this.state.userInfo.id,
+        data: {
+          ...prevState.userInfo.data, [name]: value
+        }
+      },
+    }));
   }
 
   render() {
+    console.log("State", this.state.userInfo);
+    this.applyButton = (JSON.stringify(this.state.itemInfo) !== JSON.stringify(this.state.initialState)) ? true : false;
     const addressEvaluator = (addressObj) => {
       let addrsString = addressObj.unit_num + ", " +
       addressObj.residence + ", " +
@@ -191,6 +221,11 @@ class UserField extends React.Component {
           </Typography>
           <Box borderRadius={4} border={1} borderColor="grey.400" style={{padding:"5px"}}>
 
+          </Box>
+        </Grid>
+        <Grid item xs={12}>
+          <Box display={(this.applyButton) ? "block" : "none"}>
+            <Button fullWidth style={{backgroundColor:"#ce2458",color:"white"}} onClick={this.uploadChanged}>apply changes</Button>
           </Box>
         </Grid>
       </Grid>
