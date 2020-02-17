@@ -26,9 +26,9 @@ function ItemsListItem(props) {
       {props.items.map((item, index) =>
         {
           return (
-            <div key={item.item_id}>
-            <ListItem key={item.item_id} selected={selectedIndex === index} onClick={event => handleListItemClick(event, index, item.item_id)}>
-              <ListItemText key={item.item_id} primary={
+            <React.Fragment key={item.item_id}>
+            <ListItem selected={selectedIndex === index} onClick={event => handleListItemClick(event, index, item.item_id)}>
+              <ListItemText primary={
                 <Typography variant="subtitle1">
                   {item.item_name}
                 </Typography>
@@ -51,14 +51,14 @@ function ItemsListItem(props) {
                 </Typography>
                 </React.Fragment>
               } />
-              <ListItemSecondaryAction key={item.item_id}>
+              <ListItemSecondaryAction>
                 <IconButton edge="end" aria-label="delete">
                   <DeleteIcon />
                 </IconButton>
               </ListItemSecondaryAction>
             </ListItem>
             <Divider />
-            </div>
+            </React.Fragment>
           )
         })
       }

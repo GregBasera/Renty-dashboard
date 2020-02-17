@@ -6,6 +6,7 @@ import { changeFieldView } from '../../../actions/collectionsActs';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
+import Typography from '@material-ui/core/Typography';
 
 function RentalsListItem(props) {
   const [selectedIndex, setSelectedIndex] = React.useState(-1);
@@ -22,12 +23,28 @@ function RentalsListItem(props) {
       {props.rentals.map((rental, index) =>
         {
           return (
-            <div>
+            <React.Fragment key={rental.rent_id}>
             <ListItem button selected={selectedIndex === index} onClick={event => handleListItemClick(event, index, rental.rent_id)}>
-              <ListItemText primary={rental.renter} secondary={rental.lender} />
+              <ListItemText primary={
+                <Typography variant="subtitle1">
+                  {rental.item}
+                </Typography>
+              } secondary={
+                <React.Fragment>
+                  <Typography variant="caption">
+                    {"Lender: " + rental.lender}
+                  </Typography>
+                  <Typography variant="subtitle1" component="span">
+                    {" → "}
+                  </Typography>
+                  <Typography variant="caption">
+                    {"Renter: " + rental.renter}
+                  </Typography>
+                </React.Fragment>
+              } />
             </ListItem>
             <Divider />
-            </div>
+            </React.Fragment>
           )
         })
       }

@@ -27,13 +27,19 @@ class RentalsView extends React.Component {
               rent_id: change.doc.id,
               lender: change.doc.data().lender,
               renter: change.doc.data().renter,
+              item: change.doc.data().item,
             });
             break;
           case 'removed':
-            list.splice(change.oldIndex, 1);
+            list.splice(list.map(function(all) { return all.rent_id }).indexOf(change.doc.id), 1);
             break;
           case 'modified':
-            console.log("modified");
+            list[list.map(function(all) { return all.rent_id }).indexOf(change.doc.id)] = {
+              rent_id: change.doc.id,
+              lender: change.doc.data().lender,
+              renter: change.doc.data().renter,
+              item: change.doc.data().item,
+            }
             break;
           default:
             break;

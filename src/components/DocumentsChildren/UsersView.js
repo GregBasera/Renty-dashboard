@@ -29,13 +29,19 @@ class UsersView extends React.Component {
               user_id: change.doc.id,
               name: change.doc.data().full_name,
               phone: change.doc.data().phone,
+              verified: change.doc.data().verified,
             });
             break;
           case 'removed':
-            list.splice(change.oldIndex, 1);
+            list.splice(list.map(function(all) { return all.user_id; }).indexOf(change.doc.id), 1);
             break;
           case 'modified':
-            console.log("modified");
+            list[list.map(function(all) { return all.user_id; }).indexOf(change.doc.id)] = {
+              user_id: change.doc.id,
+              name: change.doc.data().full_name,
+              phone: change.doc.data().phone,
+              verified: change.doc.data().verified,
+            }
             break;
           default:
             break;
@@ -53,7 +59,7 @@ class UsersView extends React.Component {
 
   render () {
     return (
-      <List component="nav" aria-label="Collections" dense="true">
+      <List component="nav" aria-label="Collections" dense>
         {(this.state.users[0]) ? <UsersListItem users={this.state.users}/> : <CircularProgress />}
       </List>
     )
