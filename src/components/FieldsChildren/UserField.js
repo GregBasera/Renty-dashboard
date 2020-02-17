@@ -188,7 +188,7 @@ class UserField extends React.Component {
             </Card>
           </Box>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={6}> {/* history group */}
           <Typography variant="subtitle1" color="textSecondary">
             User's History
           </Typography>
