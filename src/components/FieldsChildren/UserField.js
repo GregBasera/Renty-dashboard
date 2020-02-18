@@ -223,7 +223,7 @@ class UserField extends React.Component {
 
           </Box>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12}> {/* apply changes button */}
           <Box display={(this.applyButton) ? "block" : "none"}>
             <Button fullWidth style={{backgroundColor:"#ce2458",color:"white"}} onClick={this.uploadChanged}>apply changes</Button>
           </Box>
