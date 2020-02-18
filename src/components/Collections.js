@@ -1,7 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { changeDocView } from '../actions/collectionsActs';
-import { changeFieldView } from '../actions/collectionsActs';
+import { changeDocView, changeFieldView } from '../actions/collectionsActs';
 
 // Layout
 import { makeStyles } from '@material-ui/core/styles';

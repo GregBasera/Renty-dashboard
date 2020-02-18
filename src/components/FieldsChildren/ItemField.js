@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
 
+
 import MediaCard from './ItemFieldChildren/MediaCard.js';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -48,9 +49,9 @@ class ItemField extends React.Component {
 
   uploadChanged = () => {
     console.log("submit was called");
-    let stateRef = this.state.itemInfo;
+    let stateRef = this.state.itemInfo.data;
     this.props.query.update({
-      is_approved: (stateRef.is_approved) ? stateRef.is_approved : "error: notfound",
+      is_approved: (typeof stateRef.is_approved !== 'undefined') ? stateRef.is_approved: "error: notfound",
       item_name: (stateRef.item_name) ? stateRef.item_name : "error: notfound",
       description: (stateRef.description) ? stateRef.description : "error: notfound",
     });
@@ -63,9 +64,25 @@ class ItemField extends React.Component {
 
     this.setState(prevState => ({
       itemInfo: {
-        ...prevState.itemInfo, [name]: value
+        id: this.state.itemInfo.id,
+        data: {
+          ...prevState.itemInfo.data, [name]: value
+        }
       },
     }));
+  }
+
+  peek = (args, count) => {
+    if(this.state.itemInfo !== null) {
+      var returnThis = this.state.itemInfo.data;
+      for(var q = 0; q < count; q++) {
+        returnThis = returnThis[args[q]];
+      }
+      console.log("returnThis");
+      return returnThis;
+    } else {
+      return "--";
+    }
   }
 
   render() {
@@ -77,7 +94,7 @@ class ItemField extends React.Component {
           <TextField
             id="item_name"
             label="Item Name"
-            value={(this.state.itemInfo) ? this.state.itemInfo.data.item_name : ""}
+            value={this.peek(['item_name'], 1)}
             variant="outlined"
             fullWidth
             name="item_name"
@@ -87,7 +104,7 @@ class ItemField extends React.Component {
         <Grid item xs={3}> {/* is_approved switch @ */}
           <FormControlLabel
             control={
-              <Switch checked={(this.state.itemInfo) ? this.state.itemInfo.data.is_approved : false} />
+              <Switch checked={this.peek(["is_approved"], 1)} />
             }
             label="Approved"
             name="is_approved"
@@ -98,10 +115,8 @@ class ItemField extends React.Component {
           <TextField
             id="date_entered"
             label="Date Entered"
-            value={(this.state.itemInfo && this.state.itemInfo.data.date_entered)
-              ? this.state.itemInfo.data.date_entered.toDate().toLocaleDateString("en-US", {
-                year: 'numeric', month: 'short', day: 'numeric', hour:'2-digit', minute:'2-digit' })
-              : ""}
+            value={(this.peek(["date_entered"], 1) === 'object') ? this.peek(["date_entered"], 1).toDate().toLocaleDateString("en-US", {
+              year: 'numeric', month: 'short', day: 'numeric', hour:'2-digit', minute:'2-digit' }) : "--"}
             variant="outlined"
             fullWidth
             size="small"
@@ -116,7 +131,7 @@ class ItemField extends React.Component {
           <TextField
             id="item_ID"
             label="Item ID"
-            value={(this.state.itemInfo)? this.state.itemInfo.id: ""}
+            value={(this.state.itemInfo) ? this.state.itemInfo.id : ""}
             variant="outlined"
             fullWidth
             size="small"
@@ -141,7 +156,7 @@ class ItemField extends React.Component {
                 multiline
                 fullWidth
                 rows="7"
-                value={(this.state.itemInfo) ? this.state.itemInfo.data.description : ""}
+                value={this.peek(["description"], 1)}
                 variant="outlined"
                 name="description"
                 onChange={this.updateValue}
@@ -151,7 +166,7 @@ class ItemField extends React.Component {
               <TextField
                 id="lender"
                 label="Lender"
-                value={(this.state.itemInfo) ? this.state.itemInfo.data.lender : ""}
+                value={this.peek(["lender"], 1)}
                 variant="outlined"
                 fullWidth
                 size="small"
@@ -164,16 +179,6 @@ class ItemField extends React.Component {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12}> {/* categories chips */}
-          <Typography variant="subtitle1" color="textSecondary">
-            Categories
-          </Typography>
-          {(this.state.itemInfo && this.state.itemInfo.data.categories) ? this.state.itemInfo.data.categories.map((category,index) => {
-            return (
-              <Chip size="small" label={category} />
-            )
-          }) : "nothing"}
-        </Grid>
         <Grid item xs={5}> {/* rent_mode group */}
           <Typography variant="subtitle1" color="textSecondary">
             Rent Modes
@@ -184,7 +189,7 @@ class ItemField extends React.Component {
                 <TextField
                   id="hourly"
                   label="perHour (₱)"
-                  value={(this.state.itemInfo && this.state.itemInfo.data.rent_mode) ? this.state.itemInfo.data.rent_mode.perHour : ""}
+                  value={this.peek(["rent_mode", "perHour"], 2)}
                   variant="outlined"
                   fullWidth
                   size="small"
@@ -229,12 +234,26 @@ class ItemField extends React.Component {
           </Box>
         </Grid>
         <Grid item xs={7}> {/* reviews group */}
-          <Typography variant="subtitle1" color="textSecondary">
-            Reviews
-          </Typography>
-          <Box borderRadius={4} border={1} borderColor="grey.400" style={{padding:"5px"}}>
-            Sa next patch na yan -Pau
-          </Box>
+          <Grid container spacing={2}>
+            <Grid item xs={12}> {/* categories chips */}
+              <Typography variant="subtitle1" color="textSecondary">
+                Categories
+              </Typography>
+              {(this.state.itemInfo && this.state.itemInfo.data.categories) ? this.state.itemInfo.data.categories.map((category,index) => {
+                return (
+                  <Chip size="small" label={category} />
+                )
+              }) : "nothing"}
+            </Grid>
+            <Grid item xs={12}> {/* Dropoff method group */}
+              <Typography variant="subtitle1" color="textSecondary">
+                Drop-Off Method
+              </Typography>
+              <Box borderRadius={4} border={1} borderColor="grey.400" style={{padding:"5px"}}>
+
+              </Box>
+            </Grid>
+          </Grid>
         </Grid>
         <Grid item xs={12}> {/* apply changes button */}
           <Box display={(this.applyButton) ? "block" : "none"}>

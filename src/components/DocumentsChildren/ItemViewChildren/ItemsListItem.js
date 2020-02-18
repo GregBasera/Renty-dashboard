@@ -33,9 +33,15 @@ function ItemsListItem(props) {
                   {item.item_name}
                 </Typography>
               } secondary={
-                <div>
+                <React.Fragment>
                 <Typography variant="caption">
-                  {item.date_entered.toDate().toLocaleDateString("en-US", { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' })}
+                  {item.item_id}
+                </Typography>
+                <Typography variant="subtitle1" component="span">
+                  {" | "}
+                </Typography>
+                <Typography variant="caption">
+                  {item.date_entered.toDate().toLocaleDateString("en-US", { year: 'numeric', month: 'numeric', day: 'numeric' })}
                 </Typography>
                 <Typography variant="subtitle1" component="span">
                   {" | "}
@@ -43,7 +49,7 @@ function ItemsListItem(props) {
                 <Typography variant="overline" style={{color:(item.is_approved) ? "forestgreen" : "crimson"}}>
                   {(item.is_approved) ? "Approved" : "Not Approved"}
                 </Typography>
-                </div>
+                </React.Fragment>
               } />
               <ListItemSecondaryAction>
                 <IconButton edge="end" aria-label="delete">

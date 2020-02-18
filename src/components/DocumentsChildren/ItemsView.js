@@ -32,10 +32,15 @@ class ItemsView extends React.Component {
             });
             break;
           case 'removed':
-            // list.splice(list.indexOf(change), 1);
+            list.splice(list.map(function(all) { return all.item_id }).indexOf(change.doc.id), 1);
             break;
           case 'modified':
-            console.log("modified");
+            list[list.map(function(all) { return all.item_id }).indexOf(change.doc.id)] = {
+              item_id: change.doc.id,
+              item_name: change.doc.data().item_name,
+              is_approved: change.doc.data().is_approved,
+              date_entered: change.doc.data().date_entered,
+            };
             break;
           default:
             break;

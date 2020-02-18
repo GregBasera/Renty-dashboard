@@ -73,7 +73,7 @@ class UserField extends React.Component {
 
   render() {
     console.log("State", this.state.userInfo);
-    this.applyButton = (JSON.stringify(this.state.itemInfo) !== JSON.stringify(this.state.initialState)) ? true : false;
+    this.applyButton = (JSON.stringify(this.state.userInfo) !== JSON.stringify(this.state.initialState)) ? true : false;
     const addressEvaluator = (addressObj) => {
       let addrsString = addressObj.unit_num + ", " +
       addressObj.residence + ", " +
