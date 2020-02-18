@@ -71,19 +71,30 @@ class UserField extends React.Component {
     }));
   }
 
+  peek = (key) => {
+    if(this.state.userInfo !== null) {
+      var returnThis = this.state.userInfo.data;
+      return (Object.keys(returnThis).indexOf(key) !== -1) ? returnThis[key] : "--"
+    } else {
+      return "--";
+    }
+  }
+
   render() {
-    console.log("State", this.state.userInfo);
     this.applyButton = (JSON.stringify(this.state.userInfo) !== JSON.stringify(this.state.initialState)) ? true : false;
     const addressEvaluator = (addressObj) => {
-      let addrsString = addressObj.unit_num + ", " +
-      addressObj.residence + ", " +
-      addressObj.barangay + ", " +
-      addressObj.city_munici + ", " +
-      addressObj.postal_code + ", " +
-      addressObj.region + ", " +
-      addressObj.country;
-
-      return addrsString;
+      if(addressObj !== null) {
+        let addrsString = addressObj.unit_num + ", " +
+        addressObj.residence + ", " +
+        addressObj.barangay + ", " +
+        addressObj.city_munici + ", " +
+        addressObj.postal_code + ", " +
+        addressObj.region + ", " +
+        addressObj.country;
+        return addrsString;
+      } else {
+        return "--";
+      }
     };
 
     return (
@@ -94,23 +105,25 @@ class UserField extends React.Component {
             id="user_ID"
             label="User ID"
             value={(this.state.userInfo) ? this.state.userInfo.id : ""}
-            variant="outlined"
+            variant="filled"
             fullWidth
             size="small"
-            name="item_name"
-            onChange={this.updateValue}
+            InputProps={{
+              readOnly: true,
+            }}
           />
         </Grid>
         <Grid item xs={6}> {/* name text */}
           <TextField
             id="user_name"
             label="Name"
-            value={(this.state.userInfo) ? this.state.userInfo.data.full_name : ""}
-            variant="outlined"
+            value={this.peek("full_name")}
+            variant="filled"
             fullWidth
             size="small"
-            name="item_name"
-            onChange={this.updateValue}
+            InputProps={{
+              readOnly: true,
+            }}
           />
         </Grid>
         <Grid item xs={3}>
@@ -118,7 +131,7 @@ class UserField extends React.Component {
             <Grid item xs={12}> {/* verified switch */}
               <FormControlLabel
                 control={
-                  <Switch checked={(this.state.userInfo) ? this.state.userInfo.data.verified : false} />
+                  <Switch checked={this.peek("verified")} />
                 }
                 label="Verified"
                 name="verified"
@@ -129,13 +142,14 @@ class UserField extends React.Component {
               <TextField
                 id="acc_created"
                 label="Acc Created"
-                value={(this.state.userInfo) ? this.state.userInfo.data.acc_created.toDate().toLocaleDateString("en-US", {
-                  year: 'numeric', month: 'short', day: 'numeric' }) : ""}
-                variant="outlined"
+                value={(this.peek("acc_created") !== "--") ? this.peek("acc_created").toDate().toLocaleDateString("en-US", {
+                  year: 'numeric', month: 'numeric', day: 'numeric' }) : "--"}
+                variant="filled"
                 fullWidth
                 size="small"
-                name="item_name"
-                onChange={this.updateValue}
+                InputProps={{
+                  readOnly: true,
+                }}
               />
             </Grid>
           </Grid>
@@ -144,50 +158,54 @@ class UserField extends React.Component {
           <TextField
             id="address"
             label="Home Address"
-            value={(this.state.userInfo) ? addressEvaluator(this.state.userInfo.data.address) : ""}
-            variant="outlined"
+            value={(this.peek("address") !== "--") ? addressEvaluator(this.peek("address")) : "--"}
+            variant="filled"
             fullWidth
             multiline
             rows={3}
             size="small"
-            name="item_name"
-            onChange={this.updateValue}
+            InputProps={{
+              readOnly: true,
+            }}
           />
         </Grid>
         <Grid item xs={4}> {/* phone text */}
           <TextField
             id="phone"
             label="Phone Number"
-            value={(this.state.userInfo) ? this.state.userInfo.data.phone : ""}
-            variant="outlined"
+            value={this.peek("phone")}
+            variant="filled"
             fullWidth
             size="small"
-            name="phone"
-            onChange={this.updateValue}
+            InputProps={{
+              readOnly: true,
+            }}
           />
         </Grid>
         <Grid item xs={4}> {/* email text */}
           <TextField
             id="email"
             label="Email"
-            value={(this.state.userInfo) ? this.state.userInfo.data.email : ""}
-            variant="outlined"
+            value={this.peek("email")}
+            variant="filled"
             fullWidth
             size="small"
-            name="email"
-            onChange={this.updateValue}
+            InputProps={{
+              readOnly: true,
+            }}
           />
         </Grid>
         <Grid item xs={4}> {/* occupation text */}
           <TextField
             id="occupation"
             label="Occupation"
-            value={(this.state.userInfo) ? this.state.userInfo.data.occupation : ""}
-            variant="outlined"
+            value={this.peek("occupation")}
+            variant="filled"
             fullWidth
             size="small"
-            name="occupation"
-            onChange={this.updateValue}
+            InputProps={{
+              readOnly: true,
+            }}
           />
         </Grid>
         <Grid item xs={6}> {/* legal documents group */}

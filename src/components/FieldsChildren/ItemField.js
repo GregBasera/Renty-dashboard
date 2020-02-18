@@ -32,7 +32,6 @@ class ItemField extends React.Component {
       // console.log("Current data: ", doc.data());
       if(this.state.itemInfo === null) {
         this.setState({ initialState: { id: doc.id, data: doc.data() } });
-        console.log("updated initialState");
       }
       this.setState({ itemInfo: { id: doc.id, data: doc.data() } });
     });
@@ -72,14 +71,10 @@ class ItemField extends React.Component {
     }));
   }
 
-  peek = (args, count) => {
+  peek = (key) => {
     if(this.state.itemInfo !== null) {
       var returnThis = this.state.itemInfo.data;
-      for(var q = 0; q < count; q++) {
-        returnThis = returnThis[args[q]];
-      }
-      console.log("returnThis");
-      return returnThis;
+      return (Object.keys(returnThis).indexOf(key) !== -1) ? returnThis[key] : "--"
     } else {
       return "--";
     }
@@ -90,11 +85,11 @@ class ItemField extends React.Component {
 
     return (
       <Grid container spacing={2}>
-        <Grid item xs={12}> {/* item_name text */}
+        <Grid item xs={12}> {/* item_name text @ */}
           <TextField
             id="item_name"
             label="Item Name"
-            value={this.peek(['item_name'], 1)}
+            value={this.peek("item_name")}
             variant="outlined"
             fullWidth
             name="item_name"
@@ -104,7 +99,7 @@ class ItemField extends React.Component {
         <Grid item xs={3}> {/* is_approved switch @ */}
           <FormControlLabel
             control={
-              <Switch checked={this.peek(["is_approved"], 1)} />
+              <Switch checked={this.peek("is_approved")} />
             }
             label="Approved"
             name="is_approved"
@@ -115,9 +110,9 @@ class ItemField extends React.Component {
           <TextField
             id="date_entered"
             label="Date Entered"
-            value={(this.peek(["date_entered"], 1) === 'object') ? this.peek(["date_entered"], 1).toDate().toLocaleDateString("en-US", {
+            value={(this.peek("date_entered") !== '--') ? this.peek("date_entered").toDate().toLocaleDateString("en-US", {
               year: 'numeric', month: 'short', day: 'numeric', hour:'2-digit', minute:'2-digit' }) : "--"}
-            variant="outlined"
+            variant="filled"
             fullWidth
             size="small"
             name="date_entered"
@@ -132,7 +127,7 @@ class ItemField extends React.Component {
             id="item_ID"
             label="Item ID"
             value={(this.state.itemInfo) ? this.state.itemInfo.id : ""}
-            variant="outlined"
+            variant="filled"
             fullWidth
             size="small"
             name="item_ID"
@@ -156,7 +151,7 @@ class ItemField extends React.Component {
                 multiline
                 fullWidth
                 rows="7"
-                value={this.peek(["description"], 1)}
+                value={this.peek("description")}
                 variant="outlined"
                 name="description"
                 onChange={this.updateValue}
@@ -166,8 +161,8 @@ class ItemField extends React.Component {
               <TextField
                 id="lender"
                 label="Lender"
-                value={this.peek(["lender"], 1)}
-                variant="outlined"
+                value={this.peek("lender")}
+                variant="filled"
                 fullWidth
                 size="small"
                 name="lender"
@@ -189,8 +184,8 @@ class ItemField extends React.Component {
                 <TextField
                   id="hourly"
                   label="perHour (₱)"
-                  value={this.peek(["rent_mode", "perHour"], 2)}
-                  variant="outlined"
+                  value={(this.peek("rent_mode") !== "--") ? this.peek("rent_mode").perHour : "--"}
+                  variant="filled"
                   fullWidth
                   size="small"
                   name="rent_mode.perHour"
@@ -204,8 +199,8 @@ class ItemField extends React.Component {
                 <TextField
                   id="daily"
                   label="perDay (₱)"
-                  value={(this.state.itemInfo && this.state.itemInfo.data.rent_mode) ? this.state.itemInfo.data.rent_mode.perDay : ""}
-                  variant="outlined"
+                  value={(this.peek("rent_mode") !== "--") ? this.peek("rent_mode").perDay : "--"}
+                  variant="filled"
                   fullWidth
                   size="small"
                   name="rent_mode.perDay"
@@ -219,8 +214,8 @@ class ItemField extends React.Component {
                 <TextField
                   id="weekly"
                   label="perWeek (₱)"
-                  value={(this.state.itemInfo && this.state.itemInfo.data.rent_mode) ? this.state.itemInfo.data.rent_mode.perWeek : ""}
-                  variant="outlined"
+                  value={(this.peek("rent_mode") !== "--") ? this.peek("rent_mode").perWeek : "--"}
+                  variant="filled"
                   fullWidth
                   size="small"
                   name="rent_mode.perWeek"
@@ -233,13 +228,13 @@ class ItemField extends React.Component {
             </Grid>
           </Box>
         </Grid>
-        <Grid item xs={7}> {/* reviews group */}
+        <Grid item xs={7}>
           <Grid container spacing={2}>
             <Grid item xs={12}> {/* categories chips */}
               <Typography variant="subtitle1" color="textSecondary">
                 Categories
               </Typography>
-              {(this.state.itemInfo && this.state.itemInfo.data.categories) ? this.state.itemInfo.data.categories.map((category,index) => {
+              {(this.peek("categories") !== "--") ? this.peek("categories").map((category,index) => {
                 return (
                   <Chip size="small" label={category} />
                 )
