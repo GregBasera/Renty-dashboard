@@ -42,7 +42,7 @@ class UserField extends React.Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
     if(prevProps.query !== this.props.query) {
       this.setState({ initialState: null });
-      this.setState({ itemInfo: null });
+      this.setState({ userInfo: null });
       this.applyButton = false;
       this.listenToFirebase();
     }
