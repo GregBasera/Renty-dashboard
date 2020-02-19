@@ -8,7 +8,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
-
+import CheckIcon from '@material-ui/icons/Check';
 
 import MediaCard from './ItemFieldChildren/MediaCard.js';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -143,7 +143,7 @@ class ItemField extends React.Component {
             : <CircularProgress /> }
         </Grid>
         <Grid item xs={7}>
-          <Grid container spacing={2}>
+          <Grid container spacing={1}>
             <Grid item xs={12}> {/* description text @ */}
               <TextField
                 id="description"
@@ -179,7 +179,7 @@ class ItemField extends React.Component {
             Rent Modes
           </Typography>
           <Box borderRadius={4} border={1} borderColor="grey.400" style={{padding:"5px"}}>
-            <Grid container spacing={2} style={{marginTop:"5px"}}>
+            <Grid container spacing={1} style={{marginTop:"5px"}}>
               <Grid item xs={12}>
                 <TextField
                   id="hourly"
@@ -229,7 +229,7 @@ class ItemField extends React.Component {
           </Box>
         </Grid>
         <Grid item xs={7}>
-          <Grid container spacing={2}>
+          <Grid container spacing={1}>
             <Grid item xs={12}> {/* categories chips */}
               <Typography variant="subtitle1" color="textSecondary">
                 Categories
@@ -245,7 +245,28 @@ class ItemField extends React.Component {
                 Drop-Off Method
               </Typography>
               <Box borderRadius={4} border={1} borderColor="grey.400" style={{padding:"5px"}}>
-
+                <Grid container spacing={1}>
+                  <Grid item xs={12}>
+                    <Chip size="small" color="primary" icon={<CheckIcon fontSize="small" />} label={this.peek("acquisition_map").acquisition_type} />
+                  </Grid>
+                  <Grid item xs={12} style={{display:(this.peek("acquisition_map").pick_up_date === null) ? "none" : "block"}}>
+                    <TextField
+                      id="date_entered"
+                      label="Preffered pick-up date"
+                      value={(this.peek("acquisition_map") !== "--")
+                        ? (this.peek("acquisition_map").pick_up_date === null) ? "null" : this.peek("acquisition_map").pick_up_date.toDate().toLocaleDateString("en-US", {
+                        year: 'numeric', month: 'short', day: 'numeric', hour:'2-digit', minute:'2-digit' }) : "parent undef"}
+                      variant="filled"
+                      fullWidth
+                      size="small"
+                      name="date_entered"
+                      onChange={this.updateValue}
+                      InputProps={{
+                        readOnly: true,
+                      }}
+                    />
+                  </Grid>
+                </Grid>
               </Box>
             </Grid>
           </Grid>
