@@ -1,5 +1,8 @@
 import React from 'react';
 
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+
 import RentalFieldElements from './RentalFieldChildren/RentalFieldElements.js';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -17,7 +20,7 @@ class RentalField extends React.Component {
   listenToFirebase() {
     this.props.query.onSnapshot((doc) => {
       // console.log("Current data: ", doc.data());
-      this.setState({ rentalInfo: doc.data() });
+      this.setState({ rentalInfo: { id: doc.id, data: doc.data() } });
     });
   }
 
@@ -27,10 +30,72 @@ class RentalField extends React.Component {
     }
   }
 
+  updateValue(event) {
+    // const target = event.target;
+    // const value = target.type === 'checkbox' ? target.checked : target.value;
+    // const name = target.name;
+    //
+    // this.setState(prevState => ({
+    //   itemInfo: {
+    //     id: this.state.itemInfo.id,
+    //     data: {
+    //       ...prevState.itemInfo.data, [name]: value
+    //     }
+    //   },
+    // }));
+  }
+
+  peek = (key) => {
+    if(this.state.rentalInfo !== null) {
+      var returnThis = this.state.rentalInfo.data;
+      return (Object.keys(returnThis).indexOf(key) !== -1) ? returnThis[key] : "--"
+    } else {
+      return "--";
+    }
+  }
+
   render() {
     return (
       <div>
-        {(this.state.rentalInfo) ? <RentalFieldElements info={this.state.rentalInfo} /> : <CircularProgress />}
+        {/*(this.state.rentalInfo) ? <RentalFieldElements info={this.state.rentalInfo} /> : <CircularProgress />*/}
+        <Grid container spacing={2}>
+          <Grid item xs={3}> {/* item_ID */}
+            <TextField
+              label="Item ID"
+              value={this.peek("item_ID")}
+              variant="filled"
+              fullWidth
+              InputProps={{ readOnly: true }}
+            />
+          </Grid>
+          <Grid item xs={9}> {/* item_name */}
+            <TextField
+              label="Item name"
+              value={this.peek("item_name")}
+              variant="filled"
+              fullWidth
+              InputProps={{ readOnly: true }}
+            />
+          </Grid>
+          <Grid item xs={6}> {/* lender_ID */}
+            <TextField
+              label="Lender's ID"
+              value={this.peek("lender_ID")}
+              variant="filled"
+              fullWidth
+              InputProps={{ readOnly: true }}
+            />
+          </Grid>
+          <Grid item xs={6}> {/* renter_ID */}
+            <TextField
+              label="Renter's ID"
+              value={this.peek("renter_ID")}
+              variant="filled"
+              fullWidth
+              InputProps={{ readOnly: true }}
+            />
+          </Grid>
+        </Grid>
       </div>
     )
   }
