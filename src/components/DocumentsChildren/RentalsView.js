@@ -25,9 +25,9 @@ class RentalsView extends React.Component {
           case 'added':
             list.unshift({
               rent_id: change.doc.id,
-              lender: change.doc.data().lender,
-              renter: change.doc.data().renter,
-              item: change.doc.data().item,
+              lender: change.doc.data().lender_ID,
+              renter: change.doc.data().renter_ID,
+              item: change.doc.data().item_ID,
             });
             break;
           case 'removed':
