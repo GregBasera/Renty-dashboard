@@ -11,6 +11,10 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 
+import Icon from '@material-ui/core/Icon';
+import BeenhereIcon from '@material-ui/icons/Beenhere';
+import HelpIcon from '@material-ui/icons/Help';
+
 function ItemsListItem(props) {
   const [selectedIndex, setSelectedIndex] = React.useState(-1);
   const dispatch = useDispatch();
@@ -43,18 +47,12 @@ function ItemsListItem(props) {
                 <Typography variant="caption">
                   {item.date_entered.toDate().toLocaleDateString("en-US", { year: 'numeric', month: 'numeric', day: 'numeric' })}
                 </Typography>
-                <Typography variant="subtitle1" component="span">
-                  {" | "}
-                </Typography>
-                <Typography variant="overline" style={{color:(item.is_approved) ? "forestgreen" : "crimson"}}>
-                  {(item.is_approved) ? "Approved" : "Not Approved"}
-                </Typography>
                 </React.Fragment>
               } />
               <ListItemSecondaryAction>
-                <IconButton edge="end" aria-label="delete">
-                  <DeleteIcon />
-                </IconButton>
+                <Typography variant="caption" style={{color:(item.is_approved) ? "forestgreen" : "orange"}}>
+                  {(item.is_approved) ? <Icon ><BeenhereIcon /></Icon> : <Icon ><HelpIcon /></Icon>}
+                </Typography>
               </ListItemSecondaryAction>
             </ListItem>
             <Divider />
