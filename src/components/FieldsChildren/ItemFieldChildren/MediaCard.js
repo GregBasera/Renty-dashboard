@@ -85,7 +85,7 @@ function MediaCard(props) {
       <Card style={{backgroundColor:"#c3c3c3"}}>
         <CardMedia onClick={handleClickOpen}
           style={{height:"200px"}}
-          image={(props.info.pictures) ? props.info.pictures[activeStep].https : warning}
+          image={(props.info.pictures) ? props.info.pictures[activeStep] : warning}
           title="pictures"
         />
         <MobileStepper
@@ -111,7 +111,7 @@ function MediaCard(props) {
         </DialogTitle>
         <DialogContent dividers>
           <Card style={{backgroundColor:"#c3c3c3"}}>
-            <img src={(props.info.pictures) ? props.info.pictures[activeStep].https : warning} alt="whatHappened"/>
+            <img src={(props.info.pictures) ? props.info.pictures[activeStep] : warning} alt="whatHappened"/>
             <MobileStepper
               steps={maxSteps}
               position="static"

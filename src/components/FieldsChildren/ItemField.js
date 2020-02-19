@@ -52,7 +52,7 @@ class ItemField extends React.Component {
     this.props.query.update({
       is_approved: (typeof stateRef.is_approved !== 'undefined') ? stateRef.is_approved: "error: notfound",
       item_name: (stateRef.item_name) ? stateRef.item_name : "error: notfound",
-      description: (stateRef.description) ? stateRef.description : "error: notfound",
+      item_description: (stateRef.item_description) ? stateRef.item_description : "error: notfound",
     });
   }
 
@@ -151,9 +151,9 @@ class ItemField extends React.Component {
                 multiline
                 fullWidth
                 rows="7"
-                value={this.peek("description")}
+                value={this.peek("item_description")}
                 variant="outlined"
-                name="description"
+                name="item_description"
                 onChange={this.updateValue}
               />
             </Grid>
@@ -184,7 +184,7 @@ class ItemField extends React.Component {
                 <TextField
                   id="hourly"
                   label="perHour (₱)"
-                  value={(this.peek("rent_mode") !== "--") ? this.peek("rent_mode").perHour : "--"}
+                  value={(this.peek("rent_details") !== "--") ? this.peek("rent_details").perHour : "--"}
                   variant="filled"
                   fullWidth
                   size="small"
@@ -199,7 +199,7 @@ class ItemField extends React.Component {
                 <TextField
                   id="daily"
                   label="perDay (₱)"
-                  value={(this.peek("rent_mode") !== "--") ? this.peek("rent_mode").perDay : "--"}
+                  value={(this.peek("rent_details") !== "--") ? this.peek("rent_details").perDay : "--"}
                   variant="filled"
                   fullWidth
                   size="small"
@@ -214,7 +214,7 @@ class ItemField extends React.Component {
                 <TextField
                   id="weekly"
                   label="perWeek (₱)"
-                  value={(this.peek("rent_mode") !== "--") ? this.peek("rent_mode").perWeek : "--"}
+                  value={(this.peek("rent_details") !== "--") ? this.peek("rent_details").perWeek : "--"}
                   variant="filled"
                   fullWidth
                   size="small"
