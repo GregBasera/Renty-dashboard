@@ -6,10 +6,9 @@ import { changeFieldView } from '../../../actions/collectionsActs';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import Icon from '@material-ui/core/Icon';
 import BeenhereIcon from '@material-ui/icons/Beenhere';
@@ -50,9 +49,11 @@ function ItemsListItem(props) {
                 </React.Fragment>
               } />
               <ListItemSecondaryAction>
-                <Typography variant="caption" style={{color:(item.is_approved) ? "forestgreen" : "orange"}}>
-                  {(item.is_approved) ? <Icon ><BeenhereIcon /></Icon> : <Icon ><HelpIcon /></Icon>}
-                </Typography>
+                <Tooltip placement="right" title={(item.is_approved) ? "Approved" : "Not Approved"}>
+                  <Typography variant="caption" style={{color:(item.is_approved) ? "forestgreen" : "orange"}}>
+                    {(item.is_approved) ? <Icon ><BeenhereIcon /></Icon> : <Icon ><HelpIcon /></Icon>}
+                  </Typography>
+                </Tooltip>
               </ListItemSecondaryAction>
             </ListItem>
             <Divider />
