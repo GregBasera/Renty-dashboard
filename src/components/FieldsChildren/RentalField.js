@@ -3,7 +3,8 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 
-import RentalFieldElements from './RentalFieldChildren/RentalFieldElements.js';
+import LenderToRenterStepper from './RentalFieldChildren/LenderToRenterStepper.js';
+import RenterToLenderStepper from './RentalFieldChildren/RenterToLenderStepper.js';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 class RentalField extends React.Component {
@@ -59,19 +60,10 @@ class RentalField extends React.Component {
       <div>
         {/*(this.state.rentalInfo) ? <RentalFieldElements info={this.state.rentalInfo} /> : <CircularProgress />*/}
         <Grid container spacing={2}>
-          <Grid item xs={3}> {/* item_ID */}
+          <Grid item xs={12}> {/* item_ID */}
             <TextField
               label="Item ID"
               value={this.peek("item_ID")}
-              variant="filled"
-              fullWidth
-              InputProps={{ readOnly: true }}
-            />
-          </Grid>
-          <Grid item xs={9}> {/* item_name */}
-            <TextField
-              label="Item name"
-              value={this.peek("item_name")}
               variant="filled"
               fullWidth
               InputProps={{ readOnly: true }}
@@ -85,8 +77,10 @@ class RentalField extends React.Component {
               fullWidth
               InputProps={{ readOnly: true }}
             />
+            <LenderToRenterStepper />
           </Grid>
           <Grid item xs={6}> {/* renter_ID */}
+            <RenterToLenderStepper />
             <TextField
               label="Renter's ID"
               value={this.peek("renter_ID")}
