@@ -2,6 +2,7 @@ import React from 'react';
 
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 import LenderToRenterStepper from './RentalFieldChildren/LenderToRenterStepper.js';
 import RenterToLenderStepper from './RentalFieldChildren/RenterToLenderStepper.js';
@@ -44,6 +45,30 @@ class RentalField extends React.Component {
     //     }
     //   },
     // }));
+  }
+
+  fcm = () => {
+    fetch('https://fcm.googleapis.com/fcm/send', {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        'Authorization' : 'key=' + 'AAAAfIlkwIw:APA91bGDIpxkFFsf4hpqnmiQ5OVKexxce8BQ6xbOixXdzXUh_q13WRy6j33vR7VXI-_TJ3ePsU6xRkr044jDhZvkxEZCYjAC9ti2AtYeiTNPdGStrRt-mz3S10K0W8J3i-8JJrG0PnEW',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        to: 'cMkwTX1P0iO6EM-YC63Bvs:APA91bHceS85uNrMDFXuOrbT54XRJVQY7zPE7Ej_qJ_HesxobUxsXEcgj6ZguVGop-wQuHea6-4sbx7HD-z68pVIiWIy7Xk170xcUJAvY1L_Uo4mIeKkxo7sI0t7NAR303nsPWLlO__b',
+        notification: {
+          title: "notif using reactjs/fetch",
+          body: "Im currently testing. If you recieve this msg, pls tell me..."
+        }
+      })
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log('Success:', data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
   }
 
   peek = (key) => {
@@ -89,6 +114,9 @@ class RentalField extends React.Component {
               InputProps={{ readOnly: true }}
             />
           </Grid>
+          <Button onClick={this.fcm}>
+            click
+          </Button>
         </Grid>
       </div>
     )
