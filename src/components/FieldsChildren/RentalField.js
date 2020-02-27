@@ -48,6 +48,7 @@ class RentalField extends React.Component {
   }
 
   fcm = () => {
+    // to: 'cMkwTX1P0iO6EM-YC63Bvs:APA91bHceS85uNrMDFXuOrbT54XRJVQY7zPE7Ej_qJ_HesxobUxsXEcgj6ZguVGop-wQuHea6-4sbx7HD-z68pVIiWIy7Xk170xcUJAvY1L_Uo4mIeKkxo7sI0t7NAR303nsPWLlO__b',
     fetch('https://fcm.googleapis.com/fcm/send', {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
       headers: {
@@ -55,7 +56,7 @@ class RentalField extends React.Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        to: 'cMkwTX1P0iO6EM-YC63Bvs:APA91bHceS85uNrMDFXuOrbT54XRJVQY7zPE7Ej_qJ_HesxobUxsXEcgj6ZguVGop-wQuHea6-4sbx7HD-z68pVIiWIy7Xk170xcUJAvY1L_Uo4mIeKkxo7sI0t7NAR303nsPWLlO__b',
+        to: '/topics/android',
         notification: {
           title: "notif using reactjs/fetch",
           body: "Im currently testing. If you recieve this msg, pls tell me..."
@@ -64,7 +65,7 @@ class RentalField extends React.Component {
     })
     .then((response) => response.json())
     .then((data) => {
-      console.log('Success:', data);
+      console.log('FCM API responce:', data);
     })
     .catch((error) => {
       console.error('Error:', error);
