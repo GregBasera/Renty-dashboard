@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 
 import LenderToRenterStepper from './RentalFieldChildren/LenderToRenterStepper.js';
 import RenterToLenderStepper from './RentalFieldChildren/RenterToLenderStepper.js';
-import CircularProgress from '@material-ui/core/CircularProgress';
+// import CircularProgress from '@material-ui/core/CircularProgress';
 
 class RentalField extends React.Component {
   constructor(props) {
@@ -48,18 +48,18 @@ class RentalField extends React.Component {
   }
 
   fcm = () => {
-    // to: 'cMkwTX1P0iO6EM-YC63Bvs:APA91bHceS85uNrMDFXuOrbT54XRJVQY7zPE7Ej_qJ_HesxobUxsXEcgj6ZguVGop-wQuHea6-4sbx7HD-z68pVIiWIy7Xk170xcUJAvY1L_Uo4mIeKkxo7sI0t7NAR303nsPWLlO__b',
     fetch('https://fcm.googleapis.com/fcm/send', {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
       headers: {
-        'Authorization' : 'key=' + 'AAAAfIlkwIw:APA91bGDIpxkFFsf4hpqnmiQ5OVKexxce8BQ6xbOixXdzXUh_q13WRy6j33vR7VXI-_TJ3ePsU6xRkr044jDhZvkxEZCYjAC9ti2AtYeiTNPdGStrRt-mz3S10K0W8J3i-8JJrG0PnEW',
+        'Authorization' : 'key=AAAAfIlkwIw:APA91bGDIpxkFFsf4hpqnmiQ5OVKexxce8BQ6xbOixXdzXUh_q13WRy6j33vR7VXI-_TJ3ePsU6xRkr044jDhZvkxEZCYjAC9ti2AtYeiTNPdGStrRt-mz3S10K0W8J3i-8JJrG0PnEW',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        to: '/topics/android',
+        to: 'ceFGfb13aSA:APA91bHD9-Gony4oig3ZxOwGsamb47EZl0U0TqsW_yuKHRoxCQnNqEhYPs2-kUUe_9tU48JEYBYOWzzxPzdWpXd-9epQs8tMYL37Pm2X1ZQwWbH3ikeAME80DgameRQASVnxS3mNOCq5',
+        // to: '/topics/android',
         notification: {
-          title: "notif using reactjs/fetch",
-          body: "Im currently testing. If you recieve this msg, pls tell me..."
+          title: "Your Item has been APPROVED! char.",
+          body: "This message was generated using RentyDashboard uwu..."
         }
       })
     })
