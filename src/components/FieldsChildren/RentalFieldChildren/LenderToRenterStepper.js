@@ -21,7 +21,7 @@ function LenderToRenterStepper() {
       <Stepper activeStep={activeStep} orientation="vertical">
         {steps.map((label, index) => {
           return (
-            <Step key={label}>
+            <Step key={label} onClick={(index < activeStep) ? handleBack : handleNext}>
               <StepLabel>
                 {label}
               </StepLabel>
