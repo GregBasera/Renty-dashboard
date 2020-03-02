@@ -3,6 +3,9 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
 
 import LenderToRenterStepper from './RentalFieldChildren/LenderToRenterStepper.js';
 import RenterToLenderStepper from './RentalFieldChildren/RenterToLenderStepper.js';
@@ -42,9 +45,11 @@ class RentalField extends React.Component {
   }
 
   updateFire(payload) {
-    let stateRef = this.state.rentalInfo.data;
+    let stateRef = this.state.rentalInfo;
+    stateRef.status = payload;
+    this.setState({ rentalInfo: stateRef });
     this.props.query.update({
-      status: (typeof stateRef.status !== 'undefined') ? payload : "error: notfound",
+      status: payload,
     });
   }
 
@@ -57,7 +62,10 @@ class RentalField extends React.Component {
     }
   }
 
+
+
   render() {
+    console.log(this.state);
     return (
       <div>
         {/*(this.state.rentalInfo) ? <RentalFieldElements info={this.state.rentalInfo} /> : <CircularProgress />*/}
@@ -71,6 +79,25 @@ class RentalField extends React.Component {
               InputProps={{ readOnly: true }}
             />
           </Grid>
+          <Grid item xs={12}>
+            <Stepper activeStep={this.peek("status")} orientation="horizontal" alternativeLabel style={{padding:"10px"}}>
+              <Step key="Processing Req" onClick={() => {this.updateFire(0)}}>
+                <StepLabel>Processing Req</StepLabel>
+              </Step>
+              <Step key="Item to HQ" onClick={() => {this.updateFire(1)}}>
+                <StepLabel>Item to HQ</StepLabel>
+              </Step>
+              <Step key="HQ Check" onClick={() => {this.updateFire(2)}}>
+                <StepLabel>HQ Check</StepLabel>
+              </Step>
+              <Step key="Item to Renter" onClick={() => {this.updateFire(3)}}>
+                <StepLabel>Item to Renter</StepLabel>
+              </Step>
+              <Step key="Renter Received" onClick={() => {this.updateFire(4)}}>
+                <StepLabel>Renter Received</StepLabel>
+              </Step>
+            </Stepper>
+          </Grid>
           <Grid item xs={6}> {/* lender_ID */}
             <TextField
               label="Lender's ID"
@@ -78,7 +105,7 @@ class RentalField extends React.Component {
               variant="filled"
               fullWidth
               InputProps={{ readOnly: true }}
-            />
+              />
           </Grid>
           <Grid item xs={6}> {/* renter_ID */}
             <TextField
@@ -90,14 +117,23 @@ class RentalField extends React.Component {
             />
           </Grid>
           <Grid item xs={12}>
-            <LenderToRenterStepper
-              currStatus={(this.state.rentalInfo) ? this.state.rentalInfo.data.status : null}
-              up={this.updateFire}
-            />
-            <RenterToLenderStepper
-              currStatus={(this.state.rentalInfo) ? this.state.rentalInfo.data.status : null}
-              up={this.updateFire}
-            />
+            <Stepper activeStep={this.peek("status")-5} orientation="horizontal" alternativeLabel style={{padding:"10px"}}>
+              <Step key="Contract Over" onClick={() => {this.updateFire(5)}}>
+                <StepLabel>Contract Over</StepLabel>
+              </Step>
+              <Step key="Item to HQ" onClick={() => {this.updateFire(6)}}>
+                <StepLabel>Item to HQ</StepLabel>
+              </Step>
+              <Step key="HQ Check" onClick={() => {this.updateFire(7)}}>
+                <StepLabel>HQ Check</StepLabel>
+              </Step>
+              <Step key="Item to Lender" onClick={() => {this.updateFire(8)}}>
+                <StepLabel>Item to Lender</StepLabel>
+              </Step>
+              <Step key="Lender Received" onClick={() => {this.updateFire(9)}}>
+                <StepLabel>Renter Received</StepLabel>
+              </Step>
+            </Stepper>
           </Grid>
         </Grid>
       </div>
