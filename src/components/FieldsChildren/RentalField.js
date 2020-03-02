@@ -13,62 +13,38 @@ class RentalField extends React.Component {
     super(props);
     this.state = ({
       rentalInfo: null,
+      initialState: null,
     });
 
     this.listenToFirebase = this.listenToFirebase.bind(this);
     this.listenToFirebase();
+    this.updateFire = this.updateFire.bind(this);
   }
 
   listenToFirebase() {
     this.props.query.onSnapshot((doc) => {
       // console.log("Current data: ", doc.data());
+      if(this.state.userInfo === null) {
+        this.setState({ initialState: { id: doc.id, data: doc.data() } });
+        console.log("updated initialState");
+      }
       this.setState({ rentalInfo: { id: doc.id, data: doc.data() } });
     });
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if(prevProps.query !== this.props.query) {
+      this.setState({ initialState: null });
+      this.setState({ rentalInfo: null });
+      this.applyButton = false;
       this.listenToFirebase();
     }
   }
 
-  updateValue(event) {
-    // const target = event.target;
-    // const value = target.type === 'checkbox' ? target.checked : target.value;
-    // const name = target.name;
-    //
-    // this.setState(prevState => ({
-    //   itemInfo: {
-    //     id: this.state.itemInfo.id,
-    //     data: {
-    //       ...prevState.itemInfo.data, [name]: value
-    //     }
-    //   },
-    // }));
-  }
-
-  fcm = () => {
-    fetch('https://fcm.googleapis.com/fcm/send', {
-      method: 'POST', // *GET, POST, PUT, DELETE, etc.
-      headers: {
-        'Authorization' : 'key=AAAAfIlkwIw:APA91bGDIpxkFFsf4hpqnmiQ5OVKexxce8BQ6xbOixXdzXUh_q13WRy6j33vR7VXI-_TJ3ePsU6xRkr044jDhZvkxEZCYjAC9ti2AtYeiTNPdGStrRt-mz3S10K0W8J3i-8JJrG0PnEW',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        to: 'ceFGfb13aSA:APA91bHD9-Gony4oig3ZxOwGsamb47EZl0U0TqsW_yuKHRoxCQnNqEhYPs2-kUUe_9tU48JEYBYOWzzxPzdWpXd-9epQs8tMYL37Pm2X1ZQwWbH3ikeAME80DgameRQASVnxS3mNOCq5',
-        // to: '/topics/android',
-        notification: {
-          title: "Your Item has been APPROVED! char.",
-          body: "This message was generated using RentyDashboard uwu..."
-        }
-      })
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log('FCM API responce:', data);
-    })
-    .catch((error) => {
-      console.error('Error:', error);
+  updateFire(payload) {
+    let stateRef = this.state.rentalInfo.data;
+    this.props.query.update({
+      status: (typeof stateRef.status !== 'undefined') ? payload : "error: notfound",
     });
   }
 
@@ -103,10 +79,8 @@ class RentalField extends React.Component {
               fullWidth
               InputProps={{ readOnly: true }}
             />
-            <LenderToRenterStepper />
           </Grid>
           <Grid item xs={6}> {/* renter_ID */}
-            <RenterToLenderStepper />
             <TextField
               label="Renter's ID"
               value={this.peek("renter_ID")}
@@ -115,9 +89,16 @@ class RentalField extends React.Component {
               InputProps={{ readOnly: true }}
             />
           </Grid>
-          <Button onClick={this.fcm}>
-            click
-          </Button>
+          <Grid item xs={12}>
+            <LenderToRenterStepper
+              currStatus={(this.state.rentalInfo) ? this.state.rentalInfo.data.status : null}
+              up={this.updateFire}
+            />
+            <RenterToLenderStepper
+              currStatus={(this.state.rentalInfo) ? this.state.rentalInfo.data.status : null}
+              up={this.updateFire}
+            />
+          </Grid>
         </Grid>
       </div>
     )
