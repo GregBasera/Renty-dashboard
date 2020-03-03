@@ -36,9 +36,9 @@ class RentalsView extends React.Component {
           case 'modified':
             list[list.map(function(all) { return all.rent_id }).indexOf(change.doc.id)] = {
               rent_id: change.doc.id,
-              lender: change.doc.data().lender,
-              renter: change.doc.data().renter,
-              item: change.doc.data().item,
+              lender: change.doc.data().lender_ID,
+              renter: change.doc.data().renter_ID,
+              item: change.doc.data().item_ID,
             }
             break;
           default:
