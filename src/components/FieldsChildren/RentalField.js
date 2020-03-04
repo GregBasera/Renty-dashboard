@@ -9,8 +9,9 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
-import LenderToRenterStepper from './RentalFieldChildren/LenderToRenterStepper.js';
-import RenterToLenderStepper from './RentalFieldChildren/RenterToLenderStepper.js';
+// import LenderToRenterStepper from './RentalFieldChildren/LenderToRenterStepper.js';
+// import RenterToLenderStepper from './RentalFieldChildren/RenterToLenderStepper.js';
+import OtherCollectionDialog from './RentalFieldChildren/OtherCollectionDialog.js';
 // import CircularProgress from '@material-ui/core/CircularProgress';
 
 class RentalField extends React.Component {
@@ -19,6 +20,7 @@ class RentalField extends React.Component {
     this.state = ({
       rentalInfo: null,
       initialState: null,
+      modal: false,
     });
 
     this.listenToFirebase = this.listenToFirebase.bind(this);
@@ -26,6 +28,7 @@ class RentalField extends React.Component {
     this.updateFire = this.updateFire.bind(this);
     this.stepperNavigation = this.stepperNavigation.bind(this);
     this.fcm = this.fcm.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   listenToFirebase() {
@@ -162,6 +165,10 @@ class RentalField extends React.Component {
     }
   }
 
+  closeModal() {
+    this.setState({ modal: false });
+  }
+
   render() {
     console.log(this.state);
     return (
@@ -184,8 +191,9 @@ class RentalField extends React.Component {
               variant="filled"
               fullWidth
               InputProps={{ readOnly: true }}
-              onClick={() => {console.log("TextField click");}}
+              onClick={() => {this.setState({ modal: true })}}
               />
+            <OtherCollectionDialog open={this.state.modal} close={this.closeModal} id={this.peek("lender_ID")} coll={"users"}/>
           </Grid>
           <Grid item xs={6}> {/* renter_ID */}
             <TextField
@@ -237,18 +245,24 @@ class RentalField extends React.Component {
                     </Step>
                   </Stepper>
                 </Grid>
-                <Grid item xs={'auto'}>
-                  <Button
-                    disabled={(this.peek("status") === 10) ? true : false}
-                    variant="contained"
-                    color="primary"
-                    onClick={() => {this.updateFire((this.peek("status") === null) ? 0 : this.peek("status")+1)}}
-                  >
-                    {(this.peek("status") === 9) ? 'Finish' : 'Next'}
-                  </Button>
-                  <Typography variant="caption" color="error" style={{marginLeft: "15px"}}>
-                    {this.stepperNavigation(this.peek("status"))}
-                  </Typography>
+                <Grid item xs={12}>
+                  <Grid container spacing={1}>
+                    <Grid item xs={'auto'}>
+                      <Button
+                        disabled={(this.peek("status") === 10) ? true : false}
+                        variant="contained"
+                        color="primary"
+                        onClick={() => {this.updateFire((this.peek("status") === null) ? 0 : this.peek("status")+1)}}
+                        >
+                        {(this.peek("status") === 9) ? 'Finish' : 'Next'}
+                      </Button>
+                    </Grid>
+                    <Grid item xs={8}>
+                      <Typography variant="caption" color="error">
+                        {this.stepperNavigation(this.peek("status"))}
+                      </Typography>
+                    </Grid>
+                  </Grid>
                 </Grid>
               </Grid>
             </Box>
