@@ -170,7 +170,6 @@ class RentalField extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <div>
         {/*(this.state.rentalInfo) ? <RentalFieldElements info={this.state.rentalInfo} /> : <CircularProgress />*/}
