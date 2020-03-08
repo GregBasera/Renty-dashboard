@@ -204,10 +204,30 @@ class RentalField extends React.Component {
             />
           </Grid>
           <Grid item xs={12}> {/* rental stepper */}
-            <Box borderRadius={4} border={1} borderColor="grey.400" style={{padding:"5px"}}>
+            <Box borderRadius={4} border={1} borderColor="grey.400" style={{padding:"10px 30px"}}>
               <Grid container spacing={1}>
                 <Grid item xs={12}>
-                  <Stepper activeStep={this.peek("status")} orientation="horizontal" alternativeLabel style={{padding:"10px"}}>
+                  <Grid container spacing={1}>
+                    <Grid item xs={12}>
+                      <Typography variant="h6" color="textPrimary">
+                        {this.stepperNavigation(this.peek("status"))}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Button
+                        fullWidth
+                        disabled={(this.peek("status") === 10) ? true : false}
+                        variant="contained"
+                        color="primary"
+                        onClick={() => {this.updateFire((this.peek("status") === null) ? 0 : this.peek("status")+1)}}
+                      >
+                        {(this.peek("status") === 9) ? 'Finish' : 'Next'}
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item xs={12}>
+                  <Stepper activeStep={parseInt(this.peek("status"))} orientation="horizontal" alternativeLabel style={{padding:"10px"}}>
                     <Step key="Processing Req">
                       <StepLabel>Processing Req</StepLabel>
                     </Step>
@@ -228,40 +248,21 @@ class RentalField extends React.Component {
                 <Grid item xs={12}>
                   <Stepper activeStep={this.peek("status")-5} orientation="horizontal" alternativeLabel style={{padding:"10px"}}>
                     <Step key="Contract Over">
-                      <StepLabel>Contract Over</StepLabel>
+                      <StepLabel icon={6}>Contract Over</StepLabel>
                     </Step>
                     <Step key="Item to HQ">
-                      <StepLabel>Item to HQ</StepLabel>
+                      <StepLabel icon={7}>Item to HQ</StepLabel>
                     </Step>
                     <Step key="HQ Check">
-                      <StepLabel>HQ Check</StepLabel>
+                      <StepLabel icon={8}>HQ Check</StepLabel>
                     </Step>
                     <Step key="Item to Lender">
-                      <StepLabel>Item to Lender</StepLabel>
+                      <StepLabel icon={9}>Item to Lender</StepLabel>
                     </Step>
                     <Step key="Lender Received">
-                      <StepLabel>Renter Received</StepLabel>
+                      <StepLabel icon={10}>Renter Received</StepLabel>
                     </Step>
                   </Stepper>
-                </Grid>
-                <Grid item xs={12}>
-                  <Grid container spacing={1}>
-                    <Grid item xs={'auto'}>
-                      <Button
-                        disabled={(this.peek("status") === 10) ? true : false}
-                        variant="contained"
-                        color="primary"
-                        onClick={() => {this.updateFire((this.peek("status") === null) ? 0 : this.peek("status")+1)}}
-                        >
-                        {(this.peek("status") === 9) ? 'Finish' : 'Next'}
-                      </Button>
-                    </Grid>
-                    <Grid item xs={8}>
-                      <Typography variant="caption" color="error">
-                        {this.stepperNavigation(this.peek("status"))}
-                      </Typography>
-                    </Grid>
-                  </Grid>
                 </Grid>
               </Grid>
             </Box>
