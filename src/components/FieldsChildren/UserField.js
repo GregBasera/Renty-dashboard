@@ -12,7 +12,8 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 
 // import UserFieldElements from './UserFieldChildren/UserFieldElements.js';
-// import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import TfNoEdit from './ItemFieldChildren/TfNoEdit';
 
 class UserField extends React.Component {
   constructor(props) {
@@ -20,12 +21,12 @@ class UserField extends React.Component {
     this.state = ({
       userInfo: null,
       initialState: null,
+      applyButton: false,
     });
 
     this.listenToFirebase = this.listenToFirebase.bind(this);
     this.listenToFirebase();
     this.updateValue = this.updateValue.bind(this);
-    this.applyButton = false;
   }
 
   listenToFirebase() {
@@ -41,9 +42,11 @@ class UserField extends React.Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if(prevProps.query !== this.props.query) {
-      this.setState({ initialState: null });
-      this.setState({ userInfo: null });
-      this.applyButton = false;
+      this.setState({
+        initialState: null,
+        userInfo: null,
+        applyButton: false,
+      });
       this.listenToFirebase();
     }
   }
@@ -54,6 +57,7 @@ class UserField extends React.Component {
     this.props.query.update({
       verified: (typeof stateRef.verified !== 'undefined') ? stateRef.verified : "error: notfound",
     });
+    this.setState({ applyButton: false });
   }
 
   updateValue(event) {
@@ -68,6 +72,7 @@ class UserField extends React.Component {
           ...prevState.userInfo.data, [name]: value
         }
       },
+      applyButton: (JSON.stringify(this.state.itemInfo) !== JSON.stringify(this.state.initialState)) ? true : false,
     }));
   }
 
@@ -81,7 +86,6 @@ class UserField extends React.Component {
   }
 
   render() {
-    this.applyButton = (JSON.stringify(this.state.userInfo) !== JSON.stringify(this.state.initialState)) ? true : false;
     const addressEvaluator = (addressObj) => {
       if(addressObj !== null) {
         let addrsString = addressObj.unit_num + ", " +
@@ -97,34 +101,13 @@ class UserField extends React.Component {
       }
     };
 
-    return (
+    return (this.state.userInfo === null) ? <CircularProgress /> : (
       <Grid container spacing={2}>
-        {/*(this.state.userInfo) ? <UserFieldElements info={this.state.userInfo} /> : <CircularProgress />*/}
         <Grid item xs={6}> {/* user_ID text */}
-          <TextField
-            id="user_ID"
-            label="User ID"
-            value={(this.state.userInfo) ? this.state.userInfo.id : ""}
-            variant="filled"
-            fullWidth
-            size="small"
-            InputProps={{
-              readOnly: true,
-            }}
-          />
+          <TfNoEdit label="User ID" value={this.state.userInfo.id}/>
         </Grid>
         <Grid item xs={6}> {/* name text */}
-          <TextField
-            id="user_name"
-            label="Name"
-            value={this.peek("full_name")}
-            variant="filled"
-            fullWidth
-            size="small"
-            InputProps={{
-              readOnly: true,
-            }}
-          />
+          <TfNoEdit label="Name" value={this.state.userInfo.data.full_name}/>
         </Grid>
         <Grid item xs={3}>
           <Grid container spacing={2}>
@@ -139,18 +122,8 @@ class UserField extends React.Component {
               />
             </Grid>
             <Grid item xs={12}> {/* acc_created text */}
-              <TextField
-                id="acc_created"
-                label="Acc Created"
-                value={(this.peek("acc_created") !== "--") ? this.peek("acc_created").toDate().toLocaleDateString("en-US", {
-                  year: 'numeric', month: 'numeric', day: 'numeric' }) : "--"}
-                variant="filled"
-                fullWidth
-                size="small"
-                InputProps={{
-                  readOnly: true,
-                }}
-              />
+              <TfNoEdit label="Acc Created" value={this.state.userInfo.data.acc_created.toDate().toLocaleDateString("en-US", {
+                year: 'numeric', month: 'numeric', day: 'numeric' })}/>
             </Grid>
           </Grid>
         </Grid>
@@ -170,43 +143,13 @@ class UserField extends React.Component {
           />
         </Grid>
         <Grid item xs={4}> {/* phone text */}
-          <TextField
-            id="phone"
-            label="Phone Number"
-            value={this.peek("phone")}
-            variant="filled"
-            fullWidth
-            size="small"
-            InputProps={{
-              readOnly: true,
-            }}
-          />
+          <TfNoEdit label="Phone Number" value={this.state.userInfo.data.phone}/>
         </Grid>
         <Grid item xs={4}> {/* email text */}
-          <TextField
-            id="email"
-            label="Email"
-            value={this.peek("email")}
-            variant="filled"
-            fullWidth
-            size="small"
-            InputProps={{
-              readOnly: true,
-            }}
-          />
+          <TfNoEdit label="Email" value={this.state.userInfo.data.email}/>
         </Grid>
         <Grid item xs={4}> {/* occupation text */}
-          <TextField
-            id="occupation"
-            label="Occupation"
-            value={this.peek("occupation")}
-            variant="filled"
-            fullWidth
-            size="small"
-            InputProps={{
-              readOnly: true,
-            }}
-          />
+          <TfNoEdit label="Occupation" value={this.state.userInfo.data.occupation}/>
         </Grid>
         <Grid item xs={6}> {/* legal documents group */}
           <Typography variant="subtitle1" color="textSecondary">
@@ -242,8 +185,8 @@ class UserField extends React.Component {
           </Box>
         </Grid>
         <Grid item xs={12}> {/* apply changes button */}
-          <Box display={(this.applyButton) ? "block" : "none"}>
-            <Button fullWidth style={{backgroundColor:"#ce2458",color:"white"}} onClick={this.uploadChanged}>apply changes</Button>
+          <Box display={(this.state.applyButton) ? "block" : "none"}>
+            <Button fullWidth style={{backgroundColor:"#ce2458",color:"white"}} onClick={() => {this.uploadChanged()}}>apply changes</Button>
           </Box>
         </Grid>
       </Grid>
