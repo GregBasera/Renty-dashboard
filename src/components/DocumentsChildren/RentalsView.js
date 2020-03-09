@@ -56,9 +56,9 @@ class RentalsView extends React.Component {
   }
 
   render() {
-    return (
+    return (this.state.rentals.length === 0) ? (<CircularProgress />) : (
       <List component="nav" aria-label="Collections" dense>
-        {(this.state.rentals[0]) ? <RentalsListItem rentals={this.state.rentals} /> : <CircularProgress />}
+        <RentalsListItem rentals={this.state.rentals} />
       </List>
     );
   }

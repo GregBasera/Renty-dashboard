@@ -58,9 +58,9 @@ class UsersView extends React.Component {
   }
 
   render () {
-    return (
+    return (this.state.users.length === 0) ? (<CircularProgress />) : (
       <List component="nav" aria-label="Collections" dense>
-        {(this.state.users[0]) ? <UsersListItem users={this.state.users}/> : <CircularProgress />}
+        <UsersListItem users={this.state.users}/>
       </List>
     )
   }
