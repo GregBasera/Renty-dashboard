@@ -191,16 +191,16 @@ class RentalField extends React.Component {
             <UsersCollectionDialog open={this.state.renterModal} close={this.closeModal} id={this.peek("renter_ID")} coll={"users"}/>
           </Grid>
           <Grid item xs={12}> {/* rental stepper */}
-            <Box borderRadius={4} border={1} borderColor="grey.400" style={{padding:"10px 30px"}}>
+            <Box borderRadius={4} border={1} borderColor="grey.400" style={{padding:"10px 20px"}}>
               <Grid container spacing={1}>
                 <Grid item xs={12}>
                   <Grid container spacing={1}>
                     <Grid item xs={12}>
-                      <Typography variant="h6" color="textPrimary">
+                      <Typography variant="subtitle1" color="textPrimary">
                         {this.stepperNavigation(this.peek("status"))}
                       </Typography>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={6} style={{display: (this.peek("status") === 10) ? "none" : "block"}}>
                       <Button
                         fullWidth
                         disabled={(this.peek("status") === 10) ? true : false}
@@ -208,7 +208,17 @@ class RentalField extends React.Component {
                         color="primary"
                         onClick={() => {this.updateFire((this.peek("status") === null) ? 0 : this.peek("status")+1)}}
                       >
-                        {(this.peek("status") === 9) ? 'Finish' : 'Next'}
+                        {(this.state.rentalInfo.data.status === null) ? 'accept request' : (this.state.rentalInfo.data.status === 9) ? 'finish' : 'next'}
+                      </Button>
+                    </Grid>
+                    <Grid item xs={6} style={{display: (this.peek("status") === 0) ? "block" : "none"}}>
+                      <Button
+                        fullWidth
+                        variant="contained"
+                        color="secondary"
+                        onClick={() => {this.updateFire(-1)}}
+                      >
+                        {"decline"}
                       </Button>
                     </Grid>
                   </Grid>
