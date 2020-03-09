@@ -21,35 +21,19 @@ function Documents() {
     switch (index) {
       case 1: // ALL rentals
         return <RentalsView query={Firebase.firestore().collection('rentals')} />;
-      case 2: // DUE rentals
-        return <RentalsView query={Firebase.firestore().collection('rentals').where('status', '==', 'due')} />;
-      case 3: // PENDING rentals
-        return <RentalsView query={Firebase.firestore().collection('rentals').where('status', '==', 'pending')} />;
-      case 4: // LEASED rentals
-        return <RentalsView query={Firebase.firestore().collection('rentals').where('status', '==', 'leased')} />;
 
-      case 5: // ALL items
+      case 2: // ALL items
         return <ItemsView query={Firebase.firestore().collection('items').orderBy('date_entered')} />;
-      case 6: // IN_APP items
-        return <ItemsView query={Firebase.firestore().collection('items').where('is_approved', '==', true).orderBy('date_entered')} />;
-      case 7: // FOR-APPROVAL items
-        return <ItemsView query={Firebase.firestore().collection('items').where('is_approved', '==', false).orderBy('date_entered')} />;
 
-      case 8: // ALL users
+      case 3: // ALL users
         return <UsersView query={Firebase.firestore().collection('users').orderBy('full_name', 'desc')} />;
-      case 9: // VERIFIED users
-        return <UsersView query={Firebase.firestore().collection('users').where('verified', '==', true).orderBy('full_name', 'desc')} />;
-      case 10: // PENDING verifications
-        return "Select a collection...";
-      case 11: // NOT VERIFIED users
-        return <UsersView query={Firebase.firestore().collection('users').where('verified', '==', false).orderBy('full_name', 'desc')} />;
 
-      case 12: // NOT VERIFIED users
-        // return <UsersView query={Firebase.firestore().collection('users').where('verified', '==', false)} />;
-        Firebase.firestore().collection('operations').doc('items').onSnapshot((doc) => {
-          console.log(doc.data().categories);
-        });
-        break;
+      case 4: // client app
+        return "Client App";
+
+      case 5: // operations
+        return "Operations";
+
       default:
         return "Select a collection...";
 
