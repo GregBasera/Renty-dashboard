@@ -12,7 +12,7 @@ import Container from '@material-ui/core/Container';
 
 import Firebase from './../../../Firebase';
 
-class OtherCollectionDialog extends React.Component {
+class UsersCollectionDialog extends React.Component {
   constructor(props) {
     super(props);
     this.state = ({
@@ -171,4 +171,4 @@ class OtherCollectionDialog extends React.Component {
   }
 }
 
-export default OtherCollectionDialog;
+export default UsersCollectionDialog;

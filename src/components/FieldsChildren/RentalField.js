@@ -8,10 +8,12 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // import LenderToRenterStepper from './RentalFieldChildren/LenderToRenterStepper.js';
 // import RenterToLenderStepper from './RentalFieldChildren/RenterToLenderStepper.js';
-import OtherCollectionDialog from './RentalFieldChildren/OtherCollectionDialog.js';
+import UsersCollectionDialog from './RentalFieldChildren/UsersCollectionDialog.js';
+import TfNoEdit from './RentalFieldChildren/TfNoEdit.js';
 // import CircularProgress from '@material-ui/core/CircularProgress';
 
 class RentalField extends React.Component {
@@ -20,7 +22,8 @@ class RentalField extends React.Component {
     this.state = ({
       rentalInfo: null,
       initialState: null,
-      modal: false,
+      lenderModal: false,
+      renterModal: false,
     });
 
     this.listenToFirebase = this.listenToFirebase.bind(this);
@@ -166,42 +169,27 @@ class RentalField extends React.Component {
   }
 
   closeModal() {
-    this.setState({ modal: false });
+    this.setState({
+      lenderModal: false,
+      renterModal: false,
+    });
   }
 
   render() {
-    return (
+    return (this.state.rentalInfo === null) ? <CircularProgress /> : (
       <div>
         {/*(this.state.rentalInfo) ? <RentalFieldElements info={this.state.rentalInfo} /> : <CircularProgress />*/}
         <Grid container spacing={2}>
           <Grid item xs={12}> {/* item_ID */}
-            <TextField
-              label="Item ID"
-              value={this.peek("item_ID")}
-              variant="filled"
-              fullWidth
-              InputProps={{ readOnly: true }}
-            />
+            <TfNoEdit label="Item ID" value={this.state.rentalInfo.data.item_ID} onClick={null}/>
           </Grid>
           <Grid item xs={6}> {/* lender_ID */}
-            <TextField
-              label="Lender's ID"
-              value={this.peek("lender_ID")}
-              variant="filled"
-              fullWidth
-              InputProps={{ readOnly: true }}
-              onClick={() => {this.setState({ modal: true })}}
-              />
-            <OtherCollectionDialog open={this.state.modal} close={this.closeModal} id={this.peek("lender_ID")} coll={"users"}/>
+            <TfNoEdit label="Lender's ID" value={this.state.rentalInfo.data.lender_ID} onClick={() => {this.setState({ lenderModal: true })}}/>
+            <UsersCollectionDialog open={this.state.lenderModal} close={this.closeModal} id={this.peek("lender_ID")} coll={"users"}/>
           </Grid>
           <Grid item xs={6}> {/* renter_ID */}
-            <TextField
-              label="Renter's ID"
-              value={this.peek("renter_ID")}
-              variant="filled"
-              fullWidth
-              InputProps={{ readOnly: true }}
-            />
+            <TfNoEdit label="Renter's ID" value={this.state.rentalInfo.data.renter_ID} onClick={() => {this.setState({ renterModal: true })}}/>
+            <UsersCollectionDialog open={this.state.renterModal} close={this.closeModal} id={this.peek("renter_ID")} coll={"users"}/>
           </Grid>
           <Grid item xs={12}> {/* rental stepper */}
             <Box borderRadius={4} border={1} borderColor="grey.400" style={{padding:"10px 30px"}}>
