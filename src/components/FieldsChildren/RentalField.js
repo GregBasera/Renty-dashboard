@@ -293,10 +293,12 @@ class RentalField extends React.Component {
               </Typography>
               <Grid container spacing={1}>
                 <Grid item xs={12}>
-                  <TfNoEdit label="Start date" value={this.state.rentalInfo.data.rent_duration.start}/>
+                  <TfNoEdit label="Start date" value={this.state.rentalInfo.data.rent_duration.start.toDate().toLocaleDateString("en-US", {
+                    year: 'numeric', month: 'short', day: 'numeric', hour:'2-digit', minute:'2-digit' })}/>
                 </Grid>
                 <Grid item xs={12}>
-                  <TfNoEdit label="End date" value={this.state.rentalInfo.data.rent_duration.end}/>
+                  <TfNoEdit label="End date" value={this.state.rentalInfo.data.rent_duration.end.toDate().toLocaleDateString("en-US", {
+                    year: 'numeric', month: 'short', day: 'numeric', hour:'2-digit', minute:'2-digit' })}/>
                 </Grid>
               </Grid>
             </Box>
