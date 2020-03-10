@@ -8,8 +8,10 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import Firebase from './../../../Firebase';
+import TfNoEdit from './TfNoEdit';
 
 class UsersCollectionDialog extends React.Component {
   constructor(props) {
@@ -24,7 +26,7 @@ class UsersCollectionDialog extends React.Component {
 
   async listenToFirebase(coll, id) {
     var data = null
-    await Firebase.firestore().collection(this.props.coll).doc('Model User').get().then(function(snapshot) {
+    await Firebase.firestore().collection(coll).doc(id).get().then(function(snapshot) {
       if (snapshot.exists) {
         data = snapshot.data();
       } else {
@@ -53,36 +55,26 @@ class UsersCollectionDialog extends React.Component {
   }
 
   render() {
-    return (
+    return (this.state.doc === null) ? <CircularProgress /> : (
       <Dialog
         open={this.props.open}
         onClose={this.props.close}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{"user: " + this.props.id}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{this.props.title + ": " + this.props.id}</DialogTitle>
         <DialogContent>
           {/*(this.state.doc) ? this.state.doc.full_name : "nothing"*/}
           <Grid container spacing={2}>
             <Grid item xs={12}> {/* name text */}
-              <TextField
-                id="user_name"
-                label="Name"
-                value={(this.state.doc) ? this.state.doc.full_name : "nothing"}
-                variant="filled"
-                fullWidth
-                size="small"
-                InputProps={{
-                  readOnly: true,
-                }}
-              />
+              <TfNoEdit label="Name" value={this.state.doc.full_name}/>
             </Grid>
             <Grid item xs={3}>
               <Grid container spacing={2}>
                 <Grid item xs={12}> {/* verified switch */}
                   <FormControlLabel
                     control={
-                      <Switch checked={(this.state.doc) ? this.state.doc.verified : "nothing"} />
+                      <Switch checked={this.state.doc.verified} />
                     }
                     label="Verified"
                     name="verified"
@@ -92,8 +84,8 @@ class UsersCollectionDialog extends React.Component {
                   <TextField
                     id="acc_created"
                     label="Acc Created"
-                    value={(this.state.doc) ? this.state.doc.acc_created.toDate().toLocaleDateString("en-US", {
-                      year: 'numeric', month: 'numeric', day: 'numeric' }) : "--"}
+                    value={this.state.doc.acc_created.toDate().toLocaleDateString("en-US", {
+                      year: 'numeric', month: 'numeric', day: 'numeric' })}
                     variant="filled"
                     fullWidth
                     size="small"
@@ -108,7 +100,7 @@ class UsersCollectionDialog extends React.Component {
               <TextField
                 id="address"
                 label="Home Address"
-                value={(this.state.doc) ? this.addressEvaluator(this.state.doc.address) : "--"}
+                value={this.addressEvaluator(this.state.doc.address)}
                 variant="filled"
                 fullWidth
                 multiline
@@ -120,43 +112,13 @@ class UsersCollectionDialog extends React.Component {
               />
             </Grid>
             <Grid item xs={4}> {/* phone text */}
-              <TextField
-                id="phone"
-                label="Phone Number"
-                value={(this.state.doc) ? this.state.doc.phone : "nothing"}
-                variant="filled"
-                fullWidth
-                size="small"
-                InputProps={{
-                  readOnly: true,
-                }}
-              />
+              <TfNoEdit label="Phone Number" value={this.state.doc.phone}/>
             </Grid>
             <Grid item xs={4}> {/* email text */}
-              <TextField
-                id="email"
-                label="Email"
-                value={(this.state.doc) ? this.state.doc.email : "nothing"}
-                variant="filled"
-                fullWidth
-                size="small"
-                InputProps={{
-                  readOnly: true,
-                }}
-              />
+              <TfNoEdit label="Email" value={this.state.doc.email}/>
             </Grid>
             <Grid item xs={4}> {/* occupation text */}
-              <TextField
-                id="occupation"
-                label="Occupation"
-                value={(this.state.doc) ? this.state.doc.occupation : "nothing"}
-                variant="filled"
-                fullWidth
-                size="small"
-                InputProps={{
-                  readOnly: true,
-                }}
-              />
+              <TfNoEdit label="Occupation" value={this.state.doc.occupation}/>
             </Grid>
           </Grid>
         </DialogContent>
