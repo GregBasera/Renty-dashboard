@@ -48,7 +48,7 @@ function RentalsListItem(props) {
                       <Typography variant="caption" component="span" color="textPrimary">
                         {rental.lender}
                       </Typography>
-                      <Typography variant="h6" component="span" style={{color:"red"}}>
+                      <Typography variant="caption" component="span" style={{color:"red"}}>
                         {" → "}
                       </Typography>
                       <Typography variant="caption" component="span" color="textSecondary">
