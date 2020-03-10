@@ -195,7 +195,7 @@ class RentalField extends React.Component {
             <UsersCollDialog title="Renter" open={this.state.renterModal} close={this.closeModal} id={this.peek("renter_ID")} coll={"users"}/>
           </Grid>
           <Grid item xs={12}> {/* rental stepper */}
-            <Box borderRadius={4} border={1} borderColor="grey.400" style={{padding:"10px 20px"}}>
+            <Box borderRadius={4} border={1} borderColor="grey.400" style={{padding:"5px 10px"}}>
               <Grid container spacing={1}>
                 <Grid item xs={12}>
                   <Grid container spacing={1}>
@@ -264,6 +264,39 @@ class RentalField extends React.Component {
                       <StepLabel icon={10}>Renter Received</StepLabel>
                     </Step>
                   </Stepper>
+                </Grid>
+              </Grid>
+            </Box>
+          </Grid>
+          <Grid item xs={6}> {/* prices */}
+            <Box borderRadius={4} border={1} borderColor="grey.400" style={{padding:"5px"}}>
+              <Typography variant="subtitle1" color="textSecondary">
+                Checkout Details
+              </Typography>
+              <Grid container spacing={1}>
+                <Grid item xs={12}>
+                  <TfNoEdit label="Agreed upon price (₱)" value={this.state.rentalInfo.data.lender_def_price}/>
+                </Grid>
+                <Grid item xs={12}>
+                  <TfNoEdit label="Service Fee (₱)" value={this.state.rentalInfo.data.service_fee}/>
+                </Grid>
+                <Grid item xs={12}>
+                  <TfNoEdit label="Total Price (₱)" value={this.state.rentalInfo.data.total_price}/>
+                </Grid>
+              </Grid>
+            </Box>
+          </Grid>
+          <Grid item xs={6}> {/* duration */}
+            <Box borderRadius={4} border={1} borderColor="grey.400" style={{padding:"5px"}}>
+              <Typography variant="subtitle1" color="textSecondary">
+                Rent Duration
+              </Typography>
+              <Grid container spacing={1}>
+                <Grid item xs={12}>
+                  <TfNoEdit label="Start date" value={this.state.rentalInfo.data.rent_duration.start}/>
+                </Grid>
+                <Grid item xs={12}>
+                  <TfNoEdit label="End date" value={this.state.rentalInfo.data.rent_duration.end}/>
                 </Grid>
               </Grid>
             </Box>
