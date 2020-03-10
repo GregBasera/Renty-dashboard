@@ -139,10 +139,10 @@ class ItemField extends React.Component {
           </Grid>
         </Grid>
         <Grid item xs={5}> {/* rent_mode group */}
-          <Typography variant="subtitle1" color="textSecondary">
-            Rent Modes
-          </Typography>
           <Box borderRadius={4} border={1} borderColor="grey.400" style={{padding:"5px"}}>
+            <Typography variant="subtitle1" color="textSecondary">
+              Rent Modes
+            </Typography>
             <Grid container spacing={1} style={{marginTop:"5px"}}>
               <Grid item xs={12}>
                 <TfNoEdit label="perHour (₱)" value={this.state.itemInfo.data.rent_details.perHour}/>
@@ -169,11 +169,11 @@ class ItemField extends React.Component {
               }) : "nothing"}
             </Grid>
             <Grid item xs={12}> {/* Dropoff method group */}
-              <Typography variant="subtitle1" color="textSecondary">
-                Drop-Off Method
-              </Typography>
               <Box borderRadius={4} border={1} borderColor="grey.400" style={{padding:"5px"}}>
-                <Grid container spacing={1}>
+                <Typography variant="subtitle1" color="textSecondary">
+                  Drop-Off Method
+                </Typography>
+                <Grid container spacing={1} style={{marginTop:"5px"}}>
                   <Grid item xs={12}>
                     <Chip size="small" color="primary" icon={<CheckIcon fontSize="small" />} label={this.peek("acquisition_map").acquisition_type} />
                   </Grid>

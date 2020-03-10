@@ -152,10 +152,10 @@ class UserField extends React.Component {
           <TfNoEdit label="Occupation" value={this.state.userInfo.data.occupation}/>
         </Grid>
         <Grid item xs={6}> {/* legal documents group */}
-          <Typography variant="subtitle1" color="textSecondary">
-            Legal Documents
-          </Typography>
           <Box borderRadius={4} border={1} borderColor="grey.400" style={{padding:"5px"}}>
+            <Typography variant="subtitle1" color="textSecondary">
+              Legal Documents
+            </Typography>
             <Card>
               <CardContent style={{padding:"5px 5px"}}>
                 <Typography variant="subtitle1">
@@ -177,11 +177,10 @@ class UserField extends React.Component {
           </Box>
         </Grid>
         <Grid item xs={6}> {/* history group */}
-          <Typography variant="subtitle1" color="textSecondary">
-            User's History
-          </Typography>
           <Box borderRadius={4} border={1} borderColor="grey.400" style={{padding:"5px"}}>
-
+            <Typography variant="subtitle1" color="textSecondary">
+              User's History
+            </Typography>
           </Box>
         </Grid>
         <Grid item xs={12}> {/* apply changes button */}
