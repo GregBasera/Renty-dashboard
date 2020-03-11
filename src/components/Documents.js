@@ -7,6 +7,7 @@ import Firebase from './../Firebase';
 import RentalsView from './DocumentsChildren/RentalsView.js';
 import ItemsView from './DocumentsChildren/ItemsView';
 import UsersView from './DocumentsChildren/UsersView';
+import OperationsView from './DocumentsChildren/OperationsView';
 
 // Layout
 import Container from '@material-ui/core/Container';
@@ -32,7 +33,7 @@ function Documents() {
         return "Client App";
 
       case 5: // operations
-        return "Operations";
+        return <OperationsView query={Firebase.firestore().collection('operations')} />;
 
       default:
         return "Select a collection...";
