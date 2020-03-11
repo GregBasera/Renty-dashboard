@@ -6,6 +6,7 @@ import Firebase from './../Firebase';
 import UserField from './FieldsChildren/UserField';
 import ItemField from './FieldsChildren/ItemField';
 import RentalField from './FieldsChildren/RentalField';
+import OperationField from './FieldsChildren/OperationField';
 
 // Layout
 import Container from '@material-ui/core/Container';
@@ -28,6 +29,8 @@ function Fields() {
         return id ? <ItemField query={Firebase.firestore().collection(collection).doc(id)} /> : "Select a document";
       case 'rentals':
         return id ? <RentalField query={Firebase.firestore().collection(collection).doc(id)} /> : "Select a document";
+      case 'operations':
+        return id ? <OperationField query={Firebase.firestore().collection(collection).doc(id)} /> : "Select a document";
       default:
         return null;
     }
