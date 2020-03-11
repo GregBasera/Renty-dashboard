@@ -29,6 +29,7 @@ class App extends React.Component {
       email: null,
       passw: null,
       alert: { show: false, msg: "" },
+      header: true,
     })
 
     this.handleChanges = this.handleChanges.bind(this);
@@ -106,6 +107,12 @@ class App extends React.Component {
     })
   }
 
+  headerChange = (prev) => {
+    this.setState({
+      header: (prev) ? true : false,
+    });
+  }
+
   renderHomeOrLogin() {
     if(this.state.user === 0) {
       return (
@@ -158,7 +165,7 @@ class App extends React.Component {
       return (
         <Grid container spacing={0} style={{height:"100vh"}}>
           <Grid item xs={12}>
-            <Header />
+            <Header show={this.state.header} changes={this.headerChange}/>
           </Grid>
           <Grid item xs={3}>
             <Paper elevation={0} variant="outlined" square style={{marginTop:"48px",padding:"10px 0px"}}>
