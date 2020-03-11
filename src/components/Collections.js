@@ -51,28 +51,28 @@ function Collections() {
           <Chip variant="outlined" size="small" label="100" />
         </ListItem>
 
-        <ListItem button selected={selectedIndex === 5} onClick={event => handleListItemClick(event, 2, 'All Items', 'items')} >
+        <ListItem button selected={selectedIndex === 2} onClick={event => handleListItemClick(event, 2, 'All Items', 'items')} >
           <ListItemIcon>
             <DashboardIcon />
           </ListItemIcon>
           <ListItemText primary="Items" />
         </ListItem>
 
-        <ListItem button selected={selectedIndex === 8} onClick={event => handleListItemClick(event, 3, 'All Users', 'users')} >
+        <ListItem button selected={selectedIndex === 3} onClick={event => handleListItemClick(event, 3, 'All Users', 'users')} >
           <ListItemIcon>
             <GroupIcon />
           </ListItemIcon>
           <ListItemText primary="Users" />
         </ListItem>
 
-        <ListItem button selected={selectedIndex === 12} onClick={event => handleListItemClick(event, 4, 'Client App', null)} >
+        <ListItem button selected={selectedIndex === 4} onClick={event => handleListItemClick(event, 4, 'Client App', null)} >
           <ListItemIcon>
             <PhonelinkRingIcon />
           </ListItemIcon>
           <ListItemText primary="Client App" />
         </ListItem>
 
-        <ListItem button selected={selectedIndex === 13} onClick={event => handleListItemClick(event, 5, 'Operations', null)} >
+        <ListItem button selected={selectedIndex === 5} onClick={event => handleListItemClick(event, 5, 'Operations', 'operations')} >
           <ListItemIcon>
             <PhonelinkRingIcon />
           </ListItemIcon>
