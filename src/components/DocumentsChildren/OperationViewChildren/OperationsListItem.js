@@ -5,14 +5,14 @@ import { changeFieldView } from '../../../actions/collectionsActs';
 // Layout
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+// import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
-import Tooltip from '@material-ui/core/Tooltip';
+// import Tooltip from '@material-ui/core/Tooltip';
 
-import Icon from '@material-ui/core/Icon';
-import BeenhereIcon from '@material-ui/icons/Beenhere';
-import HelpIcon from '@material-ui/icons/Help';
+// import Icon from '@material-ui/core/Icon';
+// import BeenhereIcon from '@material-ui/icons/Beenhere';
+// import HelpIcon from '@material-ui/icons/Help';
 
 function OperationsListItem(props) {
   const [selectedIndex, setSelectedIndex] = React.useState(-1);

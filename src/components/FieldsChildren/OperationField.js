@@ -1,17 +1,7 @@
 import React from 'react';
 
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import Chip from '@material-ui/core/Chip';
-import CheckIcon from '@material-ui/icons/Check';
-
-import MediaCard from './ItemFieldChildren/MediaCard.js';
-import TfNoEdit from './ItemFieldChildren/TfNoEdit.js';
+import ItemView from './OperationFieldChildren/ItemView';
+import Fcm from './OperationFieldChildren/Fcm';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 class OperationField extends React.Component {
@@ -25,6 +15,7 @@ class OperationField extends React.Component {
     this.listenToFirebase = this.listenToFirebase.bind(this);
     this.listenToFirebase();
     this.updateValue = this.updateValue.bind(this);
+    this.operationInedxer = this.operationInedxer.bind(this);
   }
 
   listenToFirebase() {
@@ -72,19 +63,22 @@ class OperationField extends React.Component {
     }));
   }
 
-  peek = (key) => {
-    if(this.state.operationsInfo !== null) {
-      var returnThis = this.state.operationsInfo.data;
-      return (Object.keys(returnThis).indexOf(key) !== -1) ? returnThis[key] : "--"
-    } else {
-      return "--";
+  operationInedxer() {
+    switch(this.props.opIndex) {
+      case 'items':
+        return (<ItemView data={this.state.operationsInfo.data} />);
+      case 'fcm_token':
+        return (<Fcm data={this.state.operationsInfo.data} />);
+      default:
+        return "Choose a document...";
     }
   }
 
   render() {
-    console.log(this.state);
     return (this.state.operationsInfo === null) ? <CircularProgress /> : (
-      <h1>{this.state.operationsInfo.data.categories[1].name}</h1>
+      <div>
+        {this.operationInedxer()}
+      </div>
     )
   }
 }
