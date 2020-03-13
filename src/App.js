@@ -13,6 +13,8 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Box from '@material-ui/core/Box';
+import Slide from '@material-ui/core/Slide';
+import Fab from '@material-ui/core/Fab';
 
 // Components
 import logo from './Renty_Logo+Text.png';
@@ -20,6 +22,7 @@ import Header from './components/Header';
 import Collections from './components/Collections';
 import Documents from './components/Documents';
 import Fields from './components/Fields';
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 
 class App extends React.Component {
   constructor(props) {
@@ -164,21 +167,28 @@ class App extends React.Component {
     } else {
       return (
         <Grid container spacing={0} style={{height:"100vh"}}>
-          <Grid item xs={12}>
-            <Header show={this.state.header} changes={this.headerChange}/>
-          </Grid>
+          <Slide direction="left" in={!this.state.header} mountOnEnter unmountOnExit>
+            <Box onClick={() => {this.headerChange(true)}} style={{position:"absolute",backgroundColor:"#f06383",height:"25px",width:"25px"}}>
+              <KeyboardArrowRightIcon />
+            </Box>
+          </Slide>
+          <Slide direction="right" in={this.state.header} mountOnEnter unmountOnExit>
+            <Grid item xs={12}>
+              <Header show={this.state.header} changes={this.headerChange}/>
+            </Grid>
+          </Slide>
           <Grid item xs={3}>
-            <Paper elevation={0} variant="outlined" square style={{marginTop:"48px",padding:"10px 0px"}}>
+            <Paper elevation={0} variant="outlined" square style={{marginTop:(this.state.header) ? "48px" : "0px", padding:"10px 0px"}}>
               <Collections />
             </Paper>
           </Grid>
           <Grid item xs={4}>
-            <Paper elevation={0} variant="outlined" square style={{marginTop:"48px",padding:"10px 0px"}}>
+            <Paper elevation={0} variant="outlined" square style={{marginTop:(this.state.header) ? "48px" : "0px", padding:"10px 0px"}}>
               <Documents />
             </Paper>
           </Grid>
           <Grid item xs={5}>
-            <Paper elevation={0} variant="outlined" square style={{marginTop:"48px",padding:"10px 0px"}}>
+            <Paper elevation={0} variant="outlined" square style={{marginTop:(this.state.header) ? "48px" : "0px", padding:"10px 0px"}}>
               <Fields />
             </Paper>
           </Grid>

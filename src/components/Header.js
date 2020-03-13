@@ -35,11 +35,7 @@ function Header(props) {
 
   return (
     <div>
-      <Slide direction="left" in={!props.show} mountOnEnter unmountOnExit style={{position:"absolute"}}>
-        <Fab size="small" onClick={() => {props.changes(true)}}>
-          <KeyboardArrowRightIcon />
-        </Fab>
-      </Slide>
+
       <Slide direction="right" in={props.show} mountOnEnter unmountOnExit>
         <AppBar style={{backgroundColor:"#f06383"}}>
           <Toolbar variant="dense">
