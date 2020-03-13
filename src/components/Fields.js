@@ -30,7 +30,8 @@ function Fields() {
       case 'rentals':
         return id ? <RentalField query={Firebase.firestore().collection(collection).doc(id)} /> : "Select a document";
       case 'operations':
-        return id ? <OperationField query={Firebase.firestore().collection(collection).doc(id)} opIndex={id} /> : "Select a document";
+        return id ? <OperationField opIndex={id} /> : "Select a document";
+        // return id ? <OperationField query={Firebase.firestore().collection(collection).doc(id)} opIndex={id} /> : "Select a document";
       default:
         return null;
     }
