@@ -73,8 +73,8 @@ class RentalField extends React.Component {
     }
   }
 
-  fcm(title, body) {
-    console.log(title, body);
+  fcm(title, body, token) {
+    console.log(token);
     fetch('https://fcm.googleapis.com/fcm/send', {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
       headers: {
@@ -82,8 +82,8 @@ class RentalField extends React.Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        to: 'ceFGfb13aSA:APA91bHD9-Gony4oig3ZxOwGsamb47EZl0U0TqsW_yuKHRoxCQnNqEhYPs2-kUUe_9tU48JEYBYOWzzxPzdWpXd-9epQs8tMYL37Pm2X1ZQwWbH3ikeAME80DgameRQASVnxS3mNOCq5',
-        // to: '/topics/android',
+        // to: 'ceFGfb13aSA:APA91bHD9-Gony4oig3ZxOwGsamb47EZl0U0TqsW_yuKHRoxCQnNqEhYPs2-kUUe_9tU48JEYBYOWzzxPzdWpXd-9epQs8tMYL37Pm2X1ZQwWbH3ikeAME80DgameRQASVnxS3mNOCq5',
+        to: token,
         notification: {
           title: title,
           body: body
@@ -102,19 +102,23 @@ class RentalField extends React.Component {
   stepperNavigation(index) {
     switch (index) {
       case 0:
-        // this.fcm(
-        //   "A person wants to rent an item you listed.",
-        //   "We are currently processing the request. You'll be contacted shortly to confirm the items availability."
-        // ); // lender
-        // this.fcm(
-        //   "Your request has been processed.",
-        //   "The lender is now being asked for approval."
-        // ); // renter
-        return "The LENDER and RENTER was notified. (!) Contact the lender, discuss and confirm the renting and item details.";
+        this.fcm(
+          "A person wants to rent an item you listed. [item details]",
+          "We are currently processing the request. You'll be contacted shortly to confirm the item's availability.",
+          this.state.rentalInfo.data.lender_fcm_token
+        ); // lender
+        this.fcm(
+          "Your request is being processed.",
+          "The lender is now being asked for approval.",
+          this.state.rentalInfo.data.renter_fcm_token
+        ); // renter
+        return "The LENDER and RENTER was notified. Contact the lender, discuss and confirm the renting and item details.";
         // ! ! ! lender can refuse here
       case 1:
         return "Dispatch a rider to the Lenders address to retrieve the item.";
       case 2:
+        return "Item is officially out the hands of the lender and in the hands of Renty. Please inspect the item for any defect. Mark, record, and inform the lender of the seen condition.";
+      case 3:
         // this.fcm(
         //   "Item preparation complete.",
         //   "The item is now on its way to the person who rented it. <renting details>"
@@ -123,15 +127,15 @@ class RentalField extends React.Component {
         //   "Item preparation complete.",
         //   "The item is now on its way to you."
         // ); // renter
-        return "The LENDER and RENTER was notified. Item is officially out the hands of the lender and in the hands of Renty.";
-      case 3:
-        return "Dispatch a rider to the Renters address to deliver the rented item.";
+        return "The LENDER and RENTER was notified. Dispatch a rider to the Renters address to deliver the rented item.";
       case 4:
+        return "Item is officially out the hands of Renty and in the hands of the Renter.";
+      case 5:
         // this.fcm(
         //   "The item has been received.",
-        //   "The item is due <renting details>. Thank you."
+        //   "The item is due <renting details>. Thank you!"
         // ); // renter
-        return "The RENTER was notified. Item is officially out the hands of Renty and in the hands of the Renter.";
+        return "The RENTER was notified";
       case 5:
         // this.fcm(
         //   "An item contract just expired.",
@@ -184,15 +188,15 @@ class RentalField extends React.Component {
         <Grid container spacing={2}>
           <Grid item xs={12}> {/* item_ID */}
             <TfNoEdit label="Item ID" value={this.state.rentalInfo.data.item_ID} onClick={() => {this.setState({ itemModal: true })}}/>
-            <ItemsCollDialog title="Item" open={this.state.itemModal} close={this.closeModal} id={this.peek("item_ID")} coll={"items"}/>
+            {/*<ItemsCollDialog title="Item" open={this.state.itemModal} close={this.closeModal} id={this.peek("item_ID")} coll={"items"}/>*/}
           </Grid>
           <Grid item xs={6}> {/* lender_ID */}
             <TfNoEdit label="Lender's ID" value={this.state.rentalInfo.data.lender_ID} onClick={() => {this.setState({ lenderModal: true })}}/>
-            <UsersCollDialog title="Lender" open={this.state.lenderModal} close={this.closeModal} id={this.peek("lender_ID")} coll={"users"}/>
+            {/*<UsersCollDialog title="Lender" open={this.state.lenderModal} close={this.closeModal} id={this.peek("lender_ID")} coll={"users"}/>*/}
           </Grid>
           <Grid item xs={6}> {/* renter_ID */}
             <TfNoEdit label="Renter's ID" value={this.state.rentalInfo.data.renter_ID} onClick={() => {this.setState({ renterModal: true })}}/>
-            <UsersCollDialog title="Renter" open={this.state.renterModal} close={this.closeModal} id={this.peek("renter_ID")} coll={"users"}/>
+            {/*<UsersCollDialog title="Renter" open={this.state.renterModal} close={this.closeModal} id={this.peek("renter_ID")} coll={"users"}/>*/}
           </Grid>
           <Grid item xs={12}> {/* rental stepper */}
             <Box borderRadius={4} border={1} borderColor="grey.400" style={{padding:"5px 10px"}}>
@@ -247,7 +251,7 @@ class RentalField extends React.Component {
                   </Stepper>
                 </Grid>
                 <Grid item xs={12}>
-                  <Stepper activeStep={this.peek("status")-5} orientation="horizontal" alternativeLabel style={{padding:"10px"}}>
+                  <Stepper activeStep={this.peek("status")-6} orientation="horizontal" alternativeLabel style={{padding:"10px"}}>
                     <Step key="Contract Over">
                       <StepLabel icon={6}>Contract Over</StepLabel>
                     </Step>
@@ -293,11 +297,11 @@ class RentalField extends React.Component {
               </Typography>
               <Grid container spacing={1}>
                 <Grid item xs={12}>
-                  <TfNoEdit label="Start date" value={this.state.rentalInfo.data.rent_duration.start.toDate().toLocaleDateString("en-US", {
+                  <TfNoEdit label="Start date" value={this.state.rentalInfo.data.rent_duration.start_date.toDate().toLocaleDateString("en-US", {
                     year: 'numeric', month: 'short', day: 'numeric', hour:'2-digit', minute:'2-digit' })}/>
                 </Grid>
                 <Grid item xs={12}>
-                  <TfNoEdit label="End date" value={this.state.rentalInfo.data.rent_duration.end.toDate().toLocaleDateString("en-US", {
+                  <TfNoEdit label="End date" value={this.state.rentalInfo.data.rent_duration.end_date.toDate().toLocaleDateString("en-US", {
                     year: 'numeric', month: 'short', day: 'numeric', hour:'2-digit', minute:'2-digit' })}/>
                 </Grid>
               </Grid>
