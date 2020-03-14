@@ -14,7 +14,6 @@ import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Box from '@material-ui/core/Box';
 import Slide from '@material-ui/core/Slide';
-import Fab from '@material-ui/core/Fab';
 
 // Components
 import logo from './Renty_Logo+Text.png';
