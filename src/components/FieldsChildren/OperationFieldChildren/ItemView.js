@@ -6,7 +6,7 @@ import Box from '@material-ui/core/Box';
 import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
 
-import TfNoEdit from './TfNoEdit';
+// import TfNoEdit from './TfNoEdit';
 import Firebase from './../../../Firebase';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import AddIcon from '@material-ui/icons/Add';
