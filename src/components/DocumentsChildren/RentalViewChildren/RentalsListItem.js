@@ -9,6 +9,9 @@ import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Grid from '@material-ui/core/Grid';
+import Tooltip from '@material-ui/core/Tooltip';
+
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
 function RentalsListItem(props) {
   const [selectedIndex, setSelectedIndex] = React.useState(-1);
@@ -34,36 +37,34 @@ function RentalsListItem(props) {
                   <ListItemText primary={
                     <React.Fragment>
                       <Typography variant="subtitle1" component="span" color="textSecondary">
-                        {"Item: "}
+                        {"Rent-ID: "}
                       </Typography>
                       <Typography variant="subtitle1" component="span" color="textPrimary">
-                        {rental.item}
+                        {rental.rent_id}
                       </Typography>
                     </React.Fragment>
                   } secondary={
                     <React.Fragment>
-                      <Typography variant="caption" component="span" color="textSecondary">
-                        {"Lender: "}
-                      </Typography>
-                      <Typography variant="caption" component="span" color="textPrimary">
-                        {rental.lender}
-                      </Typography>
+                      <Tooltip title="Lender" placement="left">
+                        <Typography variant="caption" component="span" color="textSecondary">
+                          {rental.lender}
+                        </Typography>
+                      </Tooltip>
                       <Typography variant="caption" component="span" style={{color:"red"}}>
-                        {" → "}
+                        <ArrowForwardIcon style={{height:"10px"}} />
                       </Typography>
-                      <Typography variant="caption" component="span" color="textSecondary">
-                        {"Renter: "}
-                      </Typography>
-                      <Typography variant="caption" component="span" color="textPrimary">
-                        {rental.renter}
-                      </Typography>
+                      <Tooltip title="Renter" placement="right">
+                        <Typography variant="caption" component="span" color="textSecondary">
+                          {rental.renter}
+                        </Typography>
+                      </Tooltip>
                     </React.Fragment>
                   } />
                 </Grid>
                 <Grid item xs={12}>
-                  <LinearProgress variant="determinate" value={(rental.status === null) ? 0 : (rental.status)*10} color="primary" style={{margin:"5px 0px"}}/>
+                  <LinearProgress variant="determinate" value={(rental.status === null) ? 0 : (rental.status/11)*100} color="primary" style={{margin:"5px 0px"}}/>
                   <Typography variant="subtitle2" align="right" color="textSecondary">
-                  {(rental.status === null) ? "Pending..." : (rental.status === 10) ? "Finished" : "[ " + (rental.status+1) + " ] - " + steps[rental.status]}
+                  {(rental.status === null) ? "Pending..." : (rental.status === 11) ? "Finished" : steps[rental.status]}
                   </Typography>
                 </Grid>
               </Grid>
