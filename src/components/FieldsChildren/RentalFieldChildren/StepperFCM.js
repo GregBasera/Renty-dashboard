@@ -8,6 +8,8 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 
+import TfNoEdit from './TfNoEdit';
+
 function StepperFCM(props) {
   const stepperToMsg = [0, null, null, 1, null, 2 , 3, null, 4, null, null, 5];
   const scriptedTitles = [
@@ -97,29 +99,29 @@ function StepperFCM(props) {
   const stepperContent = (index) => {
     switch (index) {
       case 0: // Processing Req
-        return "The LENDER and RENTER was notified. Contact the lender, discuss and confirm the renting and item details.";
+        return "Please notify the LENDER and RENTER apps. Contact the lender, discuss and confirm the renting and item details.";
       case 1: // Item to HQ
         return "Dispatch a rider to the Lenders address to retrieve the item.";
       case 2: // HQ Check
         return "Item is officially out the hands of the lender and in the hands of Renty. Please inspect the item for any defect. Mark, record, and inform the lender of the seen condition.";
       case 3: // Item to Renter
-        return "The LENDER and RENTER was notified. Dispatch a rider to the Renters address to deliver the rented item.";
+        return "Please notify the LENDER and RENTER apps. Dispatch a rider to the Renters address to deliver the rented item.";
       case 4: // Renter Received
         return "Item is officially out the hands of Renty and in the hands of the Renter.";
       case 5: // HIDDEN ########
-        return "The RENTER was notified";
+        return "Please notify the RENTER app";
       case 6: // Contract Over
-        return "The LENDER and RENTER was notified.";
+        return "Please notify the LENDER and RENTER apps.";
       case 7: // Item to HQ
-        return "Dispatch a rider to the Renter's address for retrieval."
+        return "Dispatch a rider to the Renter's address for item retrieval."
       case 8: // HQ Check
-        return "The LENDER and RENTER was notified. Item is officially out the hands of the Lender and in the hands of Renty.";
+        return "Please notify the LENDER and RENTER apps. Item is officially out the hands of the Lender and in the hands of Renty.";
       case 9: // Item to Lender
         return "Dispatch a rider to the Lender's address to return the item."
       case 10: // Renter Received
-        return "The LENDER was notified. Item is officially out the hands of Renty and back in the hands of the Lender.";
+        return "Item is officially out the hands of Renty and back in the hands of the Lender.";
       case 11: // HIDDEN ########
-        return "Transactions complete!"
+        return "Transactions complete! Please notify the LENDER and RENTER apps"
       default:
         return null;
     }
@@ -136,16 +138,48 @@ function StepperFCM(props) {
                 <Typography variant="subtitle1" color="textPrimary">
                   {stepperContent(props.status)}
                 </Typography>
-                <Grid container spacing={1}>
+                <Grid container spacing={1} style={{paddingTop:"10px"}}>
                   <Grid item xs={6} style={{display: (stepperToMsg[props.status] !== null) ? "block" : "none"}}>
-                    <Button size="small" fullWidth variant="contained" color="primary" onClick={() => {fcmButton_L(stepperToMsg[props.status])}}>
-                      notify Lender
-                    </Button>
+                    <Grid container spacing={1}>
+                      <Grid item xs={12} style={{backgroundColor:"white"}}>
+                        <TfNoEdit label="Title" variant="outlined"
+                        value={(stepperToMsg[props.status] !== null && props.status !== null) ? scriptedTitles[stepperToMsg[props.status]].L : "nada"}
+                        multiLine rows={2}
+                        />
+                      </Grid>
+                      <Grid item xs={12} style={{backgroundColor:"white"}}>
+                        <TfNoEdit label="Body" variant="outlined"
+                        value={(stepperToMsg[props.status] !== null && props.status !== null) ? scriptedBodies[stepperToMsg[props.status]].L : "nada"}
+                        multiLine rows={3}
+                        />
+                      </Grid>
+                      <Grid item xs={12} style={{paddingTop:"10px"}}>
+                        <Button size="small" variant="contained" color="primary" disabled={props.status === 5} onClick={() => {fcmButton_L(stepperToMsg[props.status])}}>
+                          notify Lender
+                        </Button>
+                      </Grid>
+                    </Grid>
                   </Grid>
                   <Grid item xs={6} style={{display: (stepperToMsg[props.status] !== null) ? "block" : "none"}}>
-                    <Button size="small" fullWidth variant="contained" color="primary" onClick={() => {fcmButton_R(stepperToMsg[props.status])}}>
-                      notify Renter
-                    </Button>
+                    <Grid container spacing={1}>
+                      <Grid item xs={12} style={{backgroundColor:"white"}}>
+                        <TfNoEdit label="Title" variant="outlined"
+                        value={(stepperToMsg[props.status] !== null && props.status !== null) ? scriptedTitles[stepperToMsg[props.status]].R : "nada"}
+                        multiLine rows={2}
+                        />
+                      </Grid>
+                      <Grid item xs={12} style={{backgroundColor:"white"}}>
+                        <TfNoEdit label="Body" variant="outlined"
+                        value={(stepperToMsg[props.status] !== null && props.status !== null) ? scriptedBodies[stepperToMsg[props.status]].R : "nada"}
+                        multiLine rows={3}
+                        />
+                      </Grid>
+                      <Grid item xs={12} style={{paddingTop:"10px"}}>
+                        <Button size="small" variant="contained" color="primary" disabled={props.status === 11} onClick={() => {fcmButton_R(stepperToMsg[props.status])}}>
+                          notify Renter
+                        </Button>
+                      </Grid>
+                    </Grid>
                   </Grid>
                 </Grid>
               </Box>
