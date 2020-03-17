@@ -13,10 +13,13 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Collapse from '@material-ui/core/Collapse';
+import IconButton from '@material-ui/core/IconButton';
 
 // import TfNoEdit from './TfNoEdit';
 import Firebase from './../../../Firebase';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 class Fcm extends React.Component {
   constructor(props) {
@@ -24,21 +27,50 @@ class Fcm extends React.Component {
     this.state = ({
       fcmInfo: null,
       initialState: null,
+      androidCollapse: false,
+      iOSCollapse: false,
+      unsubscribe: "nada"
     });
 
     this.listenToFirebase = this.listenToFirebase.bind(this);
     this.listenToFirebase();
+    this.collapseChanges = this.collapseChanges.bind(this);
   }
 
   listenToFirebase() {
-    Firebase.firestore().collection('operations').doc('blast').onSnapshot((doc) => {
-      // console.log("Current data: ", doc.data());
+    var unsub = Firebase.firestore().collection('operations').doc('blast').onSnapshot((doc) => {
+      console.log("snapshot");
       if(this.state.userInfo === null) {
         this.setState({ initialState: doc.data() });
         console.log("updated initialState");
       }
-      this.setState({ fcmInfo: doc.data() });
+      this.setState({
+        fcmInfo: doc.data(),
+        unsubscribe: unsub,
+      });
     });
+  }
+
+  componentWillUnmount() {
+    console.log("unsub");
+    this.state.unsubscribe();
+  }
+
+  collapseChanges(platform, newState) {
+    switch (platform) {
+      case 'android':
+        this.setState({
+          androidCollapse: newState,
+        });
+        break;
+      case 'iOS':
+        this.setState({
+          iOSCollapse: newState,
+        });
+        break;
+      default:
+        return null;
+    }
   }
 
   render() {
@@ -78,43 +110,57 @@ class Fcm extends React.Component {
           </Grid>
         </Grid>
 
-        <TableContainer style={{marginTop:"10px"}}>
-          <Table stickyHeader size="small">
-            <TableHead>
-              <TableRow>
-                <TableCell key="fcm" align="center">All Android users FCM Tokens</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {this.state.fcmInfo.android.map((token, index) => (
+        <Collapse in={this.state.androidCollapse} collapsedHeight={40}>
+          <TableContainer style={{marginTop:"10px"}}>
+            <Table stickyHeader size="small">
+              <TableHead>
                 <TableRow>
-                  <TableCell key={index} align="left">
-                    {token.substring(0, 25) + " ... " + token.substring(token.length - 25, token.length)}
+                  <TableCell key="fcm" align="center">
+                    All Android users FCM Tokens
+                    <IconButton size="small" onClick={() => {this.collapseChanges('android', !this.state.androidCollapse)}}>
+                      <ArrowDropDownIcon />
+                    </IconButton>
                   </TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+              <TableBody>
+                {this.state.fcmInfo.android.map((token, index) => (
+                  <TableRow key={index}>
+                    <TableCell key={index} align="left">
+                      {token.substring(0, 25) + " ... " + token.substring(token.length - 25, token.length)}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Collapse>
 
-        <TableContainer>
-          <Table stickyHeader size="small">
-            <TableHead>
-              <TableRow>
-                <TableCell key="fcm" align="center">All iOS users FCM Tokens</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {this.state.fcmInfo.iOS.map((token, index) => (
+        <Collapse in={this.state.iOSCollapse} collapsedHeight={40}>
+          <TableContainer>
+            <Table stickyHeader size="small">
+              <TableHead>
                 <TableRow>
-                  <TableCell key={index} align="left">
-                    {token.substring(0, 25) + " ... " + token.substring(token.length - 25, token.length)}
+                  <TableCell key="fcm" align="center">
+                    All iOS users FCM Tokens
+                    <IconButton size="small" onClick={() => {this.collapseChanges('iOS', !this.state.iOSCollapse)}}>
+                      <ArrowDropDownIcon />
+                    </IconButton>
                   </TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+              <TableBody>
+                {this.state.fcmInfo.iOS.map((token, index) => (
+                  <TableRow key={index}>
+                    <TableCell key={index} align="left">
+                      {token.substring(0, 25) + " ... " + token.substring(token.length - 25, token.length)}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Collapse>
       </div>
     )
   }
