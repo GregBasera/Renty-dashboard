@@ -1,10 +1,10 @@
 import React from 'react';
 
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
+// import Button from '@material-ui/core/Button';
+// import Stepper from '@material-ui/core/Stepper';
+// import Step from '@material-ui/core/Step';
+// import StepLabel from '@material-ui/core/StepLabel';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -30,7 +30,6 @@ class RentalField extends React.Component {
 
     this.listenToFirebase = this.listenToFirebase.bind(this);
     this.listenToFirebase();
-    // this.updateFire = this.updateFire.bind(this);
     this.closeModal = this.closeModal.bind(this);
   }
 
@@ -53,15 +52,6 @@ class RentalField extends React.Component {
       this.listenToFirebase();
     }
   }
-
-  // updateFire(payload) {
-  //   let stateRef = this.state.rentalInfo;
-  //   stateRef.status = payload;
-  //   this.setState({ rentalInfo: stateRef });
-  //   this.props.query.update({
-  //     status: payload,
-  //   });
-  // }
 
   peek = (key) => {
     if(this.state.rentalInfo !== null) {
