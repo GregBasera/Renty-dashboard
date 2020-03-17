@@ -7,9 +7,11 @@ function TfNoEdit(props) {
     <TextField
       label={props.label}
       value={props.value}
-      variant="filled"
+      variant={(typeof props.variant === 'string') ? props.variant : "filled"}
       fullWidth
       size="small"
+      multiline={(typeof props.multiLine !== 'undefined') ? true : false}
+      rows={props.rows}
       onClick={props.onClick}
       InputProps={{
         readOnly: true,
