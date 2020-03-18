@@ -22,6 +22,7 @@ class UserField extends React.Component {
       userInfo: null,
       initialState: null,
       applyButton: false,
+      unsubscribe: "nada",
     });
 
     this.listenToFirebase = this.listenToFirebase.bind(this);
@@ -30,13 +31,16 @@ class UserField extends React.Component {
   }
 
   listenToFirebase() {
-    this.props.query.onSnapshot((doc) => {
+    var unsub = this.props.query.onSnapshot((doc) => {
       // console.log("Current data: ", doc.data());
       if(this.state.userInfo === null) {
         this.setState({ initialState: { id: doc.id, data: doc.data() } });
-        console.log("updated initialState");
+        // console.log("updated initialState");
       }
-      this.setState({ userInfo: { id: doc.id, data: doc.data() } });
+      this.setState({
+        userInfo: { id: doc.id, data: doc.data() },
+        unsubscribe: unsub,
+      });
     });
   }
 
@@ -49,6 +53,11 @@ class UserField extends React.Component {
       });
       this.listenToFirebase();
     }
+  }
+
+  componentWillUnmount() {
+    console.log("unmount unsub");
+    this.state.unsubscribe();
   }
 
   uploadChanged = () => {

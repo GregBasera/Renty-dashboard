@@ -11,6 +11,7 @@ class OperationsView extends React.Component {
     super(props);
     this.state = ({
       operations: [],
+      unsubscribe: "nada",
     });
 
     this.listenToFirebase = this.listenToFirebase.bind(this);
@@ -19,7 +20,7 @@ class OperationsView extends React.Component {
 
   listenToFirebase() {
     var list = [];
-    this.props.query.onSnapshot((snapshot) => {
+    var unsub = this.props.query.onSnapshot((snapshot) => {
       let changes = snapshot.docChanges();
       changes.forEach(change => {
         switch(change.type) {
@@ -40,7 +41,10 @@ class OperationsView extends React.Component {
             break;
         }
       })
-      this.setState({ operations: list });
+      this.setState({
+        operations: list,
+        unsubscribe: unsub,
+      });
     });
   }
 
@@ -48,6 +52,11 @@ class OperationsView extends React.Component {
     if(prevProps.query !== this.props.query) {
       this.listenToFirebase();
     }
+  }
+
+  componentWillUnmount() {
+    console.log("unmount unsub");
+    this.state.unsubscribe();
   }
 
   render () {

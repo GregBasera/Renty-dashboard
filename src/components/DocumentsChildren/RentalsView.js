@@ -10,6 +10,7 @@ class RentalsView extends React.Component {
     super(props);
     this.state = ({
       rentals: [],
+      unsubscribe: "nada",
     });
 
     this.listenToFirebase = this.listenToFirebase.bind(this);
@@ -18,7 +19,7 @@ class RentalsView extends React.Component {
 
   listenToFirebase() {
     var list = [];
-    this.props.query.onSnapshot((snapshot) => {
+    var unsub = this.props.query.onSnapshot((snapshot) => {
       let changes = snapshot.docChanges();
       changes.forEach(change => {
         switch(change.type) {
@@ -47,7 +48,10 @@ class RentalsView extends React.Component {
             break;
         }
       })
-      this.setState({ rentals: list });
+      this.setState({
+        rentals: list,
+        unsubscribe: unsub,
+      });
     })
   }
 
@@ -55,6 +59,11 @@ class RentalsView extends React.Component {
     if(prevProps.query !== this.props.query) {
       this.listenToFirebase();
     }
+  }
+
+  componentWillUnmount() {
+    console.log("unmount unsub");
+    this.state.unsubscribe();
   }
 
   render() {

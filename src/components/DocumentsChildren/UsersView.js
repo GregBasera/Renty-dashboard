@@ -11,6 +11,7 @@ class UsersView extends React.Component {
     super(props);
     this.state = ({
       users: [],
+      unsubscribe: "nada",
     });
 
     this.listenToFirebase = this.listenToFirebase.bind(this);
@@ -19,7 +20,7 @@ class UsersView extends React.Component {
 
   listenToFirebase() {
     var list = [];
-    this.props.query.onSnapshot((snapshot) => {
+    var unsub = this.props.query.onSnapshot((snapshot) => {
       let changes = snapshot.docChanges();
       changes.forEach(change => {
         // console.log(change);
@@ -47,7 +48,10 @@ class UsersView extends React.Component {
             break;
         }
       })
-      this.setState({ users: list });
+      this.setState({
+        users: list,
+        unsubscribe: unsub,
+      });
     })
   }
 
@@ -55,6 +59,11 @@ class UsersView extends React.Component {
     if(prevProps.query !== this.props.query) {
       this.listenToFirebase();
     }
+  }
+
+  componentWillUnmount() {
+    console.log("unmount unsub");
+    this.state.unsubscribe();
   }
 
   render () {

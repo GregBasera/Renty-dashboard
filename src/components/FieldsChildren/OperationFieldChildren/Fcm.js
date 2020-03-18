@@ -39,7 +39,7 @@ class Fcm extends React.Component {
 
   listenToFirebase() {
     var unsub = Firebase.firestore().collection('operations').doc('blast').onSnapshot((doc) => {
-      console.log("snapshot");
+      // console.log("snapshot");
       if(this.state.userInfo === null) {
         this.setState({ initialState: doc.data() });
         console.log("updated initialState");
@@ -52,7 +52,7 @@ class Fcm extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log("unsub");
+    console.log("unmount unsub");
     this.state.unsubscribe();
   }
 

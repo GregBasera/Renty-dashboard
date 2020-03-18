@@ -18,6 +18,7 @@ class ItemView extends React.Component {
     this.state = ({
       operationsInfo: null,
       initialState: null,
+      unsubscribe: "nada",
     });
 
     this.listenToFirebase = this.listenToFirebase.bind(this);
@@ -25,14 +26,22 @@ class ItemView extends React.Component {
   }
 
   listenToFirebase() {
-    Firebase.firestore().collection('operations').doc('items').onSnapshot((doc) => {
+    var unsub = Firebase.firestore().collection('operations').doc('items').onSnapshot((doc) => {
       // console.log("Current data: ", doc.data());
       if(this.state.userInfo === null) {
         this.setState({ initialState: doc.data() });
         console.log("updated initialState");
       }
-      this.setState({ operationsInfo: doc.data() });
+      this.setState({
+        operationsInfo: doc.data(),
+        unsubscribe: unsub,
+      });
     });
+  }
+
+  componentWillUnmount() {
+    console.log("unmount unsub");
+    this.state.unsubscribe();
   }
 
   deleteCategory = () => {

@@ -26,6 +26,7 @@ class RentalField extends React.Component {
       lenderModal: false,
       renterModal: false,
       itemModal: false,
+      unsubscribe: "nada",
     });
 
     this.listenToFirebase = this.listenToFirebase.bind(this);
@@ -34,13 +35,16 @@ class RentalField extends React.Component {
   }
 
   listenToFirebase() {
-    this.props.query.onSnapshot((doc) => {
+    var unsub = this.props.query.onSnapshot((doc) => {
       // console.log("Current data: ", doc.data());
       if(this.state.userInfo === null) {
         this.setState({ initialState: { id: doc.id, data: doc.data() } });
-        console.log("updated initialState");
+        // console.log("updated initialState");
       }
-      this.setState({ rentalInfo: { id: doc.id, data: doc.data() } });
+      this.setState({
+        rentalInfo: { id: doc.id, data: doc.data() },
+        unsubscribe: unsub,
+      });
     });
   }
 
@@ -51,6 +55,11 @@ class RentalField extends React.Component {
       this.applyButton = false;
       this.listenToFirebase();
     }
+  }
+
+  componentWillUnmount() {
+    console.log("unmount unsub");
+    this.state.unsubscribe();
   }
 
   peek = (key) => {
