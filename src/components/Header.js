@@ -33,7 +33,6 @@ function Header(props) {
 
   return (
     <div>
-
       <Slide direction="right" in={props.show} mountOnEnter unmountOnExit>
         <AppBar style={{backgroundColor:"#f06383"}}>
           <Toolbar variant="dense">
