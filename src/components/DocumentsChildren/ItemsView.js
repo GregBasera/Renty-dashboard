@@ -16,6 +16,7 @@ class ItemsView extends React.Component {
 
     this.listenToFirebase = this.listenToFirebase.bind(this);
     this.listenToFirebase();
+    this.deleteItem = this.deleteItem.bind(this);
   }
 
   listenToFirebase() {
@@ -65,10 +66,19 @@ class ItemsView extends React.Component {
     this.state.unsubscribe();
   }
 
+  deleteItem(id) {
+    console.log("Delete", id);
+    this.props.query.doc(id).delete().then(function() {
+      console.log("Document successfully deleted!");
+    }).catch(function(error) {
+      console.error("Error removing document: ", error);
+    });
+  }
+
   render () {
     return (this.state.items.length === 0) ? (<CircularProgress />) : (
       <List component="nav" aria-label="Collections" dense>
-        <ItemsListItem items={this.state.items} />
+        <ItemsListItem items={this.state.items} deletion={this.deleteItem} />
       </List>
     )
   }
