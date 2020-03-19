@@ -93,7 +93,7 @@ function StepperFCM(props) {
   }
 
   const fcmButton_R = (index) => {
-    fcm(scriptedTitles[index].R, scriptedBodies[index].R, props.lender_fcm_token);
+    fcm(scriptedTitles[index].R, scriptedBodies[index].R, props.renter_fcm_token);
   }
 
   const stepperContent = (index) => {
