@@ -6,7 +6,7 @@ function TfNoEdit(props) {
   return (
     <TextField
       label={props.label}
-      value={props.value}
+      value={(props.value !== null) ? props.value : "--"}
       variant="filled"
       fullWidth
       size="small"
