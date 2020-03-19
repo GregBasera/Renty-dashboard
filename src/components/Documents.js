@@ -24,10 +24,10 @@ function Documents() {
         return <RentalsView query={Firebase.firestore().collection('rentals')} />;
 
       case 2: // ALL items
-        return <ItemsView query={Firebase.firestore().collection('items').orderBy('date_entered')} />;
+        return <ItemsView query={Firebase.firestore().collection('items')} />;
 
       case 3: // ALL users
-        return <UsersView query={Firebase.firestore().collection('users').orderBy('full_name', 'desc')} />;
+        return <UsersView query={Firebase.firestore().collection('users')} />;
 
       case 4: // client app
         return "Client App";
