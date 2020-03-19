@@ -74,15 +74,15 @@ class ItemField extends React.Component {
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
 
-    this.setState(prevState => ({
+    var tempState = this.state.itemInfo.data;
+    tempState[name] = value;
+    this.setState({
       itemInfo: {
         id: this.state.itemInfo.id,
-        data: {
-          ...prevState.itemInfo.data, [name]: value
-        }
+        data: tempState
       },
       applyButton: (JSON.stringify(this.state.itemInfo) !== JSON.stringify(this.state.initialState)) ? true : false,
-    }));
+    });
   }
 
   peek = (key) => {
