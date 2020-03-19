@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Container from '@material-ui/core/Container';
 
 // import LenderToRenterStepper from './RentalFieldChildren/LenderToRenterStepper.js';
 // import RenterToLenderStepper from './RentalFieldChildren/RenterToLenderStepper.js';
@@ -15,6 +16,7 @@ import UsersCollDialog from './RentalFieldChildren/UsersCollDialog';
 import ItemsCollDialog from './RentalFieldChildren/ItemsCollDialog';
 import TfNoEdit from './RentalFieldChildren/TfNoEdit';
 import StepperFCM from './RentalFieldChildren/StepperFCM';
+import CountdownChip from './RentalFieldChildren/CountdownChip';
 // import CircularProgress from '@material-ui/core/CircularProgress';
 
 class RentalField extends React.Component {
@@ -62,15 +64,6 @@ class RentalField extends React.Component {
     this.state.unsubscribe();
   }
 
-  peek = (key) => {
-    if(this.state.rentalInfo !== null) {
-      var returnThis = this.state.rentalInfo.data;
-      return (Object.keys(returnThis).indexOf(key) !== -1) ? returnThis[key] : "--"
-    } else {
-      return "--";
-    }
-  }
-
   closeModal() {
     this.setState({
       lenderModal: false,
@@ -100,14 +93,17 @@ class RentalField extends React.Component {
               query={this.props.query}
               status={this.state.rentalInfo.data.status}
               lender_fcm_token={this.state.rentalInfo.data.lender_fcm_token}
-              render_fcm_token={this.state.rentalInfo.data.render_fcm_token}
+              renter_fcm_token={this.state.rentalInfo.data.renter_fcm_token}
             />
           </Grid>
           <Grid item xs={6}> {/* duration */}
             <Box borderRadius={4} border={1} borderColor="grey.400" style={{padding:"5px"}}>
-              <Typography variant="subtitle1" color="textSecondary">
-              Rent Duration
-              </Typography>
+              <Container disableGutters style={{display:"flex",justifyContent:"space-between"}}>
+                <Typography variant="subtitle1" color="textSecondary">
+                  Rent Duration
+                </Typography>
+                <CountdownChip end={this.state.rentalInfo.data.rent_duration.end_date.toDate().getTime()} />
+              </Container>
               <Grid container spacing={1}>
                 <Grid item xs={12}>
                   <TfNoEdit label="Start date" value={this.state.rentalInfo.data.rent_duration.start_date.toDate().toLocaleDateString("en-US", {
