@@ -11,6 +11,7 @@ import Firebase from './../../../Firebase';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import AddIcon from '@material-ui/icons/Add';
 import CloseIcon from '@material-ui/icons/Close';
+import CategoriesDialog from './CategoriesDialog'
 
 class ItemView extends React.Component {
   constructor(props) {
@@ -19,10 +20,12 @@ class ItemView extends React.Component {
       operationsInfo: null,
       initialState: null,
       unsubscribe: "nada",
+      addModal: false,
     });
 
     this.listenToFirebase = this.listenToFirebase.bind(this);
     this.listenToFirebase();
+    this.modalOpenClose = this.modalOpenClose.bind(this);
   }
 
   listenToFirebase() {
@@ -44,17 +47,15 @@ class ItemView extends React.Component {
     this.state.unsubscribe();
   }
 
+  modalOpenClose() {
+    this.setState({
+      addModal: !this.state.addModal,
+    })
+  }
+
   deleteCategory = () => {
 
   }
-
-  // componentDidUpdate(prevProps, prevState, snapshot) {
-  //   if(prevProps.query !== this.props.query) {
-  //     this.setState({ initialState: null });
-  //     this.setState({ rentalInfo: null });
-  //     this.listenToFirebase();
-  //   }
-  // }
 
   render() {
     return (this.state.operationsInfo === null) ? (<CircularProgress/>) : (
@@ -89,7 +90,8 @@ class ItemView extends React.Component {
                 onDelete={() => {console.log("delete")}}
               />
             ))}
-            <Chip icon={<AddIcon/>} label="Add" color="secondary" clickable />
+            <Chip icon={<AddIcon/>} label="Add" color="secondary" clickable onClick={() => {this.modalOpenClose()}} />
+            <CategoriesDialog open={this.state.addModal} close={this.modalOpenClose} />
           </Box>
         </Grid>
       </Grid>
