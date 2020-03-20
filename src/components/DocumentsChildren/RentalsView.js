@@ -19,7 +19,7 @@ class RentalsView extends React.Component {
 
   listenToFirebase() {
     var list = [];
-    var unsub = this.props.query.onSnapshot((snapshot) => {
+    var unsub = this.props.query.orderBy("date_entered").onSnapshot((snapshot) => {
       let changes = snapshot.docChanges();
       changes.forEach(change => {
         switch(change.type) {
