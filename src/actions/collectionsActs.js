@@ -11,3 +11,10 @@ export const changeFieldView = (index, id) => {
       payload: { index: index, id: id }
     };
 }
+
+export const fieldRaw = (isRaw) => {
+    return {
+      type: "raw",
+      payload: { isRaw: isRaw }
+    };
+}
