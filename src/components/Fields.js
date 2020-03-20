@@ -15,11 +15,11 @@ import FieldsRaw from './FieldsChildren/FieldsRaw';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
+// import IconButton from '@material-ui/core/IconButton';
 import Box from '@material-ui/core/Box';
 import Chip from '@material-ui/core/Chip';
 
-import ReplayIcon from '@material-ui/icons/Replay';
+// import ReplayIcon from '@material-ui/icons/Replay';
 
 function Fields() {
   const collection = useSelector(state => state.docView.frbsColl);

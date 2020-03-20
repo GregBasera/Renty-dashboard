@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Typography from '@material-ui/core/Typography';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 
 import CircularProgress from '@material-ui/core/CircularProgress';

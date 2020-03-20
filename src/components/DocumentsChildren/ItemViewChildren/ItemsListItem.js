@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 
-import Icon from '@material-ui/core/Icon';
+// import Icon from '@material-ui/core/Icon';
 import BeenhereIcon from '@material-ui/icons/Beenhere';
 import HelpIcon from '@material-ui/icons/Help';
 import DeleteIcon from '@material-ui/icons/Delete';
