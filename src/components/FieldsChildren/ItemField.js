@@ -136,7 +136,7 @@ class ItemField extends React.Component {
                 multiline
                 fullWidth
                 rows="7"
-                value={this.peek("item_description")}
+                value={this.state.itemInfo.data.item_description}
                 variant="outlined"
                 name="item_description"
                 onChange={this.updateValue}
