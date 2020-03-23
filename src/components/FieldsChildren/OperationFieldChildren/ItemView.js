@@ -5,6 +5,8 @@ import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
 import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 // import TfNoEdit from './TfNoEdit';
 import Firebase from './../../../Firebase';
@@ -21,11 +23,14 @@ class ItemView extends React.Component {
       initialState: null,
       unsubscribe: "nada",
       addModal: false,
+      servFeeApplyButton: false,
     });
 
     this.listenToFirebase = this.listenToFirebase.bind(this);
     this.listenToFirebase();
     this.modalOpenClose = this.modalOpenClose.bind(this);
+    this.updateServiceFee = this.updateServiceFee.bind(this);
+    this.modifiedServiceFee = this.modifiedServiceFee.bind(this);
   }
 
   listenToFirebase() {
@@ -47,6 +52,26 @@ class ItemView extends React.Component {
     this.state.unsubscribe();
   }
 
+  updateServiceFee() {
+    Firebase.firestore().collection('operations').doc('items').update({
+      service_fee_base_percentage: parseInt(this.state.operationsInfo.service_fee_base_percentage),
+    });
+    this.setState({ servFeeApplyButton: false });
+  }
+
+  modifiedServiceFee(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+    
+    var tempState = this.state.operationsInfo;
+    tempState[name] = value;
+    this.setState({
+      operationsInfo: tempState,
+      servFeeApplyButton: (JSON.stringify(this.state.operationsInfo) !== JSON.stringify(this.state.initialState)) ? true : false,
+    });
+  }
+
   modalOpenClose() {
     this.setState({
       addModal: !this.state.addModal,
@@ -60,18 +85,29 @@ class ItemView extends React.Component {
   render() {
     return (this.state.operationsInfo === null) ? (<CircularProgress/>) : (
       <Grid container spacing={2}>
-        <Grid item xs={6}>
+        <Grid item xs={12}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
+                type="number"
                 label="Service Fee Percentage"
                 value={this.state.operationsInfo.service_fee_base_percentage}
                 variant="outlined"
                 fullWidth
                 size="small"
+                name="service_fee_base_percentage"
                 InputProps={{
-                  readOnly: true,
+                  endAdornment: (this.state.servFeeApplyButton) ? (
+                    <Button variant="contained" size="small" color="secondary" onClick={() => {this.updateServiceFee()}}>
+                      Apply
+                    </Button>) : null,
                 }}
+                helperText={
+                  <Typography color="error" variant="caption">
+                    This is the service fee percentage added on top of all rented item. Changes to this value would apply to all items in the inventory. Please be careful.
+                  </Typography>
+                }
+                onChange={this.modifiedServiceFee}
               />
             </Grid>
           </Grid>
