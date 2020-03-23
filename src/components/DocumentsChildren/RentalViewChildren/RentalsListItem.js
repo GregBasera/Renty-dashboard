@@ -62,7 +62,12 @@ function RentalsListItem(props) {
                   } />
                 </Grid>
                 <Grid item xs={12}>
-                  <LinearProgress variant="determinate" value={(rental.status === null) ? 0 : (rental.status/11)*100} color="primary" style={{margin:"5px 0px"}}/>
+                  <LinearProgress
+                    variant="determinate"
+                    value={(rental.status === null) ? 0 : (rental.status/11)*100}
+                    color="primary"
+                    style={{margin:"5px 0px"}}
+                  />
                   <Typography variant="subtitle2" align="right" color="textSecondary">
                   {(rental.status === null) ? "Pending..." : (rental.status === 11) ? "Finished" : steps[rental.status]}
                   </Typography>
