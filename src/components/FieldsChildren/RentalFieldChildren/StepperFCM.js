@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
@@ -88,12 +88,15 @@ function StepperFCM(props) {
     });
   }
 
+  const [lButtonLabel, setLButtonLabel] = useState("Notify Lender");
   const fcmButton_L = (index) => {
     fcm(scriptedTitles[index].L, scriptedBodies[index].L, props.lender_fcm_token);
+    setLButtonLabel(lButtonLabel => "Sent")
   }
-
+  const [rButtonLabel, setRButtonLabel] = useState("Notify Renter");
   const fcmButton_R = (index) => {
     fcm(scriptedTitles[index].R, scriptedBodies[index].R, props.renter_fcm_token);
+    setRButtonLabel(rButtonLabel => "Sent")
   }
 
   const stepperContent = (index) => {
@@ -154,8 +157,8 @@ function StepperFCM(props) {
                         />
                       </Grid>
                       <Grid item xs={12} style={{paddingTop:"10px"}}>
-                        <Button size="small" variant="contained" color="primary" disabled={props.status === 5} onClick={() => {fcmButton_L(stepperToMsg[props.status])}}>
-                          notify Lender
+                        <Button size="small" variant="contained" color="primary" disabled={props.status === 5 || lButtonLabel === 'Sent'} onClick={() => {fcmButton_L(stepperToMsg[props.status])}}>
+                          {lButtonLabel}
                         </Button>
                       </Grid>
                     </Grid>
@@ -175,8 +178,8 @@ function StepperFCM(props) {
                         />
                       </Grid>
                       <Grid item xs={12} style={{paddingTop:"10px"}}>
-                        <Button size="small" variant="contained" color="primary" disabled={props.status === 11} onClick={() => {fcmButton_R(stepperToMsg[props.status])}}>
-                          notify Renter
+                        <Button size="small" variant="contained" color="primary" disabled={props.status === 11 || rButtonLabel === 'Sent'} onClick={() => {fcmButton_R(stepperToMsg[props.status])}}>
+                          {rButtonLabel}
                         </Button>
                       </Grid>
                     </Grid>
