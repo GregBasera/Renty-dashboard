@@ -60,10 +60,11 @@ class ItemView extends React.Component {
   }
 
   modifiedServiceFee(event) {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
-    
+    var target = event.target;
+    var value = target.type === 'checkbox' ? target.checked : target.value;
+    var name = target.name;
+    value = (!isNaN(parseInt(value))) ? parseInt(value) : this.state.operationsInfo.service_fee_base_percentage;
+
     var tempState = this.state.operationsInfo;
     tempState[name] = value;
     this.setState({
@@ -98,7 +99,7 @@ class ItemView extends React.Component {
                 name="service_fee_base_percentage"
                 InputProps={{
                   endAdornment: (this.state.servFeeApplyButton) ? (
-                    <Button variant="contained" size="small" color="secondary" onClick={() => {this.updateServiceFee()}}>
+                    <Button variant="contained" size="small" color="secondary" onClick={() => {this.updateServiceFee()}} style={{marginLeft:"5px"}}>
                       Apply
                     </Button>) : null,
                 }}
