@@ -30,6 +30,7 @@ class RentalsView extends React.Component {
               renter: change.doc.data().renter_ID,
               item: change.doc.data().item_ID,
               status: change.doc.data().status,
+              seen: change.doc.data().seen,
             });
             break;
           case 'removed':
@@ -42,6 +43,7 @@ class RentalsView extends React.Component {
               renter: change.doc.data().renter_ID,
               item: change.doc.data().item_ID,
               status: change.doc.data().status,
+              seen: change.doc.data().seen,
             }
             break;
           default:

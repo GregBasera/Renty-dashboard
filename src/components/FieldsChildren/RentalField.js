@@ -50,11 +50,20 @@ class RentalField extends React.Component {
     });
   }
 
+  componentDidMount() {
+    this.props.query.update({
+      seen: true,
+    });
+  }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
     if(prevProps.query !== this.props.query) {
       this.setState({ initialState: null });
       this.setState({ rentalInfo: null });
       this.applyButton = false;
+      this.props.query.update({
+        seen: true,
+      });
       this.listenToFirebase();
     }
   }
@@ -102,7 +111,7 @@ class RentalField extends React.Component {
                 <Typography variant="subtitle1" color="textSecondary">
                   Rent Duration
                 </Typography>
-                <CountdownChip end={this.state.rentalInfo.data.rent_duration.end_date.toDate().getTime()} />
+                {/*<CountdownChip end={this.state.rentalInfo.data.rent_duration.end_date.toDate().getTime()} />*/}
               </Container>
               <Grid container spacing={1}>
                 <Grid item xs={12}>
