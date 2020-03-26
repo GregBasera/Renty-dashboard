@@ -10,6 +10,7 @@ import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
+import Grid from '@material-ui/core/Grid';
 
 // import Icon from '@material-ui/core/Icon';
 import BeenhereIcon from '@material-ui/icons/Beenhere';
@@ -28,46 +29,41 @@ function ItemsListItem(props) {
   return(
     <div>
       <Divider />
-      {props.items.map((item, index) =>
-        {
-          return (
-            <React.Fragment key={item.item_id}>
-            <ListItem selected={selectedIndex === index} onClick={event => handleListItemClick(event, index, item.item_id)}>
-              <ListItemText primary={
-                <Typography variant="subtitle1">
-                  {item.item_name}
-                </Typography>
-              } secondary={
-                <React.Fragment>
-                <Typography variant="caption">
-                  {item.item_id}
-                </Typography>
-                <Typography variant="subtitle1" component="span">
-                  {" | "}
-                </Typography>
-                <Typography variant="caption">
-                  {item.date_entered.toDate().toLocaleDateString("en-US", { year: 'numeric', month: 'numeric', day: 'numeric' })}
-                </Typography>
-                </React.Fragment>
-              } />
-              <ListItemSecondaryAction>
-                <Tooltip placement="right" title={(item.is_approved) ? "Approved" : "Not Approved"}>
-                  <IconButton size="small">
-                    {(item.is_approved) ? <BeenhereIcon style={{color:"forestgreen"}} /> : <HelpIcon style={{color:"orange"}} />}
-                  </IconButton>
-                </Tooltip>
-                <Tooltip placement="right" title="Delete">
-                  <IconButton size="small" onClick={() => {props.deletion(item.item_id)}}>
-                    <DeleteIcon />
-                  </IconButton>
-                </Tooltip>
-              </ListItemSecondaryAction>
-            </ListItem>
-            <Divider />
-            </React.Fragment>
-          )
-        })
-      }
+      {props.items.map((item, index) => (
+        <React.Fragment key={item.item_id}>
+        <ListItem button selected={selectedIndex === index} onClick={event => handleListItemClick(event, index, item.item_id)}>
+          <Grid container spacing={0} justify="space-between">
+            <Grid item xs={10}>
+              <Typography variant="subtitle1">
+                {item.item_name}
+              </Typography>
+              <Typography variant="caption" color="textSecondary">
+                {item.item_id}
+              </Typography>
+              <Typography variant="subtitle1" component="span" color="textSecondary">
+                {" | "}
+              </Typography>
+              <Typography variant="caption" color="textSecondary">
+                {item.date_entered.toDate().toLocaleDateString("en-US", { year: 'numeric', month: 'numeric', day: 'numeric' })}
+              </Typography>
+            </Grid>
+            <Grid item xs="auto">
+              <Tooltip placement="right" title={(item.is_approved) ? "Approved" : "Not Approved"}>
+                <IconButton size="small">
+                  {(item.is_approved) ? <BeenhereIcon style={{color:"forestgreen"}} /> : <HelpIcon style={{color:"orange"}} />}
+                </IconButton>
+              </Tooltip>
+              <Tooltip placement="right" title="Delete">
+                <IconButton size="small" onClick={() => {props.deletion(item.item_id)}}>
+                  <DeleteIcon />
+                </IconButton>
+              </Tooltip>
+            </Grid>
+          </Grid>
+        </ListItem>
+        <Divider />
+        </React.Fragment>
+      ))}
     </div>
   )
 }
