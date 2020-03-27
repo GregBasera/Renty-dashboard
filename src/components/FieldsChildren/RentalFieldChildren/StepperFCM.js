@@ -7,11 +7,12 @@ import Button from '@material-ui/core/Button';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import TfNoEdit from './TfNoEdit';
 
 function StepperFCM(props) {
-  const stepperToMsg = [0, null, null, 1, null, 2 , 3, null, 4, null, null, 5];
+  const stepperToMsg = [0, null, null, 1, null, 2 , 3, null, null, 4, null, 5];
   const scriptedTitles = [
     {
       L: "A person wants to rent an item you listed. [item details]",
@@ -55,50 +56,6 @@ function StepperFCM(props) {
     }
   ];
 
-  const updateStatus = (currStatus) => {
-    props.query.update({
-      status: currStatus,
-    });
-  }
-
-  const fcm = (title, body, token) => {
-    console.log(title, body, token);
-    fetch('https://fcm.googleapis.com/fcm/send', {
-      method: 'POST', // *GET, POST, PUT, DELETE, etc.
-      headers: {
-        'Authorization' : 'key=AAAAfIlkwIw:APA91bGDIpxkFFsf4hpqnmiQ5OVKexxce8BQ6xbOixXdzXUh_q13WRy6j33vR7VXI-_TJ3ePsU6xRkr044jDhZvkxEZCYjAC9ti2AtYeiTNPdGStrRt-mz3S10K0W8J3i-8JJrG0PnEW',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        // to: 'ceFGfb13aSA:APA91bHD9-Gony4oig3ZxOwGsamb47EZl0U0TqsW_yuKHRoxCQnNqEhYPs2-kUUe_9tU48JEYBYOWzzxPzdWpXd-9epQs8tMYL37Pm2X1ZQwWbH3ikeAME80DgameRQASVnxS3mNOCq5',
-        // to: 'fd3Owf5FJms:APA91bFcFrZEDpJ7qPxC9zu1Bf8_m-zluMiJDBUC55JQzAbW2I1SG-KqyX48ca-LnQG-komhqhhIk7pKPcxnQ01nlXetGLdeD6pu-9YHHu1rOw7PEBPyqsO9cnT5unaRsMdEiT26mTqZ'
-        to: token,
-        notification: {
-          title: title,
-          body: body
-        }
-      })
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log('FCM API responce:', data);
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-  }
-
-  const [lButtonLabel, setLButtonLabel] = useState("Notify Lender");
-  const fcmButton_L = (index) => {
-    fcm(scriptedTitles[index].L, scriptedBodies[index].L, props.lender_fcm_token);
-    setLButtonLabel(lButtonLabel => "Sent")
-  }
-  const [rButtonLabel, setRButtonLabel] = useState("Notify Renter");
-  const fcmButton_R = (index) => {
-    fcm(scriptedTitles[index].R, scriptedBodies[index].R, props.renter_fcm_token);
-    setRButtonLabel(rButtonLabel => "Sent")
-  }
-
   const stepperContent = (index) => {
     switch (index) {
       case 0: // Processing Req
@@ -118,16 +75,69 @@ function StepperFCM(props) {
       case 7: // Item to HQ
         return "Dispatch a rider to the Renter's address for item retrieval."
       case 8: // HQ Check
-        return "Please notify the LENDER and RENTER apps. Item is officially out the hands of the Lender and in the hands of Renty.";
+        return "Item is officially out the hands of the Lender and in the hands of Renty.";
       case 9: // Item to Lender
-        return "Dispatch a rider to the Lender's address to return the item."
+        return "Please notify the LENDER and RENTER apps. Dispatch a rider to the Lender's address to return the item."
       case 10: // Renter Received
         return "Item is officially out the hands of Renty and back in the hands of the Lender.";
       case 11: // HIDDEN ########
-        return "Transactions complete! Please notify the LENDER and RENTER apps"
+        return "Transactions complete!"
       default:
         return null;
     }
+  }
+
+  const fcm = (title, body, token) => { // the actual function that sends to fcm servers
+    if (token === props.lender_fcm_token) { // first sent the button label to spinner for user feedback
+      setLButtonLabel(lButtonLabel => (<CircularProgress size={22} color="inherit"/>));
+    } else {
+      setRButtonLabel(rButtonLabel => (<CircularProgress size={22} color="inherit"/>));
+    }
+
+    fetch('https://fcm.googleapis.com/fcm/send', { // contacting server
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        'Authorization' : 'key=AAAAfIlkwIw:APA91bGDIpxkFFsf4hpqnmiQ5OVKexxce8BQ6xbOixXdzXUh_q13WRy6j33vR7VXI-_TJ3ePsU6xRkr044jDhZvkxEZCYjAC9ti2AtYeiTNPdGStrRt-mz3S10K0W8J3i-8JJrG0PnEW',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        // to: 'ceFGfb13aSA:APA91bHD9-Gony4oig3ZxOwGsamb47EZl0U0TqsW_yuKHRoxCQnNqEhYPs2-kUUe_9tU48JEYBYOWzzxPzdWpXd-9epQs8tMYL37Pm2X1ZQwWbH3ikeAME80DgameRQASVnxS3mNOCq5',
+        // to: 'fd3Owf5FJms:APA91bFcFrZEDpJ7qPxC9zu1Bf8_m-zluMiJDBUC55JQzAbW2I1SG-KqyX48ca-LnQG-komhqhhIk7pKPcxnQ01nlXetGLdeD6pu-9YHHu1rOw7PEBPyqsO9cnT5unaRsMdEiT26mTqZ'
+        to: token,
+        notification: {
+          title: title,
+          body: body
+        }
+      })
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      if (token === props.lender_fcm_token) { // set button label to the responce of the fcm server
+        setLButtonLabel(lButtonLabel => (data.success) ? "Sent" : "Send Failed");
+      } else {
+        setRButtonLabel(rButtonLabel => (data.success) ? "Sent" : "Send Failed");
+      }
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+  }
+
+  const [lButtonLabel, setLButtonLabel] = useState("Notify Lender");
+  const fcmButton_L = (index) => { // NOTIFY LENDER button clicked
+    fcm(scriptedTitles[index].L, scriptedBodies[index].L, props.lender_fcm_token);
+  }
+  const [rButtonLabel, setRButtonLabel] = useState("Notify Renter");
+  const fcmButton_R = (index) => { // NOTIFY RENTER button clicked
+    fcm(scriptedTitles[index].R, scriptedBodies[index].R, props.renter_fcm_token);
+  }
+
+  const updateStatus = (currStatus) => { // NEXT button clicked
+    props.query.update({
+      status: currStatus,
+    });
+    setLButtonLabel(lButtonLabel => "Notify Lender");
+    setRButtonLabel(rButtonLabel => "Notify Renter");
   }
 
   return(
@@ -136,7 +146,7 @@ function StepperFCM(props) {
         <Grid item xs={12}>
           <Grid container spacing={1}>
             <Grid item xs={12}>
-              <Box display={((props.status >= 0 && props.status < 11) && props.status !== null) ? "block" : "none"} borderRadius={4} border={1} borderColor="#fcdfe6"
+              <Box display={((props.status >= 0 && props.status < 12 ) && props.status !== null) ? "block" : "none"} borderRadius={4} border={1} borderColor="#fcdfe6"
                 style={{marginTop:"10px", padding:"10px 20px", backgroundColor:"#fcdfe6"}}>
                 <Typography variant="subtitle1" color="textPrimary">
                   {stepperContent(props.status)}
