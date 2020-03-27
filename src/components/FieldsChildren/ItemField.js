@@ -32,11 +32,12 @@ class ItemField extends React.Component {
   listenToFirebase() {
     var unsub = this.props.query.onSnapshot((doc) => {
       // console.log("Current data: ", doc.data());
-      if(this.state.itemInfo === null) {
-        this.setState({ initialState: { id: doc.id, data: doc.data() } });
-      }
+      // if(this.state.itemInfo === null) {
+      //   this.setState({ initialState: { id: doc.id, data: doc.data() } });
+      // }
       this.setState({
         itemInfo: { id: doc.id, data: doc.data() },
+        initialState: { id: doc.id, data: doc.data() },
         unsubscribe: unsub,
       });
     });

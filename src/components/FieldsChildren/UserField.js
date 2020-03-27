@@ -33,12 +33,13 @@ class UserField extends React.Component {
   listenToFirebase() {
     var unsub = this.props.query.onSnapshot((doc) => {
       // console.log("Current data: ", doc.data());
-      if(this.state.userInfo === null) {
-        this.setState({ initialState: { id: doc.id, data: doc.data() } });
-        // console.log("updated initialState");
-      }
+      // if(this.state.userInfo === null) {
+      //   this.setState({ initialState: { id: doc.id, data: doc.data() } });
+      //   // console.log("updated initialState");
+      // }
       this.setState({
         userInfo: { id: doc.id, data: doc.data() },
+        initialState: { id: doc.id, data: doc.data() },
         unsubscribe: unsub,
       });
     });
