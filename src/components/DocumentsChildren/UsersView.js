@@ -31,7 +31,7 @@ class UsersView extends React.Component {
               user_id: change.doc.id,
               name: change.doc.data().full_name,
               phone: change.doc.data().phone,
-              verified: change.doc.data().verified,
+              is_verified: change.doc.data().is_verified,
             });
             break;
           case 'removed':
@@ -42,7 +42,7 @@ class UsersView extends React.Component {
               user_id: change.doc.id,
               name: change.doc.data().full_name,
               phone: change.doc.data().phone,
-              verified: change.doc.data().verified,
+              is_verified: change.doc.data().is_verified,
             }
             break;
           default:

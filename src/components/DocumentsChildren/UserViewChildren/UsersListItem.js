@@ -9,7 +9,7 @@ import Avatar from '@material-ui/core/Avatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
+// import Box from '@material-ui/core/Box';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
@@ -58,11 +58,11 @@ function UsersListItem(props) {
               </React.Fragment>
             } />
             <ListItemSecondaryAction>
-              <Tooltip placement="right" title="Verified">
+              {(user.is_verified) ? <Tooltip placement="right" title="Verified">
                 <IconButton size="small">
                   <VerifiedUserIcon style={{color:"#ce2458"}}/>
                 </IconButton>
-              </Tooltip>
+              </Tooltip> : null}
               <Tooltip placement="right" title="Delete">
                 <IconButton size="small" onClick={() => {props.deletion(user.user_id)}}>
                   <DeleteIcon />

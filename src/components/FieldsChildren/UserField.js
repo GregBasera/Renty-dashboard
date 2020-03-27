@@ -64,7 +64,7 @@ class UserField extends React.Component {
     console.log("submit was called");
     let stateRef = this.state.userInfo.data;
     this.props.query.update({
-      verified: (typeof stateRef.verified !== 'undefined') ? stateRef.verified : "error: notfound",
+      is_verified: (typeof stateRef.is_verified !== 'undefined') ? stateRef.is_verified : "error: notfound",
     });
     this.setState({ applyButton: false });
   }
@@ -74,15 +74,16 @@ class UserField extends React.Component {
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
 
-    this.setState(prevState => ({
+    var tempState = this.state.userInfo.data;
+    tempState[name] = value;
+    this.setState({
       userInfo: {
         id: this.state.userInfo.id,
-        data: {
-          ...prevState.userInfo.data, [name]: value
-        }
+        data: tempState
       },
-      applyButton: (JSON.stringify(this.state.itemInfo) !== JSON.stringify(this.state.initialState)) ? true : false,
-    }));
+      applyButton: (JSON.stringify(this.state.userInfo) !== JSON.stringify(this.state.initialState)) ? true : false,
+    });
+    console.log(this.state, value);
   }
 
   peek = (key) => {
@@ -123,10 +124,10 @@ class UserField extends React.Component {
             <Grid item xs={12}> {/* verified switch */}
               <FormControlLabel
                 control={
-                  <Switch checked={this.peek("verified")} />
+                  <Switch checked={this.peek("is_verified")} />
                 }
                 label="Verified"
-                name="verified"
+                name="is_verified"
                 onChange={this.updateValue}
               />
             </Grid>
