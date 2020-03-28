@@ -14,6 +14,8 @@ import Tooltip from '@material-ui/core/Tooltip';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
 
+import CountdownChip from "./CountdownChip";
+
 function RentalsListItem(props) {
   const [selectedIndex, setSelectedIndex] = React.useState(-1);
   const dispatch = useDispatch();
@@ -68,8 +70,13 @@ function RentalsListItem(props) {
                   color="primary"
                   style={{margin:"5px 0px"}}
                 />
+              </Grid>
+              <Grid item xs={6}>
+                <CountdownChip end={rental.end}/>
+              </Grid>
+              <Grid item xs={6}>
                 <Typography variant="subtitle2" align="right" color="textSecondary">
-                {(rental.status === null) ? "Pending..." : (rental.status === 11) ? "Finished" : steps[rental.status]}
+                  {(rental.status === null) ? "Pending..." : (rental.status === 11) ? "Finished" : steps[rental.status]}
                 </Typography>
               </Grid>
             </Grid>
