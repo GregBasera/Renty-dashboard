@@ -9,6 +9,7 @@ import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Typography from '@material-ui/core/Typography';
 
 import Firebase from './../../../Firebase';
 import TfNoEdit from './TfNoEdit';
@@ -31,6 +32,7 @@ class UsersCollectionDialog extends React.Component {
         data = snapshot.data();
       } else {
         console.log("No such document!");
+        data = -1;
       }
     }).catch(function(error) {
       console.log("Error getting document:", error);
@@ -55,7 +57,9 @@ class UsersCollectionDialog extends React.Component {
   }
 
   render() {
-    return (this.state.doc === null) ? <CircularProgress /> : (
+    return (this.state.doc === null) ? <CircularProgress /> : (this.state.doc === -1) ? (
+      <Typography variant="caption" color="error">No such User!</Typography>
+    ) : (
       <Dialog
         open={this.props.open}
         onClose={this.props.close}

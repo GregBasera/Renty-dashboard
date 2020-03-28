@@ -87,15 +87,15 @@ class RentalField extends React.Component {
         <Grid container spacing={2}>
           <Grid item xs={12}> {/* item_ID */}
             <TfNoEdit label="Item ID" value={this.state.rentalInfo.data.item_ID} onClick={() => {this.setState({ itemModal: true })}}/>
-            {/*<ItemsCollDialog title="Item" open={this.state.itemModal} close={this.closeModal} id={this.peek("item_ID")} coll={"items"}/>*/}
+            <ItemsCollDialog title="Item" open={this.state.itemModal} close={this.closeModal} id={this.state.rentalInfo.data.item_ID} coll={"items"}/>
           </Grid>
           <Grid item xs={6}> {/* lender_ID */}
             <TfNoEdit label="Lender's ID" value={this.state.rentalInfo.data.lender_ID} onClick={() => {this.setState({ lenderModal: true })}}/>
-            {/*<UsersCollDialog title="Lender" open={this.state.lenderModal} close={this.closeModal} id={this.peek("lender_ID")} coll={"users"}/>*/}
+            <UsersCollDialog title="Lender" open={this.state.lenderModal} close={this.closeModal} id={this.state.rentalInfo.data.lender_ID} coll={"users"}/>
           </Grid>
           <Grid item xs={6}> {/* renter_ID */}
             <TfNoEdit label="Renter's ID" value={this.state.rentalInfo.data.renter_ID} onClick={() => {this.setState({ renterModal: true })}}/>
-            {/*<UsersCollDialog title="Renter" open={this.state.renterModal} close={this.closeModal} id={this.peek("renter_ID")} coll={"users"}/>*/}
+            <UsersCollDialog title="Renter" open={this.state.renterModal} close={this.closeModal} id={this.state.rentalInfo.data.renter_ID} coll={"users"}/>
           </Grid>
           <Grid item xs={12}> {/* rental stepper */}
             <StepperFCM
