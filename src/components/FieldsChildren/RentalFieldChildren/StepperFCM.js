@@ -59,27 +59,27 @@ function StepperFCM(props) {
   const stepperContent = (index) => {
     switch (index) {
       case 0: // Processing Req
-        return "Please notify the LENDER and RENTER apps. Contact the lender, discuss and confirm the renting and item details.";
+        return "Notify the LENDER and RENTER. Contact the lender, discuss and confirm the renting and item details.";
       case 1: // Item to HQ
         return "Dispatch a rider to the Lenders address to retrieve the item.";
       case 2: // HQ Check
-        return "Item is officially out the hands of the lender and in the hands of Renty. Please inspect the item for any defect. Mark, record, and inform the lender of the seen condition.";
+        return "Inspect the item for any defect. Mark, record, and inform the lender of the seen condition is necessary.";
       case 3: // Item to Renter
-        return "Please notify the LENDER and RENTER apps. Dispatch a rider to the Renters address to deliver the rented item.";
+        return "Notify the LENDER and RENTER. Dispatch a rider to the Renters address to deliver the rented item.";
       case 4: // Renter Received
-        return "Item is officially out the hands of Renty and in the hands of the Renter.";
+        return "Press the NEXT button to start the countdown timer for the rent request.";
       case 5: // HIDDEN ########
-        return "Please notify the RENTER app";
+        return "Please notify the RENTER";
       case 6: // Contract Over
-        return "Please notify the LENDER and RENTER apps.";
+        return "Notify the LENDER and RENTER.";
       case 7: // Item to HQ
         return "Dispatch a rider to the Renter's address for item retrieval."
       case 8: // HQ Check
-        return "Item is officially out the hands of the Lender and in the hands of Renty.";
+        return "Inspect the item for any defect. Mark, record, and inform the lender of the seen condition is necessary.";
       case 9: // Item to Lender
-        return "Please notify the LENDER and RENTER apps. Dispatch a rider to the Lender's address to return the item."
+        return "Notify the LENDER and RENTER. Dispatch a rider to the Lender's address to return the item."
       case 10: // Renter Received
-        return "Item is officially out the hands of Renty and back in the hands of the Lender.";
+        return "Press the FINISH button to complete this transaction.";
       case 11: // HIDDEN ########
         return "Transactions complete!"
       default:
