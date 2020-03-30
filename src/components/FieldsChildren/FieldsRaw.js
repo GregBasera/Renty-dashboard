@@ -58,9 +58,7 @@ class FieldsRaw extends React.Component {
 
   render() {
     return (this.state.fields === null) ? <CircularProgress /> : (
-      <TextareaAutosize style={{width:"100%"}}>
-        {this.prettyPrint(this.state.fields.data)}
-      </TextareaAutosize>
+      <TextareaAutosize style={{width:"100%"}} value={this.prettyPrint(this.state.fields.data)}/>
     );
   }
 }
