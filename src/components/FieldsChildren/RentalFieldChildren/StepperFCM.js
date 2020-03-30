@@ -145,9 +145,39 @@ function StepperFCM(props) {
       <Grid container spacing={1}>
         <Grid item xs={12}>
           <Grid container spacing={1}>
+            <Grid item xs={4} style={{marginTop:"10px",display: (props.status === 11) ? "none" : "block"}}>
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                onClick={() => {updateStatus((props.status === null) ? 0 : props.status+1)}}
+              >
+                {(props.status === null) ? 'accept request' : (props.status === 10) ? 'finish' : 'next'}
+              </Button>
+            </Grid>
+            <Grid item xs={4} style={{marginTop:"10px",display: (props.status === 0) ? "block" : "none"}}>
+              <Button
+                fullWidth
+                variant="contained"
+                color="secondary"
+                onClick={() => {updateStatus(-1)}}
+              >
+                {"decline"}
+              </Button>
+            </Grid>
+            <Grid item xs={4} style={{marginTop:"10px",display: ((props.status >= 0 && props.status < 11) && props.status !== null) ? "block" : "none"}}>
+              <Button
+                fullWidth
+                variant="contained"
+                onClick={() => {updateStatus(null)}}
+                style={{backgroundColor:"crimson",color:"white"}}
+              >
+                {"void request"}
+              </Button>
+            </Grid>
             <Grid item xs={12}>
               <Box display={((props.status >= 0 && props.status < 12 ) && props.status !== null) ? "block" : "none"} borderRadius={4} border={1} borderColor="#fcdfe6"
-                style={{marginTop:"10px", padding:"10px 20px", backgroundColor:"#fcdfe6"}}>
+                style={{padding:"10px 20px", backgroundColor:"#fcdfe6"}}>
                 <Typography variant="subtitle1" color="textPrimary">
                   {stepperContent(props.status)}
                 </Typography>
@@ -196,36 +226,6 @@ function StepperFCM(props) {
                   </Grid>
                 </Grid>
               </Box>
-            </Grid>
-            <Grid item xs={4} style={{display: (props.status === 11) ? "none" : "block"}}>
-              <Button
-                fullWidth
-                variant="contained"
-                color="primary"
-                onClick={() => {updateStatus((props.status === null) ? 0 : props.status+1)}}
-              >
-                {(props.status === null) ? 'accept request' : (props.status === 10) ? 'finish' : 'next'}
-              </Button>
-            </Grid>
-            <Grid item xs={4} style={{display: (props.status === 0) ? "block" : "none"}}>
-              <Button
-                fullWidth
-                variant="contained"
-                color="secondary"
-                onClick={() => {updateStatus(-1)}}
-              >
-                {"decline"}
-              </Button>
-            </Grid>
-            <Grid item xs={4} style={{display: ((props.status >= 0 && props.status < 11) && props.status !== null) ? "block" : "none"}}>
-              <Button
-                fullWidth
-                variant="contained"
-                onClick={() => {updateStatus(null)}}
-                style={{backgroundColor:"crimson",color:"white"}}
-              >
-                {"void request"}
-              </Button>
             </Grid>
           </Grid>
         </Grid>
