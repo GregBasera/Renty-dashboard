@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import './styles.css';
 import Chip from '@material-ui/core/Chip';
 import Typography from '@material-ui/core/Typography';
 
@@ -42,9 +43,12 @@ function CountdownChip(props) {
   return((typeof timeLeft === "object") ? (
     <Chip size="small" label={timeLeft.d + "d " + timeLeft.h + "h " + timeLeft.m + "m " + timeLeft.s + "s"}
       style={{backgroundColor:(timeLeft.d+timeLeft.h === 0 && timeLeft.m <= 15) ? "orange" : "forestgreen",color:"white"}} />
-  ) : (
-    <Chip size="small" label={"Times up!"}
-      style={{backgroundColor:"crimson",color:"white"}} />
+  ) : ((props.status >= 5) ? (
+      <Chip className={(props.status !== 7) ? "blink-2" : ""} size="small" label={"Times up!"}
+        style={{backgroundColor:"crimson",color:"white"}} />
+    ) : (
+      <Chip className={(props.status !== 7) ? "blink-2" : ""} label="Timer not started" />
+    )
   ));
 }
 
