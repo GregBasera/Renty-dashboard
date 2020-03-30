@@ -19,8 +19,8 @@ import CountdownChip from "./CountdownChip";
 function RentalsListItem(props) {
   const [selectedIndex, setSelectedIndex] = React.useState(-1);
   const dispatch = useDispatch();
-  const steps = ["Processing Req", "Item to HQ", "HQ Check", "Item to Renter", "Renter Received",
-  "Contract Over", "Item to HQ", "HQ Check", "Item to Lender", "Lender Received"]
+  const steps = ["Processing Req", "Item to HQ", "HQ Check", "Item to Renter", "Renter Received", "Rented",
+  "Contract Over", "Item to HQ", "HQ Check", "Item to Lender", "Lender Received", "Finished",]
 
   const handleListItemClick = (event, index, id) => {
     setSelectedIndex(index);
@@ -49,21 +49,6 @@ function RentalsListItem(props) {
                   </Tooltip>
                 </Grid>) : null}
               <Grid item xs={12}>
-                <Tooltip title="Lender" placement="left">
-                  <Typography variant="caption" component="span" color="textSecondary">
-                    {rental.lender}
-                  </Typography>
-                </Tooltip>
-                <Typography variant="caption" component="span" style={{color:"red"}}>
-                  <ArrowForwardIcon style={{height:"10px"}} />
-                </Typography>
-                <Tooltip title="Renter" placement="right">
-                  <Typography variant="caption" component="span" color="textSecondary">
-                    {rental.renter}
-                  </Typography>
-                </Tooltip>
-              </Grid>
-              <Grid item xs={12}>
                 <LinearProgress
                   variant="determinate"
                   value={(rental.status === null) ? 0 : (rental.status/11)*100}
@@ -72,10 +57,10 @@ function RentalsListItem(props) {
                 />
               </Grid>
               <Grid item xs={6}>
-                <CountdownChip end={rental.end}/>
+                <CountdownChip end={rental.end} status={rental.status}/>
               </Grid>
               <Grid item xs={6}>
-                <Typography variant="subtitle2" align="right" color="textSecondary">
+                <Typography variant="caption" component="div" align="right" style={{color:"crimson"}}>
                   {(rental.status === null) ? "Pending..." : (rental.status === 11) ? "Finished" : steps[rental.status]}
                 </Typography>
               </Grid>
