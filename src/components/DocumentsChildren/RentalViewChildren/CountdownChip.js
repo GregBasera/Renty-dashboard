@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import './styles.css';
 import Chip from '@material-ui/core/Chip';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
 
 function calculateTimeLeft(end, status) {
   const difference = end.toDate() - +new Date();

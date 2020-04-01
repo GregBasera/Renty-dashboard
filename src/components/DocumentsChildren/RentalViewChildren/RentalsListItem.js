@@ -11,7 +11,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import Grid from '@material-ui/core/Grid';
 import Tooltip from '@material-ui/core/Tooltip';
 
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+// import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
 
 import CountdownChip from "./CountdownChip";
