@@ -87,7 +87,7 @@ function StepperFCM(props) {
     }
   }
 
-  const fcm = (title, body, token) => { // the actual function that sends to fcm servers
+  const fcm = (index, title, body, token) => { // the actual function that sends to fcm servers
     if (token === props.lender_fcm_token) { // first sent the button label to spinner for user feedback
       setLButtonLabel(lButtonLabel => (<CircularProgress size={22} color="inherit"/>));
     } else {
@@ -113,23 +113,38 @@ function StepperFCM(props) {
     .then((response) => response.json())
     .then((data) => {
       if (token === props.lender_fcm_token) { // set button label to the responce of the fcm server
-        setLButtonLabel(lButtonLabel => (data.success) ? "Sent" : "Send Failed");
+        if(data.success) {
+          props.query.update({
+            lender_notif_status: index,
+          })
+          setLButtonLabel(lButtonLabel => "Sent");
+        } else {
+          setLButtonLabel(lButtonLabel => "Send Failed");
+        }
       } else {
-        setRButtonLabel(rButtonLabel => (data.success) ? "Sent" : "Send Failed");
+        if(data.success) {
+          props.query.update({
+            renter_notif_status: index,
+          })
+          setRButtonLabel(rButtonLabel => "Sent");
+        } else {
+          setRButtonLabel(rButtonLabel => "Send Failed");
+        }
       }
+      console.log(data);
     })
     .catch((error) => {
       console.error('Error:', error);
     });
   }
 
-  const [lButtonLabel, setLButtonLabel] = useState("Notify Lender");
+  const [lButtonLabel, setLButtonLabel] = useState((stepperToMsg[props.status] === props.lender_notif_status) ? "Sent" : "Notify Lender");
   const fcmButton_L = (index) => { // NOTIFY LENDER button clicked
-    fcm(scriptedTitles[index].L, scriptedBodies[index].L, props.lender_fcm_token);
+    fcm(index, scriptedTitles[index].L, scriptedBodies[index].L, props.lender_fcm_token);
   }
-  const [rButtonLabel, setRButtonLabel] = useState("Notify Renter");
+  const [rButtonLabel, setRButtonLabel] = useState((stepperToMsg[props.status] === props.renter_notif_status) ? "Sent" : "Notify Renter");
   const fcmButton_R = (index) => { // NOTIFY RENTER button clicked
-    fcm(scriptedTitles[index].R, scriptedBodies[index].R, props.renter_fcm_token);
+    fcm(index, scriptedTitles[index].R, scriptedBodies[index].R, props.renter_fcm_token);
   }
 
   const updateStatus = (currStatus) => { // NEXT button clicked
@@ -197,7 +212,9 @@ function StepperFCM(props) {
                         />
                       </Grid>
                       <Grid item xs={12} style={{paddingTop:"10px"}}>
-                        <Button size="small" variant="contained" color="primary" disabled={props.status === 5 || lButtonLabel === 'Sent'} onClick={() => {fcmButton_L(stepperToMsg[props.status])}}>
+                        <Button size="small" variant="contained" color="primary"
+                          disabled={props.status === 5 || stepperToMsg[props.status] === props.lender_notif_status}
+                          onClick={() => {fcmButton_L(stepperToMsg[props.status])}}>
                           {lButtonLabel}
                         </Button>
                       </Grid>
@@ -218,7 +235,9 @@ function StepperFCM(props) {
                         />
                       </Grid>
                       <Grid item xs={12} style={{paddingTop:"10px"}}>
-                        <Button size="small" variant="contained" color="primary" disabled={props.status === 11 || rButtonLabel === 'Sent'} onClick={() => {fcmButton_R(stepperToMsg[props.status])}}>
+                        <Button size="small" variant="contained" color="primary"
+                          disabled={props.status === 11 || stepperToMsg[props.status] === props.renter_notif_status}
+                          onClick={() => {fcmButton_R(stepperToMsg[props.status])}}>
                           {rButtonLabel}
                         </Button>
                       </Grid>

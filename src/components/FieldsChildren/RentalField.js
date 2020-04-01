@@ -16,7 +16,7 @@ import UsersCollDialog from './RentalFieldChildren/UsersCollDialog';
 import ItemsCollDialog from './RentalFieldChildren/ItemsCollDialog';
 import TfNoEdit from './RentalFieldChildren/TfNoEdit';
 import StepperFCM from './RentalFieldChildren/StepperFCM';
-import CountdownChip from './RentalFieldChildren/CountdownChip';
+// import CountdownChip from './RentalFieldChildren/CountdownChip';
 // import CircularProgress from '@material-ui/core/CircularProgress';
 
 class RentalField extends React.Component {
@@ -103,6 +103,8 @@ class RentalField extends React.Component {
               status={this.state.rentalInfo.data.status}
               lender_fcm_token={this.state.rentalInfo.data.lender_fcm_token}
               renter_fcm_token={this.state.rentalInfo.data.renter_fcm_token}
+              lender_notif_status={this.state.rentalInfo.data.lender_notif_status}
+              renter_notif_status={this.state.rentalInfo.data.renter_notif_status}
             />
           </Grid>
           <Grid item xs={6}> {/* duration */}
