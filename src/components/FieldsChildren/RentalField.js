@@ -83,70 +83,68 @@ class RentalField extends React.Component {
 
   render() {
     return (this.state.rentalInfo === null) ? <CircularProgress /> : (
-      <div>
-        <Grid container spacing={2}>
-          <Grid item xs={12}> {/* item_ID */}
-            <TfNoEdit label="Item ID" value={this.state.rentalInfo.data.item_ID} onClick={() => {this.setState({ itemModal: true })}}/>
-            <ItemsCollDialog title="Item" open={this.state.itemModal} close={this.closeModal} id={this.state.rentalInfo.data.item_ID} coll={"items"}/>
-          </Grid>
-          <Grid item xs={6}> {/* lender_ID */}
-            <TfNoEdit label="Lender's ID" value={this.state.rentalInfo.data.lender_ID} onClick={() => {this.setState({ lenderModal: true })}}/>
-            <UsersCollDialog title="Lender" open={this.state.lenderModal} close={this.closeModal} id={this.state.rentalInfo.data.lender_ID} coll={"users"}/>
-          </Grid>
-          <Grid item xs={6}> {/* renter_ID */}
-            <TfNoEdit label="Renter's ID" value={this.state.rentalInfo.data.renter_ID} onClick={() => {this.setState({ renterModal: true })}}/>
-            <UsersCollDialog title="Renter" open={this.state.renterModal} close={this.closeModal} id={this.state.rentalInfo.data.renter_ID} coll={"users"}/>
-          </Grid>
-          <Grid item xs={12}> {/* rental stepper */}
-            <StepperFCM
-              query={this.props.query}
-              status={this.state.rentalInfo.data.status}
-              lender_fcm_token={this.state.rentalInfo.data.lender_fcm_token}
-              renter_fcm_token={this.state.rentalInfo.data.renter_fcm_token}
-              lender_notif_status={this.state.rentalInfo.data.lender_notif_status}
-              renter_notif_status={this.state.rentalInfo.data.renter_notif_status}
-            />
-          </Grid>
-          <Grid item xs={6}> {/* duration */}
-            <Box borderRadius={4} border={1} borderColor="grey.400" style={{padding:"5px"}}>
-              <Container disableGutters style={{display:"flex",justifyContent:"space-between"}}>
-                <Typography variant="subtitle1" color="textSecondary">
-                  Rent Duration
-                </Typography>
-                {/*<CountdownChip end={this.state.rentalInfo.data.rent_duration.end_date.toDate().getTime()} />*/}
-              </Container>
-              <Grid container spacing={1}>
-                <Grid item xs={12}>
-                  <TfNoEdit label="Start date" value={this.state.rentalInfo.data.rent_duration.start_date.toDate().toLocaleDateString("en-US", {
-                    year: 'numeric', month: 'short', day: 'numeric', hour:'2-digit', minute:'2-digit' })}/>
-                </Grid>
-                <Grid item xs={12}>
-                  <TfNoEdit label="End date" value={this.state.rentalInfo.data.rent_duration.end_date.toDate().toLocaleDateString("en-US", {
-                    year: 'numeric', month: 'short', day: 'numeric', hour:'2-digit', minute:'2-digit' })}/>
-                </Grid>
-              </Grid>
-            </Box>
-          </Grid>
-          <Grid item xs={6}> {/* prices */}
-            <Box borderRadius={4} border={1} borderColor="grey.400" style={{padding:"5px"}}>
-              <Typography variant="subtitle1" color="textSecondary">
-                Checkout Details
-              </Typography>
-              <Grid container spacing={1}>
-                <Grid item xs={12}>
-                  <TfNoEdit label="Agreed upon price (₱)" value={this.state.rentalInfo.data.lender_def_price}/>
-                </Grid>
-                <Grid item xs={12}>
-                  <TfNoEdit label="Service Fee (₱)" value={this.state.rentalInfo.data.service_fee}/>
-                </Grid>
-                <Grid item xs={12}>
-                  <TfNoEdit label="Total Price (₱)" value={this.state.rentalInfo.data.total_price}/>
-                </Grid>
-              </Grid>
-            </Box>
-          </Grid>
+      <Grid container spacing={2}>
+        <Grid item xs={12}> {/* item_ID */}
+          <TfNoEdit label="Item ID" value={this.state.rentalInfo.data.item_ID} onClick={() => {this.setState({ itemModal: true })}}/>
+          {(this.state.itemModal) ? (<ItemsCollDialog title="Item" open={this.state.itemModal} close={this.closeModal} id={this.state.rentalInfo.data.item_ID} coll={"items"}/>) : null}
         </Grid>
-      </div>
+        <Grid item xs={6}> {/* lender_ID */}
+          <TfNoEdit label="Lender's ID" value={this.state.rentalInfo.data.lender_ID} onClick={() => {this.setState({ lenderModal: true })}}/>
+          {(this.state.lenderModal) ? (<UsersCollDialog title="Lender" open={this.state.lenderModal} close={this.closeModal} id={this.state.rentalInfo.data.lender_ID} coll={"users"}/>) : null}
+        </Grid>
+        <Grid item xs={6}> {/* renter_ID */}
+          <TfNoEdit label="Renter's ID" value={this.state.rentalInfo.data.renter_ID} onClick={() => {this.setState({ renterModal: true })}}/>
+          {(this.state.renterModal) ? (<UsersCollDialog title="Renter" open={this.state.renterModal} close={this.closeModal} id={this.state.rentalInfo.data.renter_ID} coll={"users"}/>) : null}
+        </Grid>
+        <Grid item xs={12}> {/* rental stepper */}
+          <StepperFCM
+            query={this.props.query}
+            status={this.state.rentalInfo.data.status}
+            lender_fcm_token={this.state.rentalInfo.data.lender_fcm_token}
+            renter_fcm_token={this.state.rentalInfo.data.renter_fcm_token}
+            lender_notif_status={this.state.rentalInfo.data.lender_notif_status}
+            renter_notif_status={this.state.rentalInfo.data.renter_notif_status}
+          />
+        </Grid>
+        <Grid item xs={6}> {/* duration */}
+          <Box borderRadius={4} border={1} borderColor="grey.400" style={{padding:"5px"}}>
+            <Container disableGutters style={{display:"flex",justifyContent:"space-between"}}>
+              <Typography variant="subtitle1" color="textSecondary">
+                Rent Duration
+              </Typography>
+              {/*<CountdownChip end={this.state.rentalInfo.data.rent_duration.end_date.toDate().getTime()} />*/}
+            </Container>
+            <Grid container spacing={1}>
+              <Grid item xs={12}>
+                <TfNoEdit label="Start date" value={this.state.rentalInfo.data.rent_duration.start_date.toDate().toLocaleDateString("en-US", {
+                  year: 'numeric', month: 'short', day: 'numeric', hour:'2-digit', minute:'2-digit' })}/>
+              </Grid>
+              <Grid item xs={12}>
+                <TfNoEdit label="End date" value={this.state.rentalInfo.data.rent_duration.end_date.toDate().toLocaleDateString("en-US", {
+                  year: 'numeric', month: 'short', day: 'numeric', hour:'2-digit', minute:'2-digit' })}/>
+              </Grid>
+            </Grid>
+          </Box>
+        </Grid>
+        <Grid item xs={6}> {/* prices */}
+          <Box borderRadius={4} border={1} borderColor="grey.400" style={{padding:"5px"}}>
+            <Typography variant="subtitle1" color="textSecondary">
+              Checkout Details
+            </Typography>
+            <Grid container spacing={1}>
+              <Grid item xs={12}>
+                <TfNoEdit label="Agreed upon price (₱)" value={this.state.rentalInfo.data.lender_def_price}/>
+              </Grid>
+              <Grid item xs={12}>
+                <TfNoEdit label="Service Fee (₱)" value={this.state.rentalInfo.data.service_fee}/>
+              </Grid>
+              <Grid item xs={12}>
+                <TfNoEdit label="Total Price (₱)" value={this.state.rentalInfo.data.total_price}/>
+              </Grid>
+            </Grid>
+          </Box>
+        </Grid>
+      </Grid>
     )
   }
 }
