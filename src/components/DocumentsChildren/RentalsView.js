@@ -67,6 +67,7 @@ class RentalsView extends React.Component {
 
   componentWillUnmount() {
     console.log("unmount unsub");
+    this.setState({ rentalInfo: null });
     this.state.unsubscribe();
   }
 
