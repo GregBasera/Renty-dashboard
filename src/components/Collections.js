@@ -24,7 +24,7 @@ import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 // import ErrorIcon from '@material-ui/icons/Warning';
 import PhonelinkRingIcon from '@material-ui/icons/PhonelinkRing';
 
-function Collections() {
+function Collections(props) {
   // const classes = useStyles();
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const dispatch = useDispatch();
@@ -36,8 +36,8 @@ function Collections() {
   };
 
   return (
-    <Container maxWidth="md" disableGutters style={{height:"88vh",overflowY:"auto"}}>
-      <Typography variant="h6" style={{marginLeft:"10px"}}>
+    <Container maxWidth="md" disableGutters style={{height:(props.head) ? "88vh": "100vh",overflowY:"auto"}}>
+      <Typography variant="h6" style={{marginLeft:"10px", marginTop:"10px"}}>
         Collections
       </Typography>
       <hr size="1"/>

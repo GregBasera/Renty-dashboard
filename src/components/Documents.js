@@ -14,7 +14,7 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
-function Documents() {
+function Documents(props) {
   const viewTitle = useSelector(state => state.docView.title);
   const viewIndex = useSelector(state => state.docView.index);
 
@@ -42,8 +42,8 @@ function Documents() {
   }
 
   return (
-    <Container maxWidth="md" disableGutters style={{height:"88vh",overflowY:"auto"}}>
-      <Typography variant="h6" style={{marginLeft:"10px"}}>
+    <Container maxWidth="md" disableGutters style={{height:(props.head) ? "88vh": "100vh",overflowY:"auto"}}>
+      <Typography variant="h6" style={{marginLeft:"10px", marginTop:"10px"}}>
         {viewTitle}
       </Typography>
       <hr size="1"/>

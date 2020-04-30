@@ -177,18 +177,18 @@ class App extends React.Component {
             </Grid>
           </Slide>
           <Grid item xs={3}>
-            <Paper elevation={0} variant="outlined" square style={{marginTop:(this.state.header) ? "48px" : "0px", padding:"10px 0px"}}>
-              <Collections />
+            <Paper elevation={0} variant="outlined" square style={{marginTop:(this.state.header) ? "48px" : "0px", paddingTop:"0px"}}>
+              <Collections head={this.state.header} />
             </Paper>
           </Grid>
           <Grid item xs={4}>
-            <Paper elevation={0} variant="outlined" square style={{marginTop:(this.state.header) ? "48px" : "0px", padding:"10px 0px"}}>
-              <Documents />
+            <Paper elevation={0} variant="outlined" square style={{marginTop:(this.state.header) ? "48px" : "0px", paddingTop:"0px"}}>
+              <Documents head={this.state.header} />
             </Paper>
           </Grid>
           <Grid item xs={5}>
-            <Paper elevation={0} variant="outlined" square style={{marginTop:(this.state.header) ? "48px" : "0px", padding:"10px 0px"}}>
-              <Fields />
+            <Paper elevation={0} variant="outlined" square style={{marginTop:(this.state.header) ? "48px" : "0px", paddingTop:"0px"}}>
+              <Fields head={this.state.header} />
             </Paper>
           </Grid>
         </Grid>

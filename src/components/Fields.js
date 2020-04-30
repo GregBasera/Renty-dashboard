@@ -21,7 +21,7 @@ import Chip from '@material-ui/core/Chip';
 
 // import ReplayIcon from '@material-ui/icons/Replay';
 
-function Fields() {
+function Fields(props) {
   const collection = useSelector(state => state.docView.frbsColl);
   const id = useSelector(state => state.fieldView.id);
   const isRaw = useSelector(state => state.raw.isRaw);
@@ -52,12 +52,12 @@ function Fields() {
   }
 
   return (
-    <Container maxWidth="md" disableGutters style={{height:"88vh", overflowY:"auto"}}>
+    <Container maxWidth="md" disableGutters style={{height:(props.head) ? "88vh": "100vh", overflowY:"auto"}}>
       <Grid container spacing={0} justify="space-between">
-        <Typography variant="h6" style={{marginLeft:"10px"}}>
+        <Typography variant="h6" style={{marginLeft:"10px", marginTop:"10px"}}>
         Fields
         </Typography>
-        <Chip label="Raw" color={(isRaw) ? "secondary" : "default"} style={{marginRight:"10px"}} onClick={() => {handleRawClick()}} />
+        <Chip label="Raw" color={(isRaw) ? "secondary" : "default"} style={{marginRight:"10px",marginTop:"10px"}} onClick={() => {handleRawClick()}} />
       </Grid>
 
       <hr size="1"/>
