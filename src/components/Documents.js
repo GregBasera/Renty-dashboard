@@ -1,40 +1,56 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
+import 'firebase/firestore';
+import Firebase from './../Firebase';
 
 // Components
-import RentalsView from './RentalsView';
-import ItemsView from './ItemsView';
+import RentalsView from './DocumentsChildren/RentalsView.js';
+import ItemsView from './DocumentsChildren/ItemsView';
+import UsersView from './DocumentsChildren/UsersView';
+import OperationsView from './DocumentsChildren/OperationsView';
 
 // Layout
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 
-function Documents() {
+function Documents(props) {
   const viewTitle = useSelector(state => state.docView.title);
   const viewIndex = useSelector(state => state.docView.index);
 
   const view = (index) => {
-    if(index >= 1 && index <= 4) {
-      return <RentalsView />;
-    } else if(index >= 5 && index <= 7) {
-      return <ItemsView />;
-    } else if(index >= 8 && index <= 11) {
-      
-    } else {
-      return <h2>Select another Collection you dumb shit..</h2>;
+    switch (index) {
+      case 1: // ALL rentals
+        return <RentalsView query={Firebase.firestore().collection('rentals')} />;
+
+      case 2: // ALL items
+        return <ItemsView query={Firebase.firestore().collection('items')} />;
+
+      case 3: // ALL users
+        return <UsersView query={Firebase.firestore().collection('users')} />;
+
+      case 4: // client app
+        return "Client App";
+
+      case 5: // operations
+        return <OperationsView query={Firebase.firestore().collection('operations')} />;
+
+      default:
+        return "Select a collection...";
+
     }
   }
 
   return (
-    <Container maxWidth="md" disableGutters="true" style={{height:"90vh",overflowY:"scroll"}}>
-      <Typography variant="h6" style={{marginLeft:"10px"}}>
+    <Container maxWidth="md" disableGutters style={{height:(props.head) ? "88vh": "100vh",overflowY:"auto"}}>
+      <Typography variant="h6" style={{marginLeft:"10px", marginTop:"10px"}}>
         {viewTitle}
       </Typography>
       <hr size="1"/>
 
-      <Typography variant="h6" style={{marginLeft:"10px"}}>
+      <Box style={{margin:"20px 10px",marginBottom:"0px"}}>
         {view(viewIndex)}
-      </Typography>
+      </Box>
     </Container>
   )
 }
